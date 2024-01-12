@@ -1,6 +1,7 @@
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts";
 import { SectionHeading } from "components/misc/Headings";
 import { PrimaryButton } from "components/misc/Buttons";
+
 import Hero from "components/hero/FullWidthWithImage.js";
 import Features from "components/features/ThreeColSimple.js";
 import MainFeature from "components/features/TwoColSingleFeatureWithStats.js";
@@ -10,6 +11,7 @@ import Blog from "components/blogs/PopularAndRecentBlogPosts.js";
 import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePictureReview.js";
 import FAQ from "components/faqs/SimpleWithSideImage.js";
 import SubscribeNewsLetterForm from "components/forms/SimpleSubscribeNewsletter.js";
+import { css } from "styled-components/macro";
 import tw from "twin.macro";
 import { useState } from "react";
 const HeadingRow = tw.div`flex`;

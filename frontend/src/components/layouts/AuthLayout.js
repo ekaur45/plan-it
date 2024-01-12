@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { Container as ContainerBase } from "components/misc/Layouts";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import logo from "images/logo.svg";
@@ -18,7 +18,7 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 export default function AuthLayout({
-  logoLinkUrl = "#",
+  logoLinkUrl = "/",
   illustrationImageSrc = illustration,
   headingText = "Sign In To Plan-it"
 }) {
@@ -27,9 +27,9 @@ export default function AuthLayout({
     <Container>
       <Content>
         <MainContainer>
-          <LogoLink href={logoLinkUrl}>
+          <Link to={logoLinkUrl}>
             <LogoImage src={logo} />
-          </LogoLink>
+          </Link>
           <MainContent>
             <Heading>{headingText}</Heading>
             <Outlet />

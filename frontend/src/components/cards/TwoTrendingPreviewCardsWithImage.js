@@ -84,13 +84,13 @@ export default () => {
         <ThreeColumn>
           <HeadingColumn>
             <HeadingInfoContainer>
-              <HeadingTitle>Trending Tours</HeadingTitle>
+              <HeadingTitle>Trending Decorators</HeadingTitle>
               <HeadingDescription>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua enim ad minim veniam.
               </HeadingDescription>
               <PrimaryLink>
-                View All Tours <ArrowRightIcon />
+                View All Decorators <ArrowRightIcon />
               </PrimaryLink>
             </HeadingInfoContainer>
           </HeadingColumn>
