@@ -6,6 +6,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import googleIconImageSrc from "images/google-icon.png";
 import twitterIconImageSrc from "images/twitter-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
+import { Link } from "react-router-dom";
 
 const FormContainer = tw.div`w-full flex-1 mt-8`;
 
@@ -56,48 +57,35 @@ export default ({
   SubmitButtonIcon = SignUpIcon,
   tosUrl = "#",
   privacyPolicyUrl = "#",
-  signInUrl = "#"
+  signInUrl = "/auth/login"
 }) => (
   <>
-                <FormContainer>
-              <SocialButtonsContainer>
-                {socialButtons.map((socialButton, index) => (
-                  <SocialButton key={index} href={socialButton.url}>
-                    <span className="iconContainer">
-                      <img src={socialButton.iconImageSrc} className="icon" alt="" />
-                    </span>
-                    <span className="text">{socialButton.text}</span>
-                  </SocialButton>
-                ))}
-              </SocialButtonsContainer>
-              <DividerTextContainer>
-                <DividerText>Or Sign up with your e-mail</DividerText>
-              </DividerTextContainer>
-              <Form>
-                <Input type="email" placeholder="Email" />
-                <Input type="password" placeholder="Password" />
-                <SubmitButton type="submit">
-                  <SubmitButtonIcon className="icon" />
-                  <span className="text">{submitButtonText}</span>
-                </SubmitButton>
-                <p tw="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by treact's{" "}
-                  <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
-                    Terms of Service
-                  </a>{" "}
-                  and its{" "}
-                  <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
-                    Privacy Policy
-                  </a>
-                </p>
+    <FormContainer>
+      <Form>
+        <Input type="email" placeholder="Email" />
+        <Input type="password" placeholder="Password" />
+        <SubmitButton type="submit">
+          <SubmitButtonIcon className="icon" />
+          <span className="text">{submitButtonText}</span>
+        </SubmitButton>
+        <p tw="mt-6 text-xs text-gray-600 text-center">
+          I agree to abide by Plan-it's{" "}
+          <a href={tosUrl} tw="border-b border-gray-500 border-dotted">
+            Terms of Service
+          </a>{" "}
+          and its{" "}
+          <a href={privacyPolicyUrl} tw="border-b border-gray-500 border-dotted">
+            Privacy Policy
+          </a>
+        </p>
 
-                <p tw="mt-8 text-sm text-gray-600 text-center">
-                  Already have an account?{" "}
-                  <a href={signInUrl} tw="border-b border-gray-500 border-dotted">
-                    Sign In
-                  </a>
-                </p>
-              </Form>
-            </FormContainer>
+        <p tw="mt-8 text-sm text-gray-600 text-center">
+          Already have an account?{" "}
+          <Link to={signInUrl} tw="border-b border-gray-500 border-dotted">
+            Sign In
+          </Link>
+        </p>
+      </Form>
+    </FormContainer>
   </>
 );
