@@ -1,0 +1,4 @@
+class UserServiceModel{
+    userId
+    serviceId
+}
