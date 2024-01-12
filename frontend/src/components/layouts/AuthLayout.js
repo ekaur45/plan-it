@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container as ContainerBase } from "components/misc/Layouts";
-import {css} from "styled-components/macro"; //eslint-disable-line
+import { css } from "styled-components/macro"; //eslint-disable-line
 import logo from "images/logo.svg";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -19,12 +18,13 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 export default function AuthLayout({
-    logoLinkUrl = "#",
-    illustrationImageSrc = illustration,
-    headingText = "Sign In To Treact"  
-  }) {
-    return <AnimationRevealPage>
-           <Container>
+  logoLinkUrl = "#",
+  illustrationImageSrc = illustration,
+  headingText = "Sign In To Treact"
+}) {
+  return <>
+    {/* <AnimationRevealPage> */}
+    <Container>
       <Content>
         <MainContainer>
           <LogoLink href={logoLinkUrl}>
@@ -40,6 +40,7 @@ export default function AuthLayout({
         </IllustrationContainer>
       </Content>
     </Container>
-        
-    </AnimationRevealPage>
+
+    {/* </AnimationRevealPage> */}
+  </>
 }
