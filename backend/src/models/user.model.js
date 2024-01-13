@@ -12,6 +12,13 @@ class UserModel{
     isUserVerified
     constructor(obj={}){
         this.firstName = obj.firstName??"";
+        this.lastName = obj.lastName??"";
+        this.email = obj.email??"";
+        this.password = obj.password??"";
     }
+    get isValid(){
+        return this.firstName && this.lastName && this.email && this.password;
+    }
+    
 }
 module.exports = UserModel;
