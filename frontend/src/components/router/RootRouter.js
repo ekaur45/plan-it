@@ -1,6 +1,8 @@
 import AdminLayout from 'components/layouts/AdminLayout';
 import AuthLayout from 'components/layouts/AuthLayout';
 import DefaultLayout from 'components/layouts/DefaultLayout';
+import CarRental from 'pages/CarRental';
+import DecoratorSignup from 'pages/DecoratorSignup';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
@@ -36,6 +38,14 @@ const rootRouter = createBrowserRouter([
             {
                 path:"signup",
                 element:<Signup/>
+            },
+            {
+                path:"signup/car-rental",
+                element:<CarRental/>
+            },
+            {
+                path:"signup/decorator",
+                element:<DecoratorSignup/>
             }
         ]
     }
