@@ -42,5 +42,17 @@ authController.getAllUsers = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+authController.updateProfile = async (req,res,next)=>{
+
+}
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 authController.example = (req,res,next)=>{}
 module.exports = authController;

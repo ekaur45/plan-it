@@ -19,7 +19,8 @@ authService.alreadyExist = async (email)=>{
  */
 authService.signup = async (data)=>{
     const users = await mongoUtil.runner(dbConstants.USERS);
-    data.password = bcrypt.hashSync(data.password,10)
+    data.password = bcrypt.hashSync(data.password,10);
+    data.isProfileCompleted = false;
     const {id, ...rest} = data;
     const result = await users.insertOne(rest);
     return result;
@@ -29,7 +30,7 @@ authService.getAllUsers = async ()=>{
     const _users = users.find({});
     const usersList = await _users.toArray();
     return usersList.map(user=>{
-        let {password,...rest} = user;
+        let {password,...rest} = user;        
         return rest
     })
 }
