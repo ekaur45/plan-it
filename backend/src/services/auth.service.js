@@ -1,6 +1,7 @@
 const dbConstants = require("../models/db.constants");
 const UserModel = require("../models/user.model");
 const config = require("../utils/config");
+const jwtUtil = require("../utils/jwt.util");
 const mongoUtil = require("../utils/mongo-db.util");
 const bcrypt = require("bcrypt");
 const authService = {};
@@ -23,7 +24,8 @@ authService.signup = async (data)=>{
     data.isProfileCompleted = false;
     const {id, ...rest} = data;
     const result = await users.insertOne(rest);
-    return result;
+    rest["access_token"] = jwtUtil.sign(rest);
+    return rest;
 }
 authService.getAllUsers = async ()=>{
     const users = await mongoUtil.runner(dbConstants.USERS);
@@ -33,5 +35,18 @@ authService.getAllUsers = async ()=>{
         let {password,...rest} = user;        
         return rest
     })
+}
+/**
+ * 
+ * @param {{email,password}} obj 
+ */
+authService.signin = async (obj)=>{
+    const users = await mongoUtil.runner(dbConstants.USERS);
+    const {password,...user} = await users.findOne({"email":obj.email});
+    if(!user) return null;
+    if(!bcrypt.compareSync(obj.password,password)) return null;
+    user["access_token"] = jwtUtil.sign(user);
+    return user;
+    
 }
 module.exports = authService;

@@ -54,5 +54,20 @@ authController.updateProfile = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
-authController.example = (req,res,next)=>{}
+authController.signin = async (req,res,next)=>{
+    const {email,password} = req.body;
+    if(!(email&&password)) return res.BadRequest(req.body,"Email/usename and password are required.");
+    const result = await authService.signin({email,password});
+    if(!result) return res.BadRequest(req.body,"Email/usename or password are invalid.")
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+authController.example = async (req,res,next)=>{}
 module.exports = authController;
