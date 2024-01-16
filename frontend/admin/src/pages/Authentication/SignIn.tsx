@@ -5,8 +5,8 @@ import Logo from '../../images/logo/logo.svg';
 const SignIn = () => {
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+      <div className="rounded-sm border border-stroke bg-white overflow-hidden shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center h-screen">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
@@ -226,7 +226,7 @@ const SignIn = () => {
                   />
                 </div>
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                {/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -261,11 +261,11 @@ const SignIn = () => {
                     </svg>
                   </span>
                   Sign in with Google
-                </button>
+                </button> */}
 
                 <div className="mt-6 text-center">
                   <p>
-                    Don’t have any account?{' '}
+                    Don't have any account?{' '}
                     <Link to="/auth/signup" className="text-primary">
                       Sign Up
                     </Link>
