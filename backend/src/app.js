@@ -5,6 +5,8 @@ const apiRouter = require("./routes");
 const app = express();
 var bodyParser = require('body-parser')
 const server = require("http").createServer(app);
+const cors = require("cors")({origin:"*"})
+app.use(cors);
 const responser = require("./utils/res.util");
 app.use(responser);
 app.use(express.static("public"));

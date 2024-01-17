@@ -1,4 +1,5 @@
 module.exports = Object.freeze({
     "USERS":"users",
-    "CARS":"cars"
+    "CARS":"cars",
+    "VENUES":"venues"
 });
