@@ -11,7 +11,7 @@ class VenueModel{
         this.images = obj.images ?? [];
     }
     get isValid(){
-        return this.name && this.location &&  this.capacity && this.images.length>0;
+        return this.name && this.location &&  this.capacity>0 && this.images.length>0;
     }
 }
 
