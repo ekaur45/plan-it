@@ -1,8 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link,  useLocation, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
+import { useState } from 'react';
+import {postRequest} from '../../utils/api.util';
 
 const SignIn = () => {
+  const redirect = useNavigate();
+  const [email,setEmail] = useState("waqas1@email.com");
+  const [password,setPassword] = useState("123456");
+  const handleLoginClick = async (e:any)=>{
+    e.preventDefault();
+    const result = await postRequest<any>("auth/login",{email,password})
+    if(result!=null){
+      localStorage.setItem("user",JSON.stringify(result.data));
+      redirect("/");
+    }
+  }
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white overflow-hidden shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -158,6 +171,8 @@ const SignIn = () => {
                   <div className="relative">
                     <input
                       type="email"
+                      onChange={e=>setEmail(e.target.value)}
+                      value={email}
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
@@ -189,6 +204,8 @@ const SignIn = () => {
                   <div className="relative">
                     <input
                       type="password"
+                      onChange={e=>setPassword(e.target.value)}
+                      value={password}
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
@@ -221,6 +238,7 @@ const SignIn = () => {
                   <input
                     type="submit"
                     value="Sign In"
+                    onClick={handleLoginClick}
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>

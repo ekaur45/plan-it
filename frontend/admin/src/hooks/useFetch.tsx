@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react'
-
+const baseURL ="http://localhost:8000/api/";
 interface State<T> {
   data?: T
   error?: Error
@@ -59,11 +59,23 @@ export function useFetch<T = unknown>(
       }
 
       try {
-        const response = await fetch(url, options)
+        let token = "";
+        let userStorageStr = localStorage.getItem("user");
+        debugger
+        if(userStorageStr){
+          let userStorage = JSON.parse(userStorageStr);
+          token = userStorage.access_token ?? "";
+        }
+        if(token && options){
+          let _header = options.headers as Headers ?? new Headers();
+          _header.set("authorization",token);
+          options.headers = _header;
+        }
+        
+        const response = await fetch(baseURL+url, options)
         if (!response.ok) {
           throw new Error(response.statusText)
         }
-
         const data = (await response.json()) as T
         cache.current[url] = data
         if (cancelRequest.current) return
