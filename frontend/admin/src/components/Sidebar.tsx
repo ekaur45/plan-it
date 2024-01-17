@@ -376,17 +376,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                         <li>
                             <NavLink
-                              to="/event/add-event"
-                              className={({ isActive }) =>
-                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                (isActive && '!text-white')
-                              }
-                            >
-                             Add Event
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
                               to="/event/events"
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
@@ -396,6 +385,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               Events
                             </NavLink>
                           </li>
+                        <li>
+                            <NavLink
+                              to="/event/add-event"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                             Add Event
+                            </NavLink>
+                          </li>
+                        
                        
                         </ul>
                       </div>
@@ -489,7 +490,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              Add Venue
+                              Venues
                             </NavLink>
                           </li>
                           <li>
@@ -500,7 +501,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                             Venues
+                             Add Venue
                             </NavLink>
                           </li>
                         </ul>

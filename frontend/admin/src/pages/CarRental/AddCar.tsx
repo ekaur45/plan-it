@@ -1,4 +1,20 @@
+import { postRequest } from "../../utils/api.util";
+import { useState } from "react"
+
 export default function AddCarPage() {
+  const [name,setName] = useState("");
+  const [model,setModel] = useState("");
+  const [color,setColor] = useState("");
+  const [rent,setRent] = useState("");
+  const [images,setImages] = useState("");
+  const handleOnAddSubmit = async (e:any)=>{
+    //e.target.preventDefault();
+    let d = {name,model,color,rent,images:[""]};
+    const result = await postRequest<any>('car-rental/add',d);
+    if(result&&result.status == 200){
+      alert("Added");
+    }
+  }
   return (<>
     <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
       <div className="flex flex-col gap-9">
@@ -16,6 +32,8 @@ export default function AddCarPage() {
               <input
                 type="text"
                 placeholder="Name"
+                value={name}
+                onChange={e=>setName(e.target.value)}
                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
             </div>
@@ -27,6 +45,8 @@ export default function AddCarPage() {
               <input
                 type="text"
                 placeholder="Model"
+                value={model}
+                onChange={e=>setModel(e.target.value)}
                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:bg-form-input"
               />
             </div>
@@ -38,6 +58,8 @@ export default function AddCarPage() {
               <input
                 type="text"
                 placeholder="Color"
+                value={color}
+                onChange={e=>setColor(e.target.value)}
                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
             </div>
@@ -47,6 +69,8 @@ export default function AddCarPage() {
               </label>
               <input
                 type="number"
+                value={rent}
+                onChange={e=>setRent(e.target.value)}
                 placeholder="Rent"
                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
@@ -100,6 +124,7 @@ export default function AddCarPage() {
           </div>
           <div className="pl-6.5 pr-6.5 pb-6.5">
             <button
+            onClick={handleOnAddSubmit}
               className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"
               type="submit"
             >

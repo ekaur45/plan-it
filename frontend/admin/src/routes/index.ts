@@ -46,12 +46,12 @@ const coreRoutes = [
   {
     path: '/venue/venues',
     title: 'Venues',
-    component: AddVenuePage,
+    component: VenueListPage,
   },
   {
     path: '/venue/add-venue',
     title: 'Add Venue',
-    component: VenueListPage,
+    component: AddVenuePage,
   },
   {
     path: '/tables',

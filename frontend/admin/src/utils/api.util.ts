@@ -1,4 +1,5 @@
 import axios, {Axios} from "axios";
+import ApiResponse from "../models/resp.interface";
 const baseURL ="http://localhost:8000/api/";
 
 const getTokenFromStorage = ():string=>{
@@ -25,7 +26,7 @@ const getRequest = async <T>(url:string):Promise<T>=>{
     }
     return null as T;
 }
-const postRequest = async <T>(url:string,data:any):Promise<T>=>{
+const postRequest = async <T>(url:string,data:any):Promise<ApiResponse<T>>=>{
     let headers = {};
     let token = getTokenFromStorage();
     if(token){
@@ -35,8 +36,8 @@ const postRequest = async <T>(url:string,data:any):Promise<T>=>{
     //const result = await instance.request({url:url,method:"POST",data:JSON.stringify(data),headers});
     //const result = await instance.post(url,JSON.stringify(data));
     if(result.status == 200){
-        return result.data as T;
+        return result.data as ApiResponse<T>;
     }
-    return null as T;
+    return {status:500} as ApiResponse<T>;
 }
 export {getRequest,postRequest}
