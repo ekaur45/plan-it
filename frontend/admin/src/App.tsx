@@ -8,7 +8,7 @@ import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 import routes from './routes';
 import Protected from './guards/Protected';
-
+import 'react-toastify/dist/ReactToastify.css';
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {

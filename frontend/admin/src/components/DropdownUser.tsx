@@ -1,11 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, redirect } from 'react-router-dom';
-
+enum UserType  {
+  Default=1,
+  ""=2,
+  "Car Rental"=3
+}
 import UserOne from '../images/user/user-01.png';
+import StorageUtil from '../utils/storage-util';
+import { FaCheck, FaCheckDouble } from 'react-icons/fa';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [user,setUser] = useState(StorageUtil.getUser());
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -20,6 +26,7 @@ const DropdownUser = () => {
       )
         return;
       setDropdownOpen(false);
+      setUser(StorageUtil.getUser());
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
@@ -44,14 +51,18 @@ const DropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
+          <div className='flex gap-1'>
+            {user.isUserVerified?<></>:<span className='text-primary'><FaCheck/></span>}
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {user.firstName} {user.lastName}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          </div>
+          <span className="block text-xs">{UserType[user.userType]}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          {user.image?<img src={user.image}/>:<img src={UserOne} alt="User" />}
+          
         </span>
 
         <svg

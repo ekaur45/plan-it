@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getRequest } from "../../utils/api.util";
+import { getRequest, postRequest } from "../../utils/api.util";
 import { FaCheck, FaEye } from 'react-icons/fa';
+import { toast } from "react-toastify";
 
 export default function UserListPage() {
     const [users, setUsers] = useState([]);
@@ -10,6 +11,11 @@ export default function UserListPage() {
             setUsers(result.data);
         }
     }
+    const handleApproveUser = async (userId:string) =>{
+        await postRequest("users/approve",{userId});
+        toast("Approved.");
+        getInitialData();
+    }
     useEffect(() => {
         getInitialData();
     }, []);
@@ -18,11 +24,13 @@ export default function UserListPage() {
             {users.map((user: any, i: number) => {
                 return <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0 relative">
                     <div className="actions flex gap-2">
-                        <FaCheck />
+                        <button onClick={()=>{handleApproveUser(user._id)}}>
+                            <FaCheck />
+                        </button>
                         <FaEye />
                     </div>
                     <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 p-6.5">
-                        {user.firstName} {user.lastName}
+                        {user.isUserVerified ? "Approved" :"No"} {user.firstName} {user.lastName}
                     </div>
                 </div>
             })}
