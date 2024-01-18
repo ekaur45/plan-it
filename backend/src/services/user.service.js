@@ -1,3 +1,4 @@
+const {ObjectId} = require("bson");
 const dbConstants = require("../models/db.constants");
 const mongoUtil = require("../utils/mongo-db.util");
 
@@ -10,5 +11,9 @@ userService.getUsers = async ()=>{
         let {password,...user} = obj;
         return user;
     })
+}
+userService.approveUser = async (userId)=>{
+    const docs = await mongoUtil.runner(dbConstants.USERS);
+    await docs.updateOne({"_id":new ObjectId(userId)},{$set:{"isUserVerified":true}});
 }
 module.exports = userService;
