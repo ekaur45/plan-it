@@ -3,6 +3,8 @@ const AddVenuePage = lazy(()=>import('../pages/Venue/AddVenue'))
 const VenueListPage = lazy(()=>import('../pages/Venue/VenueListPage'))
 const AddEventPage = lazy(()=>import('../pages/Event/AddEvent'))
 const EventListPage = lazy(()=>import('../pages/Event/EventListPage'))
+const UserListPage = lazy(()=>import('../pages/Users/UserListPage'))
+const AddUserPage = lazy(()=>import('../pages/Users/AddUserPage'))
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
 const CarListPage = lazy(() => import('../pages/CarRental/CarListPage'));
@@ -47,16 +49,25 @@ const coreRoutes = [
     path: '/venue/venues',
     title: 'Venues',
     component: VenueListPage,
+    protected:true
   },
   {
     path: '/venue/add-venue',
     title: 'Add Venue',
     component: AddVenuePage,
+    protected:true
   },
   {
-    path: '/tables',
-    title: 'Tables',
-    component: Tables,
+    path: '/users/list',
+    title: 'All Users',
+    component: UserListPage,
+    protected:true,
+    roles:["admin"]
+  },
+  {
+    path: '/users/add',
+    title: 'Add User',
+    component: AddUserPage,
   },
   {
     path: '/settings',

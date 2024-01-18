@@ -14,7 +14,7 @@ const getTokenFromStorage = ():string=>{
     }
     return "";
 }
-const getRequest = async <T>(url:string):Promise<T>=>{
+const getRequest = async <T>(url:string):Promise<ApiResponse<T>>=>{
     let headers = {};
     let token = getTokenFromStorage();
     if(token){
@@ -22,9 +22,9 @@ const getRequest = async <T>(url:string):Promise<T>=>{
     }
     const result = await axios.get(baseURL+url,{headers});
     if(result.status == 200){
-        return result.data as T;
+        return result.data as ApiResponse<T>;
     }
-    return null as T;
+    return {status:500} as ApiResponse<T>;
 }
 const postRequest = async <T>(url:string,data:any):Promise<ApiResponse<T>>=>{
     let headers = {};

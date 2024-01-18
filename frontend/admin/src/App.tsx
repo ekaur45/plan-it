@@ -7,6 +7,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 import routes from './routes';
+import Protected from './guards/Protected';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
@@ -32,8 +33,18 @@ function App() {
         <Route element={<DefaultLayout />}>
           <Route index element={<ECommerce />} />
           {routes.map((routes, index) => {
-            const { path, component: Component } = routes;
+            const { path, component: Component,roles } = routes;
             return (
+              routes.protected?<><Route
+              key={index}
+              path={path}
+              element={
+                <Suspense fallback={<Loader />}>
+                  <Protected component={<Component />} roles={roles}/>
+                  
+                </Suspense>
+              }
+            /></>:
               <Route
                 key={index}
                 path={path}
