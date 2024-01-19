@@ -1,5 +1,7 @@
-import { Fragment, ReactNode, useEffect } from "react";
+import { Fragment, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import StorageUtil from "../utils/storage-util";
+import { toast } from "react-toastify";
 type PComponent ={
     component:ReactNode,
     roles?:Array<string>
@@ -7,9 +9,14 @@ type PComponent ={
 export default function Protected(component:PComponent){
     const redirect = useNavigate();
     useEffect(()=>{
-        if(!localStorage.getItem("user")){
+        let user = StorageUtil.getUser();
+        if(!user){
             return redirect("/auth/signin");
         }
-    },[component.component]);
+        if(user.userRole!="admin" && !user.isProfileCompleted ){
+            toast("Complete your profile",{type:"info"});
+            return redirect("/settings");
+        }
+    },[component]);
     return <Fragment>{component.component}</Fragment>
 }

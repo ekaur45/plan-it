@@ -9,6 +9,7 @@ import Loader from './common/Loader';
 import routes from './routes';
 import Protected from './guards/Protected';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
@@ -27,11 +28,12 @@ function App() {
         reverseOrder={false}
         containerClassName="overflow-auto"
       />
+       <ToastContainer />
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
-        <Route element={<DefaultLayout />}>
-          <Route index element={<ECommerce />} />
+        <Route element={<Protected component={<DefaultLayout />}/>}>
+          <Route index element={ <Protected component={<ECommerce />} /> } />
           {routes.map((routes, index) => {
             const { path, component: Component,roles } = routes;
             return (
@@ -40,8 +42,7 @@ function App() {
               path={path}
               element={
                 <Suspense fallback={<Loader />}>
-                  <Protected component={<Component />} roles={roles}/>
-                  
+                  <Protected component={<Component />} roles={roles}/>                  
                 </Suspense>
               }
             /></>:
