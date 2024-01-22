@@ -1,45 +1,44 @@
 import Breadcrumb from '../components/Breadcrumb';
 import userThree from '../images/user/user-03.png';
-import { useState, useEffect} from "react";
-import { FaEnvelope, FaSpinner,  FaUpload, FaUser } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { FaEnvelope, FaSpinner, FaTimesCircle, FaUpload, FaUser } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
 import { postFormRequest, postRequest } from '../utils/api.util';
 const Settings = () => {
-  const [isUploading,setIsUploading] = useState<boolean>(false);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const [rows] = useState(localStorage.getItem("alertSettings") ? JSON.parse(localStorage.getItem("alertSettings") ?? "{}") : []);
   const [user, setUser] = useState(StorageUtil.getUser());
-  const [files, setFiles] = useState<any[]>(user.documents.map((e:any)=>{return {file:e}}));
+  const [files, setFiles] = useState<any[]>(user?.documents?.map((e: any) => { return { file: e } })??[]);
+  const [firstName,setFirstName] = useState("");
+  const [lastName,setLastName] = useState("");
   useEffect(() => {
+    setFirstName(user?.firstName);
+    setLastName(user?.lastName);
     localStorage.setItem("alertSettings", JSON.stringify(rows));
   }, [rows]);
 
   const handleFirstNameChange = (e: any) => {
-    user.firstName = e.target.value;
-    setUser(user);
+    setFirstName(e.target.value);
   }
 
 
   const handleOnFormSubmit = async (e: any) => {
     e.preventDefault();
-    let d = {documents:[],...user};
-    d.documents = files.map(e=>e.file);
-    await postRequest("auth/update-profile",d);
-    
+    let d = { documents: files.map(e => e.file), firstName,lastName };
+    await postRequest("auth/update-profile", d);
+
   }
   const handleOnImageChange = async (e: any) => {
     setIsUploading(true);
     const form = new FormData();
-    form.append("file",e.target.files[0]);
-    const response = await postFormRequest<any>("upload",form);
+    form.append("file", e.target.files[0]);
+    const response = await postFormRequest<any>("upload", form);
     setFiles(pre => [...pre, response.data]);
     setIsUploading(false);
   }
-  // const handleRemove = (e:any,i:number) =>{
-  //   setFiles(_file=>{
-  //     _file.splice(i,1);
-  //     return _file;
-  //   });
-  // }
+  const handleRemove = (e: any) => {
+    setFiles(pre=>e);
+  }
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -63,7 +62,6 @@ const Settings = () => {
                         htmlFor="firstName"
                       >
                         First name
-                        {user?.firstName}
                       </label>
                       <div className="relative">
                         <span className="absolute left-4.5 top-4">
@@ -75,7 +73,6 @@ const Settings = () => {
                           name="firstName"
                           id="firstName"
                           placeholder="First name"
-                          value={user?.firstName}
                           onChange={handleFirstNameChange}
                         />
                       </div>
@@ -98,10 +95,9 @@ const Settings = () => {
                           name="lastName"
                           id="lastName"
                           placeholder="Last name"
-                          value={user?.lastName}
+                          value={lastName}
                           onChange={e => {
-                            user.lastName = e.target.value;
-                            setUser(user);
+                            setLastName(e.target.value);
                           }}
                         />
                       </div>
@@ -179,21 +175,21 @@ const Settings = () => {
                       </div>
                     </div>
                     <div className='flex gap-2'>
-                    {
-                      files.map((img,i) => <div key={i} className='relative'>
-                      {/* <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={e=>handleRemove(e,i)}>
-                      <FaTimesCircle />
-                      </div> */}
-                        <img style={{height:"6rem",width:"6rem"}} src={"http://localhost:8000/"+img.file} />
-                      </div>)
-                    }
-                    {
-                      isUploading == true && <div className='relative'>
-                        <div style={{height:"6rem",width:"6rem"}} className='border-2 flex items-center justify-center border-[#eee]'>
-                          <FaSpinner/>
+                      {
+                        (files&&files)?files.map((img, i) => <div key={i} className='relative'>
+                          <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f=>f.filter((item:any,ndx:number)=>ndx!==i))}>
+                            <FaTimesCircle  />
+                          </div>
+                          <img style={{ height: "6rem", width: "6rem" }} src={"http://localhost:8000/" + img.file} />
+                        </div>):null
+                      }
+                      {
+                        isUploading == true && <div className='relative'>
+                          <div style={{ height: "6rem", width: "6rem" }} className='border-2 flex items-center justify-center border-[#eee]'>
+                            <FaSpinner />
+                          </div>
                         </div>
-                      </div>
-                    }
+                      }
                     </div>
                   </div>
                   {/* <div className="mb-5.5">
@@ -254,8 +250,8 @@ const Settings = () => {
                       Cancel
                     </button>
                     <button
-                    disabled={files.length == 0}
-                      className={ (files.length==0?"bg-opacity-30 ":"")  + "flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"}
+                      disabled={files?.length == 0}
+                      className={(files?.length == 0 ? "bg-opacity-30 " : "") + "flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"}
                       type="submit"
 
                     >
@@ -314,7 +310,7 @@ const Settings = () => {
                       </p>
                       <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
                       <p>(max, 800 X 800px)</p>
-                    </div>                   
+                    </div>
                   </div>
 
                   <div className="flex justify-end gap-4.5">

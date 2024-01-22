@@ -1,8 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
-import { getRequest } from "../../utils/api.util";
+import { getRequest, postRequest } from "../../utils/api.util";
 import CONFIG from "../../utils/config.util";
+import { toast } from "react-toastify";
+import { FaCheck } from "react-icons/fa";
 
 export default function ViewUserPage(){
     const {id} = useParams();
@@ -13,15 +14,26 @@ export default function ViewUserPage(){
             setData(result.data);
         }
     }
+    const handleApproveUser = async () =>{
+        await postRequest("users/approve",{userId:id});
+        toast("Approved.");
+        fetchUser();
+    }
     useEffect(()=>{
         fetchUser();
     },[id]);
     return (<Fragment>
         {
             data&&<div>
+                {
+                    data.isUserVerified==true?<span>Approved</span>:
+                    <button onClick={handleApproveUser}>
+                            <FaCheck />
+                        </button>
+                }
                 {data.firstName}
                 {
-                    data.documents.map((doc:any,i:number)=>{
+                    data.documents&& data.documents.map((doc:any,i:number)=>{
                         return <div key={i}>
                                 <img src={CONFIG.BaseUrl+doc} alt="" />
                             </div>
