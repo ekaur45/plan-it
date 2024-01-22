@@ -11,10 +11,10 @@ const venueController = {};
  */
 
 venueController.add = async (req,res,next)=>{
-    const model = new VenueModel();
+    const model = new VenueModel(req.body);
     if(!model.isValid) return res.BadRequest(model);
     const result = await venueRentalService.addVenue(model);
-    return res.Ok(result);
+    return res.Ok(result,"Venue added succesfully.");
 }
 
 /**
