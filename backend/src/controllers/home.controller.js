@@ -5,4 +5,8 @@ homeController.getHomeData = async (req,res,nex)=>{
     const result = await homeService.getHomeData();
     return res.Ok(result);
 }
+homeController.getCarRentals = async (req,res,nex)=>{
+    const result = await homeService.getCarRentals();
+    return res.Ok(result);
+}
 module.exports = homeController;
