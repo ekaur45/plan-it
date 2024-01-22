@@ -1,4 +1,6 @@
+const { ObjectId } = require("bson");
 const dbConstants = require("../models/db.constants");
+const UserUpdateModel = require("../models/user-update.model");
 const UserModel = require("../models/user.model");
 const config = require("../utils/config");
 const jwtUtil = require("../utils/jwt.util");
@@ -48,5 +50,15 @@ authService.signin = async (obj)=>{
     user["access_token"] = jwtUtil.sign(user);
     return user;
     
+}
+/**
+ * 
+ * @param {string} userId 
+ * @param {UserUpdateModel} user 
+ */
+authService.updateProfile = async (userId,user)=>{
+    const users = await mongoUtil.runner(dbConstants.USERS);
+    const result = await users.updateOne({"_id":new ObjectId(userId)},{$set:{...user}});
+    return result;
 }
 module.exports = authService;

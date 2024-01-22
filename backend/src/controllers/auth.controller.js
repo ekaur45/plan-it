@@ -1,3 +1,4 @@
+const UserUpdateModel = require("../models/user-update.model");
 const UserModel = require("../models/user.model");
 const authService = require("../services/auth.service");
 
@@ -35,16 +36,16 @@ authController.getAllUsers = async (req,res,next)=>{
     return res.Ok(result);
 }
 
-/**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @param {import("express").NextFunction} next 
- */
+// /**
+//  * 
+//  * @param {import("express").Request} req 
+//  * @param {import("express").Response} res 
+//  * @param {import("express").NextFunction} next 
+//  */
 
-authController.updateProfile = async (req,res,next)=>{
+// authController.updateProfile = async (req,res,next)=>{
 
-}
+// }
 
 
 /**
@@ -61,6 +62,22 @@ authController.signin = async (req,res,next)=>{
     if(!result) return res.BadRequest(req.body,"Email/usename or password are invalid.")
     return res.Ok(result);
 }
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+authController.updateProfile = async (req,res,next)=>{
+    const model = new UserUpdateModel(req.body);
+    if(!model.isValid) return res.BadRequest(model);
+    const userId = req.user._id;
+    const result = await authService.updateProfile(userId,model);
+    return res.Ok(result);
+}
+
 
 /**
  * 
