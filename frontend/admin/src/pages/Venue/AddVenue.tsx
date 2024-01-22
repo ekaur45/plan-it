@@ -1,16 +1,27 @@
 import { useState } from "react"
-import { postRequest } from "../../utils/api.util";
-import ApiResponse from "../../models/resp.interface";
+import { postFormRequest, postRequest } from "../../utils/api.util";
+import { toast } from "react-toastify";
+
 
 export default function AddVenuePage() {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [capacity, setCapacity] = useState(0);
+  const [images,setImages] = useState<any[]>([]);
   const handleOnSubmit =async (e:any) => {
-    let d = {name,location,capacity,images:[""]};
+    let d = {name,location,capacity,images};
     const result = await postRequest<any>('venue/add',d);
     if(result&&result.status == 200){
-      alert(result.message);
+      toast(result.message,{type:"success"});
+    }
+  }
+  const handleOnImageChange = async (e:any) =>{
+    const image = e.target.files[0];
+    const form = new FormData();
+    form.append("image",image);
+    const result = await postFormRequest("upload",form);
+    if(result.status == 200){
+      setImages(pre=>[...pre,result.data]);
     }
   }
   return (
@@ -71,6 +82,7 @@ export default function AddVenuePage() {
                   type="file"
                   accept="image/*"
                   className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+                  onChange={handleOnImageChange}
                 />
                 <div className="flex flex-col items-center justify-center space-y-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -110,6 +122,9 @@ export default function AddVenuePage() {
                 </div>
               </div>
             </div>
+            {
+              images&&images.length>0&&<>{images.length} image{images.length==1?"":"s"} added.</>
+            }
             <div className="pl-6.5 pr-6.5 pb-6.5">
               <button
               onClick={handleOnSubmit}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FaEnvelope, FaSpinner, FaTimesCircle, FaUpload, FaUser } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
 import { postFormRequest, postRequest } from '../utils/api.util';
+import { toast } from 'react-toastify';
 const Settings = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [rows] = useState(localStorage.getItem("alertSettings") ? JSON.parse(localStorage.getItem("alertSettings") ?? "{}") : []);
@@ -25,7 +26,10 @@ const Settings = () => {
   const handleOnFormSubmit = async (e: any) => {
     e.preventDefault();
     let d = { documents: files.map(e => e.file), firstName,lastName };
-    await postRequest("auth/update-profile", d);
+    const result = await postRequest("auth/update-profile", d);
+    if(result.status == 200){
+      toast("Profile updated",{type:"success",draggable:true})
+    }
 
   }
   const handleOnImageChange = async (e: any) => {
@@ -73,6 +77,7 @@ const Settings = () => {
                           name="firstName"
                           id="firstName"
                           placeholder="First name"
+                          value={firstName}
                           onChange={handleFirstNameChange}
                         />
                       </div>
