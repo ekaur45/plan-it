@@ -1,16 +1,15 @@
 import Breadcrumb from '../components/Breadcrumb';
 import userThree from '../images/user/user-03.png';
-import { useState, useEffect, FormEvent } from "react";
-import { FaEnvelope, FaTimes, FaTimesCircle, FaUpload, FaUser, FaUserAlt } from 'react-icons/fa';
+import { useState, useEffect} from "react";
+import { FaEnvelope, FaSpinner,  FaUpload, FaUser } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
+import { postFormRequest, postRequest } from '../utils/api.util';
 const Settings = () => {
-
+  const [isUploading,setIsUploading] = useState<boolean>(false);
   const [rows] = useState(localStorage.getItem("alertSettings") ? JSON.parse(localStorage.getItem("alertSettings") ?? "{}") : []);
   const [user, setUser] = useState(StorageUtil.getUser());
-  const [files, setFiles] = useState<any[]>([]);
-  const [previewImages, setPreviewImages] = useState<any[]>([]);
+  const [files, setFiles] = useState<any[]>(user.documents.map((e:any)=>{return {file:e}}));
   useEffect(() => {
-    // storing input name
     localStorage.setItem("alertSettings", JSON.stringify(rows));
   }, [rows]);
 
@@ -20,20 +19,27 @@ const Settings = () => {
   }
 
 
-  const handleOnFormSubmit = (e: FormEvent) => {
+  const handleOnFormSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(user);
+    let d = {documents:[],...user};
+    d.documents = files.map(e=>e.file);
+    await postRequest("auth/update-profile",d);
+    
   }
-  const handleOnImageChange = (e: any) => {
-    setFiles(prev => [...prev, ...e.target.files]);
-    const objUrl = URL.createObjectURL(e.target.files[0]);
-    setPreviewImages(pre => [...pre, objUrl]);
-    console.log(files);
-
-    if (e.target) {
-
-    }
+  const handleOnImageChange = async (e: any) => {
+    setIsUploading(true);
+    const form = new FormData();
+    form.append("file",e.target.files[0]);
+    const response = await postFormRequest<any>("upload",form);
+    setFiles(pre => [...pre, response.data]);
+    setIsUploading(false);
   }
+  // const handleRemove = (e:any,i:number) =>{
+  //   setFiles(_file=>{
+  //     _file.splice(i,1);
+  //     return _file;
+  //   });
+  // }
   return (
     <>
       <div className="mx-auto max-w-270">
@@ -69,7 +75,6 @@ const Settings = () => {
                           name="firstName"
                           id="firstName"
                           placeholder="First name"
-                          defaultValue=""
                           value={user?.firstName}
                           onChange={handleFirstNameChange}
                         />
@@ -93,7 +98,6 @@ const Settings = () => {
                           name="lastName"
                           id="lastName"
                           placeholder="Last name"
-                          defaultValue=""
                           value={user?.lastName}
                           onChange={e => {
                             user.lastName = e.target.value;
@@ -107,7 +111,7 @@ const Settings = () => {
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="emailAddress"
+                      htmlFor="email"
                     >
                       Email Address
                     </label>
@@ -118,10 +122,9 @@ const Settings = () => {
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="email"
-                        name="emailAddress"
-                        id="emailAddress"
+                        name="email"
+                        id="email"
                         placeholder=""
-                        defaultValue=""
                         value={user.email}
                         onChange={e => {
                           user.email = e.target.value;
@@ -144,7 +147,6 @@ const Settings = () => {
                       name="Username"
                       id="Username"
                       placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
                     />
                   </div>
                   <div className="mb-5.5">
@@ -179,11 +181,18 @@ const Settings = () => {
                     <div className='flex gap-2'>
                     {
                       files.map((img,i) => <div key={i} className='relative'>
-                      <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray'>
+                      {/* <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={e=>handleRemove(e,i)}>
                       <FaTimesCircle />
-                      </div>
-                        <img style={{height:"6rem",width:"6rem"}} src={URL.createObjectURL(img)} />
+                      </div> */}
+                        <img style={{height:"6rem",width:"6rem"}} src={"http://localhost:8000/"+img.file} />
                       </div>)
+                    }
+                    {
+                      isUploading == true && <div className='relative'>
+                        <div style={{height:"6rem",width:"6rem"}} className='border-2 flex items-center justify-center border-[#eee]'>
+                          <FaSpinner/>
+                        </div>
+                      </div>
                     }
                     </div>
                   </div>
@@ -245,7 +254,8 @@ const Settings = () => {
                       Cancel
                     </button>
                     <button
-                      className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"
+                    disabled={files.length == 0}
+                      className={ (files.length==0?"bg-opacity-30 ":"")  + "flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"}
                       type="submit"
 
                     >
@@ -304,10 +314,7 @@ const Settings = () => {
                       </p>
                       <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
                       <p>(max, 800 X 800px)</p>
-                    </div>
-                    {
-                      previewImages.map(img => <img src={img} />)
-                    }
+                    </div>                   
                   </div>
 
                   <div className="flex justify-end gap-4.5">

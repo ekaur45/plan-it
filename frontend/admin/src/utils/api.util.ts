@@ -1,6 +1,7 @@
-import axios, {Axios} from "axios";
+import axios from "axios";
 import ApiResponse from "../models/resp.interface";
-const baseURL ="http://localhost:8000/api/";
+import CONFIG from "./config.util";
+const baseURL = CONFIG.ApiUrl ;
 
 const getTokenFromStorage = ():string=>{
     let userStorageStr = localStorage.getItem("user");
@@ -40,4 +41,18 @@ const postRequest = async <T>(url:string,data:any):Promise<ApiResponse<T>>=>{
     }
     return {status:500} as ApiResponse<T>;
 }
-export {getRequest,postRequest}
+const postFormRequest = async <T>(url:string,data:any):Promise<ApiResponse<T>>=>{
+    let headers = {};
+    let token = getTokenFromStorage();
+    if(token){
+        headers = {"Authorization":token}
+    }
+    const result = await axios.post(baseURL+url,data,{headers:{...headers}})
+    //const result = await instance.request({url:url,method:"POST",data:JSON.stringify(data),headers});
+    //const result = await instance.post(url,JSON.stringify(data));
+    if(result.status == 200){
+        return result.data as ApiResponse<T>;
+    }
+    return {status:500} as ApiResponse<T>;
+}
+export {getRequest,postRequest,postFormRequest}

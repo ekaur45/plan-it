@@ -37,15 +37,14 @@ function App() {
           {routes.map((routes, index) => {
             const { path, component: Component,roles } = routes;
             return (
-              routes.protected?<><Route
+              routes.protected?<Route
               key={index}
               path={path}
               element={
                 <Suspense fallback={<Loader />}>
                   <Protected component={<Component />} roles={roles}/>                  
                 </Suspense>
-              }
-            /></>:
+              }/>:
               <Route
                 key={index}
                 path={path}

@@ -3,17 +3,20 @@ import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import { useState } from 'react';
 import {postRequest} from '../../utils/api.util';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const redirect = useNavigate();
-  const [email,setEmail] = useState("waqas1@email.com");
+  const [email,setEmail] = useState("waqas2@email.com");
   const [password,setPassword] = useState("123456");
   const handleLoginClick = async (e:any)=>{
     e.preventDefault();
     const result = await postRequest<any>("auth/login",{email,password})
-    if(result!=null){
+    if(result!=null && result.status == 200){
       localStorage.setItem("user",JSON.stringify(result.data));
       redirect("/");
+    }else{
+      toast(result.message,{type:"error"});
     }
   }
   return (

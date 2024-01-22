@@ -4,6 +4,7 @@ const VenueListPage = lazy(()=>import('../pages/Venue/VenueListPage'))
 const AddEventPage = lazy(()=>import('../pages/Event/AddEvent'))
 const EventListPage = lazy(()=>import('../pages/Event/EventListPage'))
 const UserListPage = lazy(()=>import('../pages/Users/UserListPage'))
+const ViewUserPage = lazy(()=>import('../pages/Users/ViewUserPage'))
 const AddUserPage = lazy(()=>import('../pages/Users/AddUserPage'))
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
@@ -68,6 +69,11 @@ const coreRoutes = [
     path: '/users/add',
     title: 'Add User',
     component: AddUserPage,
+  },
+  {
+    path: '/users/:id/view',
+    title: 'View User',
+    component: ViewUserPage,
   },
   {
     path: '/settings',
