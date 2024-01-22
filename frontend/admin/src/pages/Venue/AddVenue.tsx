@@ -121,10 +121,10 @@ export default function AddVenuePage() {
                   <p>(max, 800 X 800px)</p>
                 </div>
               </div>
-            </div>
             {
               images&&images.length>0&&<>{images.length} image{images.length==1?"":"s"} added.</>
             }
+            </div>
             <div className="pl-6.5 pr-6.5 pb-6.5">
               <button
               onClick={handleOnSubmit}
