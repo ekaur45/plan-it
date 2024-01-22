@@ -1,4 +1,23 @@
+import { useEffect, useState } from "react"
+
 export default function HomePage(){
+    const [carRentals,setCarRentals] = useState([]);
+    const [venueProviders,setVenueProviders] = useState([]);
+    const [eventDecorators,setEventDecorators] = useState([]);
+    const fetchData = async ()=>{
+        const resp = await fetch("http://localhost:8000/api/home/home-data");
+        const result = await resp.json();
+        if(result.status == 200){
+            const {carRentals,venueProviders,eventDecorators} = result.data;
+            setCarRentals(carRentals)
+            setVenueProviders(venueProviders);
+            setEventDecorators(eventDecorators);
+            console.log({carRentals,venueProviders,eventDecorators});
+        }
+    }
+    useEffect(()=>{
+        fetchData();
+    },[]);
     return<>
       <div className="preloader">
         <div className="loader">
@@ -77,212 +96,107 @@ export default function HomePage(){
         </div> 
     </section>
 
-    
 
-    
-
-    <section id="couple" className="couple_area pt-120 pb-130">
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-lg-6">
-                    <div className="section_title text-center pb-30">
-                        <h3 className="title">Lovely Couple</h3>
-                        <img src={require("../assets/images/section_shape.png")} alt="Shape"/>
-                    </div> 
-                </div>
-            </div> 
-            <div className="row">
-                <div className="col-md-6">
-                    <div className="single_couple mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                        <div className="couple_image">
-                            <img src={require("../assets/images/couple-1.jpg")} alt="Couple"/>
-                        </div>
-                        <div className="couple_content text-center">
-                            <img className="shape" src={require("../assets/images/couple-shape.png")} alt="shape"/>
-                            <h4 className="couple_name">Michael Smith</h4>
-                            <p>Hi I am Michael Smith, dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                            <ul className="social">
-                                <li><a href="#"><i className="lni lni-facebook-filled"></i></a></li>
-                                <li><a href="#"><i className="lni lni-twitter-original"></i></a></li>
-                                <li><a href="#"><i className="lni lni-instagram-original"></i></a></li>
-                                <li><a href="#"><i className="lni lni-linkedin-original"></i></a></li>
-                            </ul>
-                        </div>
-                    </div> 
-                </div>
-                <div className="col-md-6">
-                    <div className="single_couple mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.6s">
-                        <div className="couple_image">
-                            <img src="assets/images/couple-2.jpg" alt="Couple"/>
-                        </div>
-                        <div className="couple_content text-center">
-                            <img className="shape" src="assets/images/couple-shape.png" alt="shape"/>
-                            <h4 className="couple_name">Jessica Jones</h4>
-                            <p>Hi I am Jessica Jones, dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                            <ul className="social">
-                                <li><a href="#"><i className="lni lni-facebook-filled"></i></a></li>
-                                <li><a href="#"><i className="lni lni-twitter-original"></i></a></li>
-                                <li><a href="#"><i className="lni lni-instagram-original"></i></a></li>
-                                <li><a href="#"><i className="lni lni-linkedin-original"></i></a></li>
-                            </ul>
-                        </div>
-                    </div> 
-                </div>
-            </div> 
-        </div> 
-    </section>
-
-    
-
-    
-
-    <section id="coming_soon" className="coming_soon_area pt-20 pb-70">
-        <div className="coming_soon_shape_1">
-            <img src="assets/images/shape-1.png" alt="shape"/>
-        </div> 
-
-        <div className="container">
-
-        <div className="text-center">
-            <h1>You are Using Free Lite Version</h1>
-            <p>Please purchase full version to get all elements, sections and permission to remove footer credit</p>
-            <a href="https://rebrand.ly/wedding-day-ud" rel="nofollow" className="main-btn">Purchase Now</a>
-        </div>
-
-        </div> 
-
-        <div className="coming_soon_shape_2">
-            <img src="assets/images/shape-2.png" alt="shape"/>
-        </div> 
-    </section>
-
-    
-
-    
-
-    <section id="our_love" className="our_love_area pt-120">
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-lg-6">
-                    <div className="section_title text-center pb-30">
-                        <h3 className="title">Our Love Story</h3>
-                        <img src="assets/images/section_shape.png" alt="Shape"/>
-                    </div> 
-                </div>
-            </div> 
-            <div className="love_wrapper">
-                <div className="single_love d-flex flex-wrap align-items-center">
-                    <div className="love_content order-md-last wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                        <h3 className="love_title">We Met For The First Time</h3>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna nose aaliquyam erat, sed diam voluptua. At vero eos et accusam justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea timata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum.</p>
-                    </div>
-                    <div className="love_date">
-                        <p><i className="lni lni-heart-filled"></i> 7 May 21</p>
-                    </div>
-                    <div className="love_image order-md-first wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                        <img src="assets/images/love-1.jpg" alt="love"/>
-                    </div>
-                </div> 
-
-                <div className="single_love d-flex flex-wrap align-items-center">
-                    <div className="love_content text-lg-right wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                        <h3 className="love_title">We AreFirst Dating</h3>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna nose aaliquyam erat, sed diam voluptua. At vero eos et accusam justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea timata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum.</p>
-                    </div>
-                    <div className="love_date">
-                        <p><i className="lni lni-heart-filled"></i> 15 Jan 22</p>
-                    </div>
-                    <div className="love_image wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                        <img src="assets/images/love-2.jpg" alt="love"/>
-                    </div>
-                </div> 
-
-                <div className="single_love d-flex flex-wrap align-items-center">
-                    <div className="love_content order-md-last wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                        <h3 className="love_title">We Live Together</h3>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna nose aaliquyam erat, sed diam voluptua. At vero eos et accusam justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea timata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum.</p>
-                    </div>
-                    <div className="love_date">
-                        <p><i className="lni lni-heart-filled"></i> 25 Jul 22</p>
-                    </div>
-                    <div className="love_image order-md-first wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                        <img src="assets/images/love-3.jpg" alt="love"/>
-                    </div>
-                </div> 
-            </div> 
-        </div> 
-    </section>
-
-    
-
-    
-
-    <section id="gallery" className="gallery_area pt-120">
-        <div className="container">
-
-        <div className="text-center">
-            <h1>You are Using Free Lite Version</h1>
-            <p>Please purchase full version to get all elements, sections and permission to remove footer credit</p>
-            <a href="https://rebrand.ly/wedding-day-ud" rel="nofollow" className="main-btn">Purchase Now</a>
-        </div>
-
-        </div> 
-    </section>
-
-    
-
-    
 
     <section id="event" className="event_area pt-120 pb-130">
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-lg-6">
                     <div className="section_title text-center pb-30">
-                        <h3 className="title">Weeding Events</h3>
+                        <h3 className="title">Event Decorators</h3>
                         <img src="assets/images/section_shape.png" alt="Shape"/>
                     </div> 
                 </div>
             </div> 
             <div className="row justify-content-center">
-                <div className="col-lg-4 col-md-7">
+                {
+                    eventDecorators&&eventDecorators.length>0&&eventDecorators.map((ed:any)=><div key={ed._id} className="col-lg-4 col-md-7">
                     <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
                         <div className="event_image">
                             <img src="assets/images/event-1.jpg" alt="event"/>
                         </div>
                         <div className="event_content">
-                            <span className="date">02 Feb 2023</span>
-                            <h3 className="event_title"><a href="#">Bride Shower</a></h3>
-                            <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p>
-                            <a className="more" href="#">Read More...</a>
+                            {/* <span className="date">02 Feb 2023</span> */}
+                            <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
+                            {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
+                            <a className="more" href="#">View Services...</a>
                         </div>
                     </div> 
+                </div>)
+                }
+                {
+                    (!eventDecorators || eventDecorators.length == 0) &&<div>
+                        Event Decorators coming soon...
+                    </div>
+                }
+            </div> 
+        </div> 
+    </section>
+    <section id="event" className="event_area pt-120 pb-130">
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-lg-6">
+                    <div className="section_title text-center pb-30">
+                        <h3 className="title">Car Rental</h3>
+                        <img src="assets/images/section_shape.png" alt="Shape"/>
+                    </div> 
                 </div>
-                <div className="col-lg-4 col-md-7">
-                    <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.5s">
+            </div> 
+            <div className="row justify-content-center">
+                {
+                    carRentals&&carRentals.length>0&&carRentals.map((ed:any)=><div key={ed._id} className="col-lg-4 col-md-7">
+                    <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
                         <div className="event_image">
-                            <img src="assets/images/event-2.jpg" alt="event"/>
+                            <img src="assets/images/event-1.jpg" alt="event"/>
                         </div>
                         <div className="event_content">
-                            <span className="date">05 Feb 2023</span>
-                            <h3 className="event_title"><a href="#">Wedding Reception</a></h3>
-                            <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p>
-                            <a className="more" href="#">Read More...</a>
+                            {/* <span className="date">02 Feb 2023</span> */}
+                            <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
+                            {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
+                            <a className="more" href="#">View Services...</a>
                         </div>
                     </div> 
+                </div>)
+                }
+                {
+                    (!carRentals || carRentals.length == 0) &&<div>
+                        Car Rental coming soon...
+                    </div>
+                }
+            </div> 
+        </div> 
+    </section>
+    <section id="event" className="event_area pt-120 pb-130">
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-lg-6">
+                    <div className="section_title text-center pb-30">
+                        <h3 className="title">Venue Providers</h3>
+                        <img src="assets/images/section_shape.png" alt="Shape"/>
+                    </div> 
                 </div>
-                <div className="col-lg-4 col-md-7">
-                    <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.8s">
+            </div> 
+            <div className="row justify-content-center">
+                {
+                    venueProviders&&venueProviders.length>0&&venueProviders.map((ed:any)=><div key={ed._id} className="col-lg-4 col-md-7">
+                    <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
                         <div className="event_image">
-                            <img src="assets/images/event-3.jpg" alt="event"/>
+                            <img src="assets/images/event-1.jpg" alt="event"/>
                         </div>
                         <div className="event_content">
-                            <span className="date">07 Feb 2023</span>
-                            <h3 className="event_title"><a href="#">Bachelor Party</a></h3>
-                            <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p>
-                            <a className="more" href="#">Read More...</a>
+                            {/* <span className="date">02 Feb 2023</span> */}
+                            <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
+                            {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
+                            <a className="more" href="#">View Services...</a>
                         </div>
                     </div> 
-                </div>
+                </div>)
+                }
+                 {
+                    (!venueProviders || venueProviders.length == 0) ?<div>
+                        Venues Provider coming soon...
+                    </div>:<></>
+                }
             </div> 
         </div> 
     </section>
@@ -293,17 +207,6 @@ export default function HomePage(){
 
     
 
-    <section id="contact" className="contact_area pt-130 pb-130">
-        <div className="container">
-
-        <div className="text-center">
-            <h1>You are Using Free Lite Version</h1>
-            <p>Please purchase full version to get all elements, sections and permission to remove footer credit</p>
-            <a href="https://rebrand.ly/wedding-day-ud" rel="nofollow" className="main-btn">Purchase Now</a>
-        </div>
-
-        </div> 
-    </section>
 
     
 
