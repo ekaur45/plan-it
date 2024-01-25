@@ -1,3 +1,4 @@
+const BookVenueModel = require("../models/book-venue.model");
 const VenueModel = require("../models/venue.model");
 const venueRentalService = require("../services/venue.service");
 
@@ -29,6 +30,22 @@ venueController.getVenues = async (req,res,next)=>{
     const result = await venueRentalService.getVenues();
     return res.Ok(result);
 }
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+venueController.bookVenue = async (req,res,next)=>{
+    const model = new BookVenueModel(req.body);
+    model.userId = req.user._id;
+    if(!model.isValid) return res.BadRequest({},"Invalid request.");
+    const result = await venueRentalService.bookVenue(model);
+    return res.Ok(result,"Booked successfuly.");
+}
+
 
 /**
  * 

@@ -61,4 +61,10 @@ authService.updateProfile = async (userId,user)=>{
     const result = await users.updateOne({"_id":new ObjectId(userId)},{$set:{...user,"isProfileCompleted":true}});
     return result;
 }
+
+authService.getMyProfile = async userId =>{
+    const users = await mongoUtil.runner(dbConstants.USERS);
+    const result = await users.findOne({"_id":new ObjectId(userId)});
+    return result;
+}
 module.exports = authService;

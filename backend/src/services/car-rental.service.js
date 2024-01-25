@@ -17,4 +17,13 @@ carRentalService.getMyCars = async (userId)=>{
     const result = await carDocs.find({"userId":userId})
     return result.toArray();
 }
+
+/**
+ * 
+ * @param {RentCarModel} model 
+ */
+carRentalService.rentCar = async (model) =>{
+    const docs = await mongoUtil.runner(dbConstants.CAR_RENT);
+    return await docs.insertOne(model);
+}
 module.exports = carRentalService;

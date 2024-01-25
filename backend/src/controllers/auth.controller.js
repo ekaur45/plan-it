@@ -78,6 +78,29 @@ authController.updateProfile = async (req,res,next)=>{
     return res.Ok(result);
 }
 
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+authController.getMyProfile = async (req,res,next)=>{
+    const userId = req.user._id;
+    const result = await authService.getMyProfile(userId);
+    return res.Ok(result);
+}
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+authController.getMyBokings = async (req,res,next)=>{
+    const userId = req.user._id;
+    return res.Ok(userId);
+}
 
 /**
  * 
