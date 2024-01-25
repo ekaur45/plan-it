@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import CONFIG from "../utils/config.util";
 
 export default function Header() {
     return (
@@ -30,6 +31,9 @@ export default function Header() {
                                         </li>
                                         <li className="nav-item">
                                             <Link className="page-scroll" to="/cars">Venue Providers</Link>
+                                        </li>                                        
+                                        <li className="nav-item">
+                                            <Link className="page-scroll" to={CONFIG.AdminUrl+"auth/signin"}>Login / Signup</Link>
                                         </li>                                        
                                     </ul>
                                 </div>
