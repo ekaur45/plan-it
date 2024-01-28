@@ -44,7 +44,9 @@ authService.getAllUsers = async ()=>{
  */
 authService.signin = async (obj)=>{
     const users = await mongoUtil.runner(dbConstants.USERS);
-    const {password,...user} = await users.findOne({"email":obj.email});
+    const userDoc = await users.findOne({"email":obj.email});
+    if (!userDoc) return userDoc;
+    const {password,...user} = userDoc;
     if(!user) return null;
     if(!bcrypt.compareSync(obj.password,password)) return null;
     user["access_token"] = jwtUtil.sign(user);
