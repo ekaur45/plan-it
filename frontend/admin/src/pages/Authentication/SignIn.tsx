@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const redirect = useNavigate();
-  const [email,setEmail] = useState("waqas2@email.com");
+  const [email,setEmail] = useState("admin@email.com");
   const [password,setPassword] = useState("123456");
   const handleLoginClick = async (e:any)=>{
     e.preventDefault();

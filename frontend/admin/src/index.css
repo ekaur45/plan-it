@@ -6,9 +6,11 @@
   body {
     @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
   }
+  
 }
 
 @layer components {
+ 
 }
 
 @layer utilities {
