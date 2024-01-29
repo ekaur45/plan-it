@@ -1,4 +1,6 @@
 import { lazy } from 'react';
+const CarBookingPage = lazy(()=>import('../pages/CarRental/CarBookingPage'));
+const AddCarBookingPage = lazy(()=>import('../pages/CarRental/AddCarBookingPage'));
 const AddVenuePage = lazy(()=>import('../pages/Venue/AddVenue'))
 const VenueListPage = lazy(()=>import('../pages/Venue/VenueListPage'))
 const AddEventPage = lazy(()=>import('../pages/Event/AddEvent'))
@@ -30,6 +32,16 @@ const coreRoutes = [
     path: '/car-rental/cars',
     title: 'Cars',
     component: CarListPage,
+  },
+  {
+    path: '/car-rental/rents',
+    title: 'Cars',
+    component: CarBookingPage,
+  },
+  {
+    path: '/car-rental/add-booking',
+    title: 'Cars',
+    component: AddCarBookingPage,
   },
   {
     path: '/car-rental/add-car',

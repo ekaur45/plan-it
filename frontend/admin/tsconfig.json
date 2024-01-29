@@ -20,9 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@pages/*":["./src/pages/*"],
-      "@components/*":["./src/components/*"],
-      "@utils/*":["/src/utils/*"]
     }
   },
   "include": ["src", "src/lib.d.ts"],

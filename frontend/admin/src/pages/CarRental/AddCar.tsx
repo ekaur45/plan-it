@@ -8,10 +8,13 @@ export default function AddCarPage() {
   const [color,setColor] = useState("");
   const [rent,setRent] = useState("");
   const [images,setImages] = useState<any[]>([]);
+  const [isSubmiting,setIsSubmiting] = useState<boolean>(false);
   const handleOnAddSubmit = async (e:any)=>{
     //e.target.preventDefault();
     let d = {name,model,color,rent,images:[""]};
+    setIsSubmiting(true);
     const result = await postRequest<any>('car-rental/add',d);
+    setIsSubmiting(false);
     toast(result.message,{type:result.status == 200 ?"success":"error"});
     if(result&&result.status == 200){
     }
@@ -138,11 +141,12 @@ export default function AddCarPage() {
           </div>
           <div className="pl-6.5 pr-6.5 pb-6.5">
             <button
+            disabled={isSubmiting}
             onClick={handleOnAddSubmit}
               className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"
               type="submit"
             >
-              Save
+              {isSubmiting?"Saving...":"Save"}
             </button>
           </div>
         </div>

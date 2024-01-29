@@ -4,5 +4,5 @@ export default class CarModel{
     model:string="";
     color:string="";
     rent:number=0;
-    images:string="";
+    images:string[]=[];
 }

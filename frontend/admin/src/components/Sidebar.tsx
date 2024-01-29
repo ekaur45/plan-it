@@ -95,8 +95,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
 
-              {
-                user.userRole != "admin" && user.userType == "1" && <SidebarLinkGroup
+              
+                <SidebarLinkGroup
                   activeCondition={
                     pathname === '/car-rental' || pathname.includes('car-rental')
                   }
@@ -141,6 +141,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </li>
                             <li>
                               <NavLink
+                                to="/car-rental/rents"
+                                className={({ isActive }) =>
+                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                  (isActive && '!text-white')
+                                }
+                              >
+                                Rent Cars
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
                                 to="/car-rental/add-car"
                                 className={({ isActive }) =>
                                   'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
@@ -157,10 +168,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-              }
-
-              {
-                user.userRole != "admin"&& user.userType == "2" && <SidebarLinkGroup
+               <SidebarLinkGroup
                   activeCondition={
                     pathname === '/event' || pathname.includes('event')
                   }
@@ -224,9 +232,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-              }
-              {
-                user.userRole != "admin" && user.userType == "3" && <SidebarLinkGroup
+             <SidebarLinkGroup
                   activeCondition={
                     pathname === '/venue' || pathname.includes('venue')
                   }
@@ -288,9 +294,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-              }
-              {
-                user.userRole == "admin" &&
                 <SidebarLinkGroup
                   activeCondition={
                     pathname === '/users' || pathname.includes('users')
@@ -352,7 +355,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-              }
+              
             </ul>
           </div>
         </nav>
