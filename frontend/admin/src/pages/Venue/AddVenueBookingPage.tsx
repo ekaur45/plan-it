@@ -1,43 +1,43 @@
-import React, { Fragment, useEffect, useState } from "react"
-import CarModel from "../../models/car/car.model";
+import React, { Fragment, ReactNode, useEffect, useState } from "react";
+import VenueModel from "../../models/venue/venue.model";
 import { getRequest, postRequest } from "../../utils/api.util";
+import { toast } from "react-toastify";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/16/solid";
 
-export default function AddCarBookingPage() {
-  const [cars, setCars] = useState<CarModel[]>([]);
-  const [selectedCar, setSelectedCars] = useState<CarModel>(new CarModel());
-  const [selectedStartDate,setSelectedStartDate] = useState<Date>(new Date());
-  const [selectedEndDate,setSelectedEndDate] = useState<Date>(new Date());
-  const [numberOfDays,setNumberOfDays] = useState<number>(1);
-  const [isLoadingCar, setIsLoadingCar] = useState<boolean>(false);
-  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
-  const getCars = async () => {
-    setIsLoadingCar(true);
-    const result = await getRequest<CarModel[]>("car-rental/my-cars");
-    setIsLoadingCar(false);
-    if (result.status == 200) {
-      result.data = [{ name: "Select car", _id: "", color: "", images: [], model: "", rent: 0 }, ...result.data];
-      setCars(result.data);
-      if (result.data.length > 0)
-        setSelectedCars(result.data[0]);
+export default  function AddVenueBookingPage(){
+    const [venues,setVenues] = useState<VenueModel[]>([]);
+    const [selectedVenue,setSelectedVenue] = useState<VenueModel>({} as VenueModel); // initialize as an empty object with VenueModel type
+    const [selectedStartDate,setSelectedStartDate] = useState<Date>(new Date());
+    const [selectedEndDate,setSelectedEndDate] = useState<Date>(new Date());
+    const [isVenuesLoading,setIsVenuesLoading] = useState<boolean>(false);
+    const [isSubmiting,setIsSubmiting] = useState<boolean>(false);
+
+    const getVenues = async ()=>{
+        setIsVenuesLoading(true);
+        const result = await getRequest<VenueModel[]>('/venue/venues');
+        setIsVenuesLoading(false);
+        if(result.status == 200){
+            setVenues(result.data);
+        }
     }
-  }
-  const handleOnFormSubmit = async (e:React.SyntheticEvent<HTMLFormElement>)=>{
-    e.preventDefault();
-    e.stopPropagation();
-    const d = {carId:selectedCar._id,rentDate:selectedStartDate,returnDate:selectedEndDate,numberOfDays};
-    setIsSubmiting(true);
-    const result = await postRequest<any>('/car-rental/rent-car',d);
-    setIsSubmiting(false);
-    if(result.status == 200){
-      
+
+    const handleOnFormSubmit = async (e:React.SyntheticEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        const d = {venueId:selectedVenue._id,bookingDate:selectedStartDate,bookingEndDate:selectedEndDate};
+        setIsSubmiting(true);
+        const result = await postRequest('/venue/book-venue',d);
+        setIsSubmiting(false);
+        toast(result.message,{type:result.status == 200 ? "success":"error"});
     }
-  }
-  useEffect(() => {
-    getCars();
-  }, [])
-  return (<div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
+
+    useEffect(()=>{
+        getVenues();
+    },[getVenues]);
+
+    return(<Fragment>
+        <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
     <div className="flex flex-col gap-9">
       <form className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
       onSubmit={handleOnFormSubmit}
@@ -54,14 +54,14 @@ export default function AddCarBookingPage() {
               Select Car
             </label>
             <Listbox
-              onChange={setSelectedCars}
-              value={selectedCar}
-              disabled={isLoadingCar}
+              onChange={setSelectedVenue}
+              value={selectedVenue}
+              disabled={isVenuesLoading}
             >
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm py-3 px-5">
                   <span className="block truncate">
-                    {selectedCar._id == "" ? selectedCar.name : `${selectedCar.name} ${selectedCar.model} - PKR ${selectedCar.rent}`}
+                    {selectedVenue._id == "" ? selectedVenue.name : `${selectedVenue.name} ${selectedVenue.capacity} - PKR ${selectedVenue.price}`}
                   </span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronUpDownIcon
@@ -77,14 +77,14 @@ export default function AddCarBookingPage() {
                   leaveTo="opacity-0"
                 >
                   <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                    {cars.map((car, personIdx) => (
+                    {venues.map((venue, ndx) => (
                       <Listbox.Option
-                        key={personIdx}
+                        key={ndx}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                           }`
                         }
-                        value={car}
+                        value={venue}
                       >
                         {({ selected }) => (
                           <>
@@ -92,7 +92,7 @@ export default function AddCarBookingPage() {
                               className={`block truncate ${selected ? 'font-medium' : 'font-normal'
                                 }`}
                             >
-                              {car._id == "" ? car.name : `${car.name} ${car.model} - PKR ${car.rent}`}
+                              {venue._id == "" ? venue.name : `${venue.name} ${venue.capacity} - PKR ${venue.price}`}
 
                             </span>
                             {selected ? (
@@ -140,7 +140,7 @@ export default function AddCarBookingPage() {
         </div>
         <div className="pl-6.5 pr-6.5 pb-6.5">
           <button
-            disabled={isSubmiting || isLoadingCar}
+            disabled={isSubmiting || isVenuesLoading}
             className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"
             type="submit"
           >
@@ -149,5 +149,6 @@ export default function AddCarBookingPage() {
         </div>
       </form>
     </div>
-  </div>)
+  </div>
+    </Fragment>)
 }

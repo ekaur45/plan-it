@@ -8,5 +8,6 @@ export default class VenueBookingModel{
     venueId:string = "";
     venue:VenueModel = new VenueModel;
     bookingDate:string = "";
+    bookingEndDate:string = "";
     bookingTime:string = "";
 }
