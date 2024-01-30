@@ -46,6 +46,18 @@ carRentalController.rentCar = async (req,res,next)=>{
     return res.Ok(result,"Booked successfuly.");
 }
 
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+carRentalController.getBookings = async (req,res,next)=>{
+    const {_id,userRole,userType} = req.user;
+    const result = await carRentalService.getBookings(_id,userRole,userType);
+    return res.Ok(result,"Booked successfuly.");
+}
+
 
 /**
  * 

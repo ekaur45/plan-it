@@ -46,6 +46,17 @@ venueController.bookVenue = async (req,res,next)=>{
     return res.Ok(result,"Booked successfuly.");
 }
 
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+venueController.getVenueBookin = async (req,res,next)=>{
+    res.InternalServerError();
+}
+
 
 /**
  * 
