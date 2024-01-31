@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { getRequest } from "../utils/api.util";
 import CarModel from "../models/cars.model";
+import CONFIG from "../utils/config.util";
 
-export default function ({ }: any) {
+export default function CarPage() {
     const [cars, setCars] = useState<CarModel[]>([]);
     const getCars = async () => {
         const result = await getRequest<CarModel[]>("home/car-rentals");
-        if (result.status == 200) {
+        if (result.status === 200) {
             setCars(result.data);
         }
     }
@@ -36,11 +37,17 @@ export default function ({ }: any) {
                 {
                     cars && cars.length > 0 && cars.map((car: CarModel, ndx: number) => <div key={car._id} className="col-md-3 mb-3"><div className="card">
                         <div className="card-body">
+                            <img src={CONFIG.BaseUrl + car.images[0]} alt="" className="card-image" />
                             {car.name}
                             <br />
                             {car.model}
                             <br />
                             PKR - {car.rent}
+                        </div>
+                        <div className="">
+                            <button className="btn btn-light btn-sm">
+                                Book
+                            </button>
                         </div>
                     </div>
                     </div>)
