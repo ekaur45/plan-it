@@ -10,6 +10,7 @@ const cors = require("cors")({origin:"*"})
 app.use(cors);
 const responser = require("./utils/res.util");
 const { writeFileSync } = require("fs");
+const defaultData = require("./utils/default.data");
 app.use(responser);
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -38,4 +39,7 @@ const port = config.PORT || 3000;
 server.listen(port,()=>{
     console.log(`http://localhost:${port}/api-doc`);
 })
+// let dd = defaultData;
+
+// dd.accounts().then(()=>{console.log("Completed");});
 module.exports = app;
