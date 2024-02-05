@@ -14,7 +14,7 @@ export default function Protected(component:PComponent){
             return redirect("/auth/signin");
         }
         if(user.userRole!="admin" && !user.isProfileCompleted ){
-            toast("Complete your profile",{type:"info"});
+            //toast("Complete your profile",{type:"info"});
             return redirect("/settings");
         }
     },[component]);

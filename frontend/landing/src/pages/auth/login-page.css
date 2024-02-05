@@ -1,0 +1,7 @@
+.login-card, .login-card  .form-control, .login-card  .btn{
+    border-radius: 0px !important;
+    outline: none !important;
+}
+.form-control:focus,.btn:focus{
+    box-shadow: none !important;
+}

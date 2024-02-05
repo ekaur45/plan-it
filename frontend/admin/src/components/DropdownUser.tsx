@@ -53,7 +53,7 @@ const DropdownUser = () => {
         >
         <span className="hidden text-right lg:block">
           <div className='flex gap-1'>
-            {user.isUserVerified?<></>:<span className='text-primary'><FaCheck/></span>}
+            {user.isUserVerified == true?<span className='text-primary'><FaCheck/></span>:<></>}
           <span className="block text-sm font-medium text-black dark:text-white">
             {user.firstName} {user.lastName}
           </span>

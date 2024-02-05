@@ -8,6 +8,9 @@ const StorageUtil = {
             
         }
         return null;
+    },
+    setUser:(user:any)=>{
+        localStorage.setItem("user",JSON.stringify(user));
     }
 }
 export default StorageUtil;

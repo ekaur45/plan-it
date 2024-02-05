@@ -1,4 +1,6 @@
+const { ObjectId } = require("bson");
 const dbConstants = require("../models/db.constants");
+const UserUpdateModel = require("../models/user-update.model");
 const UserModel = require("../models/user.model");
 const config = require("../utils/config");
 const jwtUtil = require("../utils/jwt.util");
@@ -42,11 +44,29 @@ authService.getAllUsers = async ()=>{
  */
 authService.signin = async (obj)=>{
     const users = await mongoUtil.runner(dbConstants.USERS);
-    const {password,...user} = await users.findOne({"email":obj.email});
+    const userDoc = await users.findOne({"email":obj.email});
+    if (!userDoc) return userDoc;
+    const {password,...user} = userDoc;
     if(!user) return null;
     if(!bcrypt.compareSync(obj.password,password)) return null;
     user["access_token"] = jwtUtil.sign(user);
     return user;
     
+}
+/**
+ * 
+ * @param {string} userId 
+ * @param {UserUpdateModel} user 
+ */
+authService.updateProfile = async (userId,user)=>{
+    const users = await mongoUtil.runner(dbConstants.USERS);
+    const result = await users.updateOne({"_id":new ObjectId(userId)},{$set:{...user,"isProfileCompleted":true}});
+    return result;
+}
+
+authService.getMyProfile = async userId =>{
+    const users = await mongoUtil.runner(dbConstants.USERS);
+    const result = await users.findOne({"_id":new ObjectId(userId)});
+    return result;
 }
 module.exports = authService;

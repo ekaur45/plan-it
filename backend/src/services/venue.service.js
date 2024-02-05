@@ -17,4 +17,13 @@ venueRentalService.getVenues = async (userId)=>{
     const result = await docs.find({})//.find({"userId":userId})
     return result.toArray();
 }
+
+/**
+ * 
+ * @param {BookVenueModel} model 
+ */
+venueRentalService.bookVenue = async model =>{
+    const docs = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
+    return await docs.insertOne(model);
+}
 module.exports = venueRentalService;

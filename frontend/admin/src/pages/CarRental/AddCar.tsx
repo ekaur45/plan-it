@@ -1,4 +1,5 @@
-import { postRequest } from "../../utils/api.util";
+import { toast } from "react-toastify";
+import { postFormRequest, postRequest } from "../../utils/api.util";
 import { useState } from "react"
 
 export default function AddCarPage() {
@@ -6,13 +7,25 @@ export default function AddCarPage() {
   const [model,setModel] = useState("");
   const [color,setColor] = useState("");
   const [rent,setRent] = useState("");
-  const [images,setImages] = useState("");
+  const [images,setImages] = useState<any[]>([]);
+  const [isSubmiting,setIsSubmiting] = useState<boolean>(false);
   const handleOnAddSubmit = async (e:any)=>{
     //e.target.preventDefault();
     let d = {name,model,color,rent,images:[""]};
+    setIsSubmiting(true);
     const result = await postRequest<any>('car-rental/add',d);
+    setIsSubmiting(false);
+    toast(result.message,{type:result.status == 200 ?"success":"error"});
     if(result&&result.status == 200){
-      alert("Added");
+    }
+  }
+  const handleOnImageChange = async (e:any) =>{
+    const image = e.target.files[0];
+    const form = new FormData();
+    form.append("image",image);
+    const result = await postFormRequest("upload",form);
+    if(result.status == 200){
+      setImages(pre=>[...pre,result.data]);
     }
   }
   return (<>
@@ -83,6 +96,7 @@ export default function AddCarPage() {
                 type="file"
                 accept="image/*"
                 className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+                onChangeCapture={handleOnImageChange}
               />
               <div className="flex flex-col items-center justify-center space-y-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -120,15 +134,19 @@ export default function AddCarPage() {
                 <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
                 <p>(max, 800 X 800px)</p>
               </div>
+              {
+              images&&images.length>0&&<>{images.length} image{images.length==1?"":"s"} added.</>
+            }
             </div>
           </div>
           <div className="pl-6.5 pr-6.5 pb-6.5">
             <button
+            disabled={isSubmiting}
             onClick={handleOnAddSubmit}
               className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"
               type="submit"
             >
-              Save
+              {isSubmiting?"Saving...":"Save"}
             </button>
           </div>
         </div>

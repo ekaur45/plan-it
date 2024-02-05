@@ -1,9 +1,12 @@
 import { lazy } from 'react';
+const CarBookingPage = lazy(()=>import('../pages/CarRental/CarBookingPage'));
+const AddCarBookingPage = lazy(()=>import('../pages/CarRental/AddCarBookingPage'));
 const AddVenuePage = lazy(()=>import('../pages/Venue/AddVenue'))
 const VenueListPage = lazy(()=>import('../pages/Venue/VenueListPage'))
 const AddEventPage = lazy(()=>import('../pages/Event/AddEvent'))
 const EventListPage = lazy(()=>import('../pages/Event/EventListPage'))
 const UserListPage = lazy(()=>import('../pages/Users/UserListPage'))
+const ViewUserPage = lazy(()=>import('../pages/Users/ViewUserPage'))
 const AddUserPage = lazy(()=>import('../pages/Users/AddUserPage'))
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
@@ -29,6 +32,16 @@ const coreRoutes = [
     path: '/car-rental/cars',
     title: 'Cars',
     component: CarListPage,
+  },
+  {
+    path: '/car-rental/rents',
+    title: 'Cars',
+    component: CarBookingPage,
+  },
+  {
+    path: '/car-rental/add-booking',
+    title: 'Cars',
+    component: AddCarBookingPage,
   },
   {
     path: '/car-rental/add-car',
@@ -68,6 +81,11 @@ const coreRoutes = [
     path: '/users/add',
     title: 'Add User',
     component: AddUserPage,
+  },
+  {
+    path: '/users/:id/view',
+    title: 'View User',
+    component: ViewUserPage,
   },
   {
     path: '/settings',

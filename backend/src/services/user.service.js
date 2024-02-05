@@ -12,6 +12,11 @@ userService.getUsers = async ()=>{
         return user;
     })
 }
+userService.getUserSingle = async (userId)=>{
+    const docs = await mongoUtil.runner(dbConstants.USERS);
+    const user = await docs.findOne({"_id":new ObjectId(userId)});
+    return user;
+}
 userService.approveUser = async (userId)=>{
     const docs = await mongoUtil.runner(dbConstants.USERS);
     await docs.updateOne({"_id":new ObjectId(userId)},{$set:{"isUserVerified":true}});
