@@ -12,6 +12,7 @@ const SignIn = () => {
   const handleLoginClick = async (e:any)=>{
     e.preventDefault();
     const result = await postRequest<any>("auth/login",{email,password})
+    toast(result.message,{type:result.status==200?"success" : "error"});
     if(result!=null && result.status == 200){
       localStorage.setItem("user",JSON.stringify(result.data));
       redirect("/");
