@@ -14,6 +14,7 @@ const checkAuth = (role="user")=>{
                 let token = authorizationHeader.toLocaleLowerCase().indexOf("bearer")>-1 ? authorizationHeader.split(" ")[1] : authorizationHeader;
                 let user = jwtUtil.verify(token);
                 req.user = user;
+                if(role && user.userRole&& user.userRole == "admin") return next();
                 if(role && user.userRole && user.userRole == role){                    
                     return next();
                 }

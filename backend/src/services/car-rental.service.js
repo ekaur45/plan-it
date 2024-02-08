@@ -21,6 +21,11 @@ carRentalService.getMyCars = async (userId)=>{
     const result = await carDocs.find({"userId":userId})
     return result.toArray();
 }
+carRentalService.getAllCars = async ()=>{
+    const carDocs = await mongoUtil.runner(dbConstants.CARS);
+    const result = await carDocs.find();
+    return result.toArray();
+}
 
 /**
  * 
@@ -48,7 +53,7 @@ carRentalService.getMyCarsRental = async (userId)=>{
         cb["user"] = user;
         const car = carsList.filter(c => c._id == cb.carId);
         cb["car"] = car&&car.length>0?car[0]:null;
-        return car;
+        return cb;
     });
 }
 
@@ -74,25 +79,25 @@ carRentalService.getBookings = async (userId,userRole,userType)=>{
     //Get the carRental document from the mongoUtil
     const carBookingDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
     //If the userRole is admin, get all the bookings from the carBookingDocs
-    if(userRole == "admin"){
+    // if(userRole == "admin"){
         const carBookingCollection = await carBookingDocs.find();
         const carBookingList = await carBookingCollection.toArray();
         //Map the carBookingList and get the user and car details
-        return carBookingList.map(async cb => {
+        return await Promise.all(carBookingList.map(async cb => {
             const user = await userService.getUserSingle(cb.userId);
             cb["user"] = user;
-            const car = await this.getSingleCar(cb.carId);
+            const car = await carRentalService.getSingleCar(cb.carId);
             cb["car"] = car;
-            return car;
-        });
-    }
-    //If the userRole is user and userType is not ServiceTypes.CarRental, get myCarsRental from the carRentalService
-    if(userRole == "user" && userType != ServiceTypes.CarRental){
-        return await this.getMyCarsRental(userId);
-    }
-    //If the userRole is user and userType is ServiceTypes.CarRental, get myCarsRental from the carRentalService
-    if(userRole == "user" && userType == ServiceTypes.CarRental){
-        return await this.getMyCarsRental(userId);
-    }
+            return cb;
+        }));
+    // }
+    // //If the userRole is user and userType is not ServiceTypes.CarRental, get myCarsRental from the carRentalService
+    // if(userRole == "user" && userType != ServiceTypes.CarRental){
+    //     return await this.getMyCarsRental(userId);
+    // }
+    // //If the userRole is user and userType is ServiceTypes.CarRental, get myCarsRental from the carRentalService
+    // if(userRole == "user" && userType == ServiceTypes.CarRental){
+    //     return await carRentalService.getMyCarsRental(userId);
+    // }
 }
 module.exports = carRentalService;

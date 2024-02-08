@@ -38,6 +38,17 @@ carRentalController.getMyCars = async (req,res,next)=>{
  * @param {import("express").Response} res 
  * @param {import("express").NextFunction} next 
  */
+carRentalController.getAllCars = async (req,res,next)=>{
+    const result = await carRentalService.getAllCars();
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
 carRentalController.rentCar = async (req,res,next)=>{
     var model = new RentCarModel(req.body);
     model.userId = req.user._id;
