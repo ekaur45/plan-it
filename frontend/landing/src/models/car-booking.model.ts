@@ -6,6 +6,6 @@ export default class CarBookingModel{
     userId:string = "";
     user:UserModel = new UserModel();
     car:CarModel = new CarModel();
-    startDate:Date = new Date();
-    endDate:Date = new Date();
+    rentDate:Date = new Date();
+    returnDate:Date = new Date();
 }

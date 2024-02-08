@@ -10,11 +10,12 @@ interface IUserType{
 const userTypes: Array<IUserType> = [
     { name: "Car Rental", value: "1" },
     { name: "Event Decorator", value: "2" },
-    { name: "Venue Provider", value: "3" }
+    { name: "Venue Provider", value: "3" },
+    { name: "Other", value: "4" }
 ]
 export default function SignupPage() {
     const redirect = useNavigate();
-    const [userType, setType] = useState("1");
+    const [userType, setType] = useState("4");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
