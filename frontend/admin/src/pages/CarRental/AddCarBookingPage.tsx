@@ -3,6 +3,7 @@ import CarModel from "../../models/car/car.model";
 import { getRequest, postRequest } from "../../utils/api.util";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import moment from "moment";
 
 export default function AddCarBookingPage() {
   const [cars, setCars] = useState<CarModel[]>([]);
@@ -14,7 +15,7 @@ export default function AddCarBookingPage() {
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const getCars = async () => {
     setIsLoadingCar(true);
-    const result = await getRequest<CarModel[]>("car-rental/my-cars");
+    const result = await getRequest<CarModel[]>("car-rental/all-cars");
     setIsLoadingCar(false);
     if (result.status == 200) {
       result.data = [{ name: "Select car", _id: "", color: "", images: [], model: "", rent: 0 }, ...result.data];
@@ -118,7 +119,7 @@ export default function AddCarBookingPage() {
             <input
               type="date"
               placeholder="date"
-              value={selectedStartDate.toDateString()}              
+              value={moment(selectedStartDate).format("YYYY-MM-DD")}              
               onChange={e=>setSelectedStartDate(e.target.valueAsDate ?? new Date())}
               className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:bg-form-input"
             />
@@ -130,7 +131,7 @@ export default function AddCarBookingPage() {
             <input
               type="date"
               placeholder="date"
-              value={selectedEndDate.toDateString()}              
+              value={moment(selectedEndDate).format("YYYY-MM-DD")}              
               onChange={e=>setSelectedEndDate(e.target.valueAsDate ?? new Date())}
               className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:bg-form-input"
             />
@@ -138,7 +139,7 @@ export default function AddCarBookingPage() {
 
 
         </div>
-        <div className="pl-6.5 pr-6.5 pb-6.5">
+        <div className="pl-6.5 pr-6.5 pb-6.5 pt-6.5">
           <button
             disabled={isSubmiting || isLoadingCar}
             className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"

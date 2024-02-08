@@ -93,7 +93,7 @@ export default function AddEventPage() {
               </div>
             </div>
             <div className="pl-6.5 pr-6.5 pb-6.5">
-              <button className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70" type="submit">
+              <button onClick={handleFormSubmit} className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70" type="submit">
                 Save
               </button>
             </div>

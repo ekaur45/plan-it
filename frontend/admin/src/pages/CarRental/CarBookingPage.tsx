@@ -3,6 +3,7 @@ import CarBookingModel from "../../models/car/car-booking.model";
 import { getRequest } from "../../utils/api.util";
 import Loader from "../../common/Loader";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 // Export a default function called CarBookingPage
 export default function CarBookingPage() {
@@ -31,58 +32,63 @@ export default function CarBookingPage() {
     // Return a fragment containing either a loader or a table of bookings data
     return <Fragment>
         {isLoading && <Loader />}
-        {!isLoading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
-            <Link to={"/car-rental/add-booking"}>Add</Link>
-            <table>
-                <thead>
+        {!isLoading && <>
+            
+            <div className="flex justify-end">
+            <Link className="bg-primary border border-primary cursor-pointer hover:bg-opacity-90 px-4 py-2 rounded-lg text-white transition mb-2" to={"/car-rental/add-booking"}>Rent New Car</Link>
+        </div>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="bg-graydark dark:text-gray-400 text-white text-xs uppercase">
                     <tr>
-                        <th>
+                    <th scope="col" className="px-6 py-3">
                             Sr#
                         </th>
-                        <th>
+                        <th scope="col" className="px-6 py-3">
                             Car
                         </th>
-                        <th>
+                        <th scope="col" className="px-6 py-3">
                             User
                         </th>
-                        <th>
+                        <th scope="col" className="px-6 py-3">
                             Date
                         </th>
-                        <th>
+                        <th scope="col" className="px-6 py-3">
                             No. of days
                         </th>
-                        <th>
+                        <th scope="col" className="px-6 py-3 text-center">
                             Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {bookings.map((booking: CarBookingModel,ndx:number) => <Fragment key={booking._id}>
-                        <tr>
-                            <td>
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td className="px-6 py-4">
                                 {ndx+1}
                             </td>
-                            <td>
+                            <td className="px-6 py-4">
                                 <span>{booking.car.name} {booking.car.model}</span>
                                 PKR - {booking.car.rent} /-
                             </td>
-                            <td>
+                            <td className="px-6 py-4">
                                 <span>{booking.user.firstName} {booking.user.lastName}</span>
                                 {booking.user.phoneNumber}
                             </td>
-                            <td>
-                                {booking.startDate.toDateString()}
+                            <td className="px-6 py-4">
+                                {moment(booking.startDate).format("YYYY-MM-DD")}
                             </td>
-                            <td>
-                                {booking.endDate.toDateString()}
+                            <td className="px-6 py-4">
+                                {moment(booking.endDate).format("YYYY-MM-DD")}
                             </td>
-                            <td>
+                            <td className="px-6 py-4 flex gap-3 justify-center">
                                 Actions
                             </td>
                         </tr>
                     </Fragment>)}
                 </tbody>
             </table>
-        </div>}
+            </div>
+        </>}
     </Fragment>
 }

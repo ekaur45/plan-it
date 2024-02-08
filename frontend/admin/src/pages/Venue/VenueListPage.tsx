@@ -1,6 +1,13 @@
 import VenueModel from "../../models/venue/venue.model";
 import { getRequest } from "../../utils/api.util";
 import { useEffect, useState } from "react";
+import CONFIG from "../../utils/config.util";
+function VenueImage(venue:any){
+    if(venue && venue.images&&venue.images.length>0){
+        return <><img src={CONFIG.BaseUrl+venue.images[0]}/></>
+    }
+    return <>No Image</>
+}
 export default function VenueListPage() {
     const [venues, setVenues] = useState<VenueModel[]>([]);
     const handleFetchInitialData = async () => {
@@ -32,7 +39,7 @@ export default function VenueListPage() {
                         venues.map((e: VenueModel, i: number) => {
                             return <tr>
                                 <td>{i+1}</td>
-                                <td>{e.images[0]}</td>
+                                <td><VenueImage venue={e}/></td>
                                 <td>{e.name}</td>
                                 <td>{e.location}</td>
                                 <td>{e.capacity}</td>
