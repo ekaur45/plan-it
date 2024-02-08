@@ -4,7 +4,8 @@ import { getRequest } from "../../utils/api.util";
 import Loader from "../../common/Loader";
 import { Link } from "react-router-dom";
 import moment from "moment";
-
+import norecordImage from '../../images/no-record.svg';
+import { FaBan } from "react-icons/fa";
 // Export a default function called CarBookingPage
 export default function CarBookingPage() {
     // Create a state variable called bookings and set it to an empty array of type CarBookingModel
@@ -33,61 +34,72 @@ export default function CarBookingPage() {
     return <Fragment>
         {isLoading && <Loader />}
         {!isLoading && <>
-            
+
             <div className="flex justify-end">
-            <Link className="bg-primary border border-primary cursor-pointer hover:bg-opacity-90 px-4 py-2 rounded-lg text-white transition mb-2" to={"/car-rental/add-booking"}>Rent New Car</Link>
-        </div>
+                <Link className="bg-primary border border-primary cursor-pointer hover:bg-opacity-90 px-4 py-2 rounded-lg text-white transition mb-2" to={"/car-rental/add-booking"}>Rent New Car</Link>
+            </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="bg-graydark dark:text-gray-400 text-white text-xs uppercase">
-                    <tr>
-                    <th scope="col" className="px-6 py-3">
-                            Sr#
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Car
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            User
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Date
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            No. of days
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-center">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {bookings.map((booking: CarBookingModel,ndx:number) => <Fragment key={booking._id}>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td className="px-6 py-4">
-                                {ndx+1}
-                            </td>
-                            <td className="px-6 py-4">
-                                <span>{booking.car.name} {booking.car.model}</span>
-                                PKR - {booking.car.rent} /-
-                            </td>
-                            <td className="px-6 py-4">
-                                <span>{booking.user.firstName} {booking.user.lastName}</span>
-                                {booking.user.phoneNumber}
-                            </td>
-                            <td className="px-6 py-4">
-                                {moment(booking.startDate).format("YYYY-MM-DD")}
-                            </td>
-                            <td className="px-6 py-4">
-                                {moment(booking.endDate).format("YYYY-MM-DD")}
-                            </td>
-                            <td className="px-6 py-4 flex gap-3 justify-center">
-                                Actions
-                            </td>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="bg-graydark dark:text-gray-400 text-white text-xs uppercase">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Sr#
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Car
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                User
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Date
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                No. of days
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-center">
+                                Action
+                            </th>
                         </tr>
-                    </Fragment>)}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {bookings.map((booking: CarBookingModel, ndx: number) => <Fragment key={booking._id}>
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td className="px-6 py-4">
+                                    {ndx + 1}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span>{booking.car.name} {booking.car.model}</span>
+                                    PKR - {booking.car.rent} /-
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span>{booking.user.firstName} {booking.user.lastName}</span>
+                                    {booking.user.phoneNumber}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {moment(booking.startDate).format("YYYY-MM-DD")}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {moment(booking.endDate).format("YYYY-MM-DD")}
+                                </td>
+                                <td className="px-6 py-4 flex gap-3 justify-center">
+                                    Actions
+                                </td>
+                            </tr>
+                        </Fragment>)}
+                        {bookings.length == 0 && <tr>
+                            <td colSpan={6} className="p-3">
+                                <div className="flex flex-col items-center p-3 text-center w-full">
+
+                                <span style={{fontSize:"64px"}}>
+                                <FaBan/>
+                                </span>
+                                <span>No Record Found</span>
+                                </div>
+                            </td>
+                        </tr>}
+                    </tbody>
+                </table>
             </div>
         </>}
     </Fragment>
