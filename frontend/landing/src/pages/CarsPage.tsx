@@ -23,11 +23,7 @@ export default function CarPage() {
         }
     }
     const checkIsLoggedIn =()=>{
-        if(StorageUtil.getUser()){
-            setIsLoggedIn(true);
-        }else{
-            setIsLoggedIn(false);
-        }
+        setIsLoggedIn(StorageUtil.isLoggedIn());
     }
     const handBookCarSubmit = (e: CarModel) => {
         setSelectedCar(e);
@@ -92,7 +88,7 @@ export default function CarPage() {
                 {
                     cars && cars.length > 0 && cars.map((car: CarModel, ndx: number) => <div key={car._id} className="col-md-3 mb-3">
                         <div className="card">
-                            <img onError={handleOnImageError} src={CONFIG.BaseUrl + car.images[0]} alt="" className="card-image" />
+                            <img onError={handleOnImageError} src={CONFIG.BaseUrl + car.images[0].file} alt="" className="card-image" />
                             <div className="card-body">
                                 <div className="d-flex w-100 justify-content-between">
                                     <b>Car: </b><span>{car.name}</span>
@@ -104,12 +100,12 @@ export default function CarPage() {
                                     <b>Price/day: </b><span>PKR - {car.rent}</span>
                                 </div>
 
+                            </div>
                                 <div className="mt-3">
                                     <button className="btn btn-primary btn-sm btn-block" onClick={e => handBookCarSubmit(car)}>
                                         Book
                                     </button>
                                 </div>
-                            </div>
                         </div>
                     </div>)
                 }

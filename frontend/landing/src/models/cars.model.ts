@@ -3,7 +3,7 @@ export default class CarModel {
     name!: string;
     model!: string;
     color!: string;
-    images!: string[];
+    images!: any[];
     rent!: number;
     userId!: string;
 }

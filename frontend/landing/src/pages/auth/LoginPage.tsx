@@ -1,11 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import './login-page.css'
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHref, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { postRequest } from "../../utils/api.util";
 import { toast } from "react-toastify";
 export default function LoginPage() {
-
     const redirect = useNavigate();
+    const [search] = useSearchParams();
+    const [fallback] = useState(search.get("fallback"));
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -16,7 +17,8 @@ export default function LoginPage() {
         setIsLoading(false);
         if (result != null && result.status === 200) {
             localStorage.setItem("user", JSON.stringify(result.data));
-            redirect("/");
+            const rd = "" + (fallback?fallback:"/");
+            redirect(rd);
         } else {
             toast(result.message, { type: "error" });
         }
