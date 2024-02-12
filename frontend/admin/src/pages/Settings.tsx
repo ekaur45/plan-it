@@ -9,9 +9,9 @@ const Settings = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [rows] = useState(localStorage.getItem("alertSettings") ? JSON.parse(localStorage.getItem("alertSettings") ?? "{}") : []);
   const [user, setUser] = useState(StorageUtil.getUser());
-  const [files, setFiles] = useState<any[]>(user?.documents?.map((e: any) => { return { file: e } })??[]);
-  const [firstName,setFirstName] = useState("");
-  const [lastName,setLastName] = useState("");
+  const [files, setFiles] = useState<any[]>(user?.documents?.map((e: any) => { return { file: e } }) ?? []);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   useEffect(() => {
     setFirstName(user?.firstName);
     setLastName(user?.lastName);
@@ -25,10 +25,10 @@ const Settings = () => {
 
   const handleOnFormSubmit = async (e: any) => {
     e.preventDefault();
-    let d = { documents: files.map(e => e.file), firstName,lastName };
+    let d = { documents: files.map(e => e.file), firstName, lastName };
     const result = await postRequest("auth/update-profile", d);
-    if(result.status == 200){
-      toast("Profile updated",{type:"success",draggable:true})
+    if (result.status == 200) {
+      toast("Profile updated", { type: "success", draggable: true })
     }
 
   }
@@ -41,7 +41,7 @@ const Settings = () => {
     setIsUploading(false);
   }
   const handleRemove = (e: any) => {
-    setFiles(pre=>e);
+    setFiles(pre => e);
   }
   return (
     <>
@@ -150,12 +150,27 @@ const Settings = () => {
                       placeholder="devidjhon24"
                     />
                   </div>
-                  <div className="mb-5.5">
+                  {user.userType == 2 && <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="Username"
                     >
-                      Images
+                      Decoration Price
+                    </label>
+                    <input
+                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      type="number"
+                      name="price"
+                      id="price"
+                      placeholder="Decoration Price"
+                    />
+                  </div>
+                  }
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                    >
+                      Documents
                     </label>
                     <div
                       id="FileUpload"
@@ -181,12 +196,12 @@ const Settings = () => {
                     </div>
                     <div className='flex gap-2'>
                       {
-                        (files&&files)?files.map((img, i) => <div key={i} className='relative'>
-                          <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f=>f.filter((item:any,ndx:number)=>ndx!==i))}>
-                            <FaTimesCircle  />
+                        (files && files) ? files.map((img, i) => <div key={i} className='relative'>
+                          <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f => f.filter((item: any, ndx: number) => ndx !== i))}>
+                            <FaTimesCircle />
                           </div>
                           <img style={{ height: "6rem", width: "6rem" }} src={"http://localhost:8000/" + img.file} />
-                        </div>):null
+                        </div>) : null
                       }
                       {
                         isUploading == true && <div className='relative'>

@@ -3,6 +3,7 @@ export default class CarModel{
     name:string="";
     model:string="";
     color:string="";
+    description:string="";
     rent:number=0;
     images:string[]=[];
 }

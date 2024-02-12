@@ -82,6 +82,9 @@ export default function CarListPage() {
                                         PKR {e.rent}
                                     </span>
                                 </div>
+                                <div className="flex justify-between px-3 pb-3">
+                                    {e.description}
+                                </div>
                             </div>
                         </div>
                     })
