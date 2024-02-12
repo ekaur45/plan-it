@@ -9,16 +9,19 @@ import './assets/css/LineIcons.css';
 import './assets/css/bootstrap.min.css';
 import './assets/css/default.css';
 import './assets/css/style.css';
+import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom';
+import defaultStore from './stores/default-store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Router>
-    <App />
-    </Router>
-
+    <Provider store={defaultStore}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>
 );
 

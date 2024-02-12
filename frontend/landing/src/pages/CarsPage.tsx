@@ -6,9 +6,12 @@ import { Modal } from "react-bootstrap";
 import './car-page.css';
 import { Link, useNavigate } from "react-router-dom";
 import StorageUtil from "../utils/storage.util";
+import { useGlobalDispatch, useGlobalSelector } from "../hooks";
+import { showGlobalLogin } from "../stores/reducers/global-reducer";
 export default function CarPage() {
-    const redirect = useNavigate();
-    const [isLoggedIn,setIsLoggedIn] = useState<boolean>(false);
+    const isGlobalLoginVisible = useGlobalSelector((state) => state.globalReducer.isGlobalLoginVisible);
+    const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
+    const dispatch = useGlobalDispatch();
     const [cars, setCars] = useState<CarModel[]>([]);
     const [selectedCar, setSelectedCar] = useState<CarModel>();
     const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(new Date());
@@ -22,16 +25,19 @@ export default function CarPage() {
 
         }
     }
-    const checkIsLoggedIn =()=>{
-        setIsLoggedIn(StorageUtil.isLoggedIn());
-    }
+    
     const handBookCarSubmit = (e: CarModel) => {
         setSelectedCar(e);
         setIsModalVisible(true);
-        checkIsLoggedIn();
+        if (!isLoggedIn) {
+            dispatch(showGlobalLogin());
+        }
     }
     const handleOnAddBooking = async () => {
-        if(!isLoggedIn) return redirect("/auth/login");
+        if (!isLoggedIn) {
+            return;
+            //return redirect("/auth/login");
+        }
         const d = { carId: selectedCar?._id, rentDate: selectedStartDate, returnDate: selectedEndDate };
         setIsSubmiting(true);
         const result = await postRequest<any>('/car-rental/rent-car', d);
@@ -55,14 +61,14 @@ export default function CarPage() {
                 <Link to={"/bookings"}>My Bookings</Link>
             </div>
             <div className="filter container pt-20">
-                <div className="d-flex mb-3 w-100" style={{"gap":"15px"}}>
+                <div className="d-flex mb-3 w-100" style={{ "gap": "15px" }}>
                     <input type="text" className="form-control" />
                     <button className="btn btn-outline-primary">Search</button>
                 </div>
             </div>
         </section>
         <section className="container">
-            <Modal show={isModalVisible}>
+            <Modal show={isModalVisible && isLoggedIn && !isGlobalLoginVisible}>
                 <Modal.Header>
                     <h3>
                         Book a car
@@ -81,7 +87,7 @@ export default function CarPage() {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className="btn btn-light" onClick={() => setIsModalVisible(false)}>Cancel</button>
-                    <button className="btn btn-primary" onClick={handleOnAddBooking}>{!isLoggedIn?"Login to continue": isSubmiting ? "Saving..." : "Save"}</button>
+                    <button className="btn btn-primary" onClick={handleOnAddBooking}>{!isLoggedIn ? "Login to continue" : isSubmiting ? "Saving..." : "Save"}</button>
                 </Modal.Footer>
             </Modal>
             <div className="row">
@@ -101,11 +107,11 @@ export default function CarPage() {
                                 </div>
 
                             </div>
-                                <div className="mt-3">
-                                    <button className="btn btn-primary btn-sm btn-block" onClick={e => handBookCarSubmit(car)}>
-                                        Book
-                                    </button>
-                                </div>
+                            <div className="mt-3">
+                                <button className="btn btn-primary btn-sm btn-block" onClick={e => handBookCarSubmit(car)}>
+                                    Book
+                                </button>
+                            </div>
                         </div>
                     </div>)
                 }

@@ -2,17 +2,22 @@ import { Link } from "react-router-dom";
 import CONFIG from "../utils/config.util";
 import StorageUtil from "../utils/storage.util";
 import { Fragment, useEffect, useState } from "react";
+import { useGlobalSelector } from "../hooks";
+import { useDispatch } from "react-redux";
+import { setIsLoggedInFalse } from "../stores/reducers/global-reducer";
 
 export default function Header() {
+    const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
+    const dispatch = useDispatch();
     const [user,setUser] = useState(StorageUtil.getUser());
-    const [isLoggedIn,setIsLoggedIn] = useState(StorageUtil.isLoggedIn());
     const handleLogout = ()=>{
         StorageUtil.clearStorage();
         setUser(StorageUtil.getUser());
+        dispatch(setIsLoggedInFalse())
     }
     useEffect(()=>{
-        setIsLoggedIn(StorageUtil.isLoggedIn());
-    },[user]);
+        setUser(StorageUtil.getUser());        
+    },[]);
     return (
         <section className="header_area">
             <div className="header_navbar">
