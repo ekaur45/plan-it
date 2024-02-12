@@ -20,6 +20,12 @@ homeService.getCarRentals = async ()=>{
     const all = await allPromise.toArray();
     return all;
 }
+homeService.getVenues = async ()=>{
+    const docs = await mongoUtil.runner(dbConstants.VENUES);
+    const allPromise = await docs.find({});
+    const all = await allPromise.toArray();
+    return all;
+}
 homeService.getMyBookings = async userId =>{
     const carBookingsDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
     const venueBookingsDoc = await mongoUtil.runner(dbConstants.VENUE_BOOKING);

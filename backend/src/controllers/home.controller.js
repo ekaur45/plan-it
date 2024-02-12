@@ -14,4 +14,8 @@ homeController.getMyBookings = async (req,res,nex)=>{
     const result = await homeService.getMyBookings(userId);
     return res.Ok(result);
 }
+homeController.getVenues = async (req,res,next)=>{
+    const result = await homeService.getVenues();
+    return res.Ok(result);
+}
 module.exports = homeController;
