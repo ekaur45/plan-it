@@ -50,6 +50,9 @@ export default function Header() {
                                         </li>
                                         {isLoggedIn && <Fragment>
                                             <li className="nav-item">
+                                            <Link to={"/bookings"}>My Bookings</Link>
+                                            </li>
+                                            <li className="nav-item">
                                                     <Link className="page-scroll" to={"/"}>{StorageUtil.getUser().firstName} {StorageUtil.getUser().lastName}</Link>
                                                     <button className="btn btn-sm btn-primary" onClick={handleLogout}>Logout</button>
                                                 </li>

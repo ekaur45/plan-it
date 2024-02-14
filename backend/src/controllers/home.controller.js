@@ -1,3 +1,4 @@
+const CarRatingModel = require("../models/car-rating.model");
 const homeService = require("../services/home.service");
 
 const homeController = {};
@@ -16,6 +17,12 @@ homeController.getMyBookings = async (req,res,nex)=>{
 }
 homeController.getVenues = async (req,res,next)=>{
     const result = await homeService.getVenues();
+    return res.Ok(result);
+}
+homeController.addCarRating = async (req,res,next)=>{
+    const carRatingModel = new CarRatingModel(req.body);
+    carRatingModel.userId = req.user._id;
+    const result = await homeService.addCarRating(carRatingModel);
     return res.Ok(result);
 }
 module.exports = homeController;

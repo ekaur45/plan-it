@@ -49,6 +49,10 @@ export default function CarPage() {
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
     }
+    const handleOnSearchSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();        
+        
+    }
     useEffect(() => {
         getCars();
     }, []);
@@ -57,14 +61,14 @@ export default function CarPage() {
 
         </section>
         <section>
-            <div>
-                <Link to={"/bookings"}>My Bookings</Link>
-            </div>
             <div className="filter container pt-20">
-                <div className="d-flex mb-3 w-100" style={{ "gap": "15px" }}>
-                    <input type="text" className="form-control" />
+                <form className="d-flex mb-3 w-100" style={{ "gap": "15px" }} onSubmit={handleOnSearchSubmit}>
+                    <input type="text" placeholder="Search by name" className="form-control" name="name" />
+                    <input type="number" placeholder="Min. Price" className="form-control" name="minPrice"/>
+                    <input type="number" placeholder="Max. Price" className="form-control" name="maxPrice"/>
+                    <input type="number" placeholder="Model Year" className="form-control" name="modelYear"/>
                     <button className="btn btn-outline-primary">Search</button>
-                </div>
+                </form>
             </div>
         </section>
         <section className="container">
@@ -105,7 +109,9 @@ export default function CarPage() {
                                 <div className="d-flex w-100 justify-content-between">
                                     <b>Price/day: </b><span>PKR - {car.rent}</span>
                                 </div>
-
+                                <p>
+                                    {car.description}
+                                </p>
                             </div>
                             <div className="mt-3">
                                 <button className="btn btn-primary btn-sm btn-block" onClick={e => handBookCarSubmit(car)}>

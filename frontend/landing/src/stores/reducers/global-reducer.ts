@@ -4,8 +4,9 @@ import StorageUtil from "../../utils/storage.util";
 export const globalSlice = createSlice({
     name:"globalSlice",
     initialState:{
-        isGlobalLoginVisible:true,
-        isLoggedIn:StorageUtil.isLoggedIn()
+        isGlobalLoginVisible:false,
+        isLoggedIn:StorageUtil.isLoggedIn(),
+        user:StorageUtil.getUser()
     },
     reducers:{
         showGlobalLogin:(state)=>{
