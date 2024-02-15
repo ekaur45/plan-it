@@ -64,10 +64,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex gap-2 items-center justify-center lg:py-6.5 px-6 py-5.5">
-        <NavLink to="/" style={{"fontSize":"50px"}}>
-          Plan IT
-          {/* <img src={Logo} alt="Logo" /> */}
+      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+        <NavLink to="/">
+          <img src={Logo} alt="Logo" />
         </NavLink>
 
         <button
@@ -96,8 +95,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
 
-              
-                <SidebarLinkGroup
+              {
+                user.userRole != "admin" && user.userType == "1" && <SidebarLinkGroup
                   activeCondition={
                     pathname === '/car-rental' || pathname.includes('car-rental')
                   }
@@ -142,17 +141,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </li>
                             <li>
                               <NavLink
-                                to="/car-rental/rents"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Rent Cars
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
                                 to="/car-rental/add-car"
                                 className={({ isActive }) =>
                                   'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
@@ -169,7 +157,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-               <SidebarLinkGroup
+              }
+
+              {
+                user.userRole != "admin"&& user.userType == "2" && <SidebarLinkGroup
                   activeCondition={
                     pathname === '/event' || pathname.includes('event')
                   }
@@ -233,7 +224,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-             <SidebarLinkGroup
+              }
+              {
+                user.userRole != "admin" && user.userType == "3" && <SidebarLinkGroup
                   activeCondition={
                     pathname === '/venue' || pathname.includes('venue')
                   }
@@ -295,6 +288,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
+              }
+              {
+                user.userRole == "admin" &&
                 <SidebarLinkGroup
                   activeCondition={
                     pathname === '/users' || pathname.includes('users')
@@ -356,7 +352,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     );
                   }}
                 </SidebarLinkGroup>
-              
+              }
             </ul>
           </div>
         </nav>

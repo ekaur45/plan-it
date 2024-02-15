@@ -69,4 +69,9 @@ authService.getMyProfile = async userId =>{
     const result = await users.findOne({"_id":new ObjectId(userId)});
     return result;
 }
+authService.updateProfileImage =async d=>{
+    const userDoc = await mongoUtil.runner(dbConstants.USERS);
+    const user = userDoc.updateOne({_id:new ObjectId(d.userId)},{$set:{profileImage:d.img}});
+    return user;
+}
 module.exports = authService;

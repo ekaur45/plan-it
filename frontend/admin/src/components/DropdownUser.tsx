@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, redirect } from 'react-router-dom';
 enum UserType  {
-  Default=1,
-  ""=2,
-  "Car Rental"=3
+  "Car Rental"=1,
+  "Event Decorator"=2,
+  "Venue Provider"=3
 }
 import UserOne from '../images/user/user-01.png';
 import StorageUtil from '../utils/storage-util';
 import { FaCheck, FaCheckDouble } from 'react-icons/fa';
+import CONFIG from '../utils/config.util';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -62,7 +63,7 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          {user.image?<img src={user.image}/>:<img src={UserOne} alt="User" />}
+          {user.profileImage?<img src={CONFIG.BaseUrl+user.profileImage} style={{height:"100%",width:"100%",borderRadius:"100%"}}/>:<img src={user.profileImage?CONFIG.BaseUrl+user.profileImage:UserOne} alt="User" />}
           
         </span>
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import CONFIG from "../utils/config.util";
-
+import './header.css';
 export default function Header() {
     return (
         <section className="header_area">
@@ -9,8 +9,9 @@ export default function Header() {
                     <div className="row">
                         <div className="col-lg-12">
                             <nav className="navbar navbar-expand-lg">
-                                <a className="navbar-brand" href="index.html">
-                                    <img src={require("../assets/images/logo.png")} alt="Logo" />
+                                <a className="navbar-brand text-white" href="index.html">
+                                    {/* <img src={require("../assets/images/logo.png")} alt="Logo" /> */}
+                                    Plan-IT
                                 </a>
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="toggler-icon"></span>

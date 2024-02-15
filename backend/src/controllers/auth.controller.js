@@ -60,7 +60,7 @@ authController.signin = async (req,res,next)=>{
     if(!(email&&password)) return res.BadRequest(req.body,"Email/usename and password are required.");
     const result = await authService.signin({email,password});
     if(!result) return res.BadRequest(req.body,"Email/usename or password are invalid.")
-    return res.Ok(result);
+    return res.Ok(result,"Loggedin successful.");
 }
 
 
@@ -100,6 +100,18 @@ authController.getMyProfile = async (req,res,next)=>{
 authController.getMyBokings = async (req,res,next)=>{
     const userId = req.user._id;
     return res.Ok(userId);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+authController.updateProfileImage = async (req,res,next)=>{
+    let d = {userId:req.user._id,img:req.body.img};
+    const result = await authService.updateProfileImage(d);
+    return res.Ok(result);
 }
 
 /**
