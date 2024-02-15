@@ -25,7 +25,7 @@ export default function CarPage() {
 
         }
     }
-    
+
     const handBookCarSubmit = (e: CarModel) => {
         setSelectedCar(e);
         setIsModalVisible(true);
@@ -49,9 +49,9 @@ export default function CarPage() {
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
     }
-    const handleOnSearchSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
-        e.preventDefault();        
-        
+    const handleOnSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
     }
     useEffect(() => {
         getCars();
@@ -64,9 +64,9 @@ export default function CarPage() {
             <div className="filter container pt-20">
                 <form className="d-flex mb-3 w-100" style={{ "gap": "15px" }} onSubmit={handleOnSearchSubmit}>
                     <input type="text" placeholder="Search by name" className="form-control" name="name" />
-                    <input type="number" placeholder="Min. Price" className="form-control" name="minPrice"/>
-                    <input type="number" placeholder="Max. Price" className="form-control" name="maxPrice"/>
-                    <input type="number" placeholder="Model Year" className="form-control" name="modelYear"/>
+                    <input type="number" placeholder="Min. Price" className="form-control" name="minPrice" />
+                    <input type="number" placeholder="Max. Price" className="form-control" name="maxPrice" />
+                    <input type="number" placeholder="Model Year" className="form-control" name="modelYear" />
                     <button className="btn btn-outline-primary">Search</button>
                 </form>
             </div>
@@ -96,7 +96,7 @@ export default function CarPage() {
             </Modal>
             <div className="row">
                 {
-                    cars && cars.length > 0 && cars.map((car: CarModel, ndx: number) => <div key={car._id} className="col-md-3 mb-3">
+                    cars && cars.length > 0 && cars.map((car: CarModel, ndx: number) => <div key={car._id} className="col-md-4 mb-3">
                         <div className="card">
                             <img onError={handleOnImageError} src={CONFIG.BaseUrl + car.images[0].file} alt="" className="card-image" />
                             <div className="card-body">
@@ -106,7 +106,7 @@ export default function CarPage() {
                                 <div className="d-flex w-100 justify-content-between">
                                     <b>Model: </b> <span>{car.model}</span>
                                 </div>
-                                <div className="d-flex w-100 justify-content-between">
+                                <div className="d-flex w-100 justify-content-between mb-3">
                                     <b>Price/day: </b><span>PKR - {car.rent}</span>
                                 </div>
                                 <p>

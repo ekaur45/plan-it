@@ -11,7 +11,7 @@ export default function AddVenuePage() {
   const [pricePerHead, setPricePerHead] = useState(1);
   const [images, setImages] = useState<any[]>([]);
   const handleOnSubmit = async (e: any) => {
-    let d = { name, location, capacity, images,description };
+    let d = { name, location, capacity, images,description,pricePerHead };
     const result = await postRequest<any>('venue/add', d);
     if (result && result.status == 200) {
       toast(result.message, { type: "success" });

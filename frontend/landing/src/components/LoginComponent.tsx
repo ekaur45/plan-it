@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import { postRequest } from "../utils/api.util";
 import { useGlobalDispatch, useGlobalSelector } from "../hooks";
 import { hideGlobalLogin, setIsLoggedInTrue } from "../stores/reducers/global-reducer";
-export default function LoginComponent() {
+type LoginComponentProps = {
+    hideSignup?:boolean
+}
+export default function LoginComponent(props:LoginComponentProps) {
     const isGlobalLoginVisible = useGlobalSelector((state) => state.globalReducer.isGlobalLoginVisible);
     const dispatch = useGlobalDispatch();
     const redirect = useNavigate();
@@ -53,10 +56,11 @@ export default function LoginComponent() {
                 <button
                     disabled={isLoading}
                     type="submit" className="btn btn-outline-primary btn-sm btn-block mt-3">Login</button>
-                <div className="align-items-center d-flex justify-content-center" style={{ gap: "1rem" }}>
+                    {!props.hideSignup&&<><div className="align-items-center d-flex justify-content-center" style={{ gap: "1rem" }}>
                     <hr className="w-100" /> or <hr className="w-100" />
                 </div>
-                <Link to={"/auth/signup"} className="w-100 text-center">Signup</Link>
+                <Link to={"/auth/signup"} className="w-100 text-center">Signup</Link></>}
+                
             </form>
         </div>
     )

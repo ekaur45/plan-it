@@ -14,7 +14,7 @@ export default function DefaultLayout() {
         dispatch(hideGlobalLogin());
     }
     return (<>
-        {isGlobalLoginVisible && <Modal show={true}><Modal.Header><button onClick={handlCloseGlobalLogin}>Close</button></Modal.Header> <LoginComponent /></Modal>}
+        {isGlobalLoginVisible && <Modal show={true}><Modal.Header><b>Login to continue</b><button className="btn btn-outline-danger" onClick={handlCloseGlobalLogin}>Close</button></Modal.Header> <LoginComponent hideSignup={true}/></Modal>}
         <ToastContainer />
         <div className="preloader">
             <div className="loader">

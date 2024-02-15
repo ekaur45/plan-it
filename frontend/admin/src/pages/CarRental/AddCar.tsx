@@ -57,11 +57,11 @@ export default function AddCarPage() {
 
             <div>
               <label className="mb-3 block text-black dark:text-white">
-                Model
+                Model year
               </label>
               <input
                 type="text"
-                placeholder="Model"
+                placeholder="Model year"
                 value={model}
                 onChange={e=>setModel(e.target.value)}
                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:bg-form-input"
@@ -104,7 +104,7 @@ export default function AddCarPage() {
                         rows={6}
                         placeholder="Write your bio here"
                         onChange={descriptionChange}
-                        defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet."
+                        defaultValue=""
                       ></textarea>
             </div>
             <div

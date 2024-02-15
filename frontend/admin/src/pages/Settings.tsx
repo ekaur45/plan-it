@@ -3,15 +3,15 @@ import userThree from '../images/user/user-03.png';
 import { useState, useEffect } from "react";
 import { FaEnvelope, FaSpinner, FaTimes, FaTimesCircle, FaUpload, FaUser } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
-import { postFormRequest, postRequest } from '../utils/api.util';
+import { getRequest, postFormRequest, postRequest } from '../utils/api.util';
 import { toast } from 'react-toastify';
 import CONFIG from '../utils/config.util';
 const Settings = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [cnicFront,setCnicFront] = useState("");
-  const [cnicNumber,setCnicNumber] = useState("");
-  const [phoneNumber,setPhoneNumber] = useState("");
-  const [cnicBack,setCnicBack] = useState("");
+  const [cnicFront, setCnicFront] = useState("");
+  const [cnicNumber, setCnicNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [cnicBack, setCnicBack] = useState("");
   const [isPIUploading, setIsPIUploading] = useState<boolean>(false);
   const [rows] = useState(localStorage.getItem("alertSettings") ? JSON.parse(localStorage.getItem("alertSettings") ?? "{}") : []);
   const [user, setUser] = useState(StorageUtil.getUser());
@@ -32,13 +32,19 @@ const Settings = () => {
     setFirstName(e.target.value);
   }
 
-
+  const updateProfileValued = async () => {
+    const result = await getRequest("auth/me");
+    if (result.status == 200) {
+      StorageUtil.updateUser(result.data);
+    }
+  }
   const handleOnFormSubmit = async (e: any) => {
     e.preventDefault();
-    let d = { documents: files.map(e => e.file), firstName,  lastName,phoneNumber,cnicFront,cnicBack,cnicNumber };
+    let d = { documents: files.map(e => e.file), firstName, lastName, phoneNumber, cnicFront, cnicBack, cnicNumber };
     const result = await postRequest("auth/update-profile", d);
+    toast(result.message, { type:result.status == 200? "success":"error", draggable: true })
     if (result.status == 200) {
-      toast("Profile updated", { type: "success", draggable: true })
+      updateProfileValued();
     }
 
   }
@@ -73,7 +79,7 @@ const Settings = () => {
     form.append("file", e.target.files[0]);
     const response = await postFormRequest<any>("upload", form);
     const added = await postRequest<any>("auth/update-profile-image", { img: response.data.file });
-
+    updateProfileValued();
     setIsPIUploading(false);
   }
   const handleRemove = (e: any) => {
@@ -200,7 +206,7 @@ const Settings = () => {
                       id="cnicNumber"
                       placeholder="00000-0000000-0"
                       value={cnicNumber}
-                      onChange={e=>setCnicNumber(e.target.value)}
+                      onChange={e => setCnicNumber(e.target.value)}
                     />
                   </div>
                   <div className="mb-5.5">
@@ -217,7 +223,7 @@ const Settings = () => {
                       id="phoneNumber"
                       placeholder="0000-0000000"
                       value={phoneNumber}
-                      onChange={e=>setPhoneNumber(e.target.value)}
+                      onChange={e => setPhoneNumber(e.target.value)}
                     />
                   </div>
 
@@ -227,12 +233,12 @@ const Settings = () => {
                         id="FileUpload"
                         className="relative  mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray dark:bg-meta-4"
                       >
-                        <span onClick={e=>setCnicFront("")} className='text-danger top-3 right-3 absolute'>
-                          <FaTimesCircle/>
+                        <span onClick={e => setCnicFront("")} className='text-danger top-3 right-3 absolute'>
+                          <FaTimesCircle />
                         </span>
-                        <img src={CONFIG.BaseUrl+cnicFront}/>
-                        </div>}
-                        {!cnicFront &&<div
+                        <img src={CONFIG.BaseUrl + cnicFront} />
+                      </div>}
+                      {!cnicFront && <div
                         id="FileUpload"
                         className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
                       >
@@ -259,16 +265,16 @@ const Settings = () => {
                       </div>}
                     </div>
                     <div className="w-full sm:w-1/2">
-                    {cnicBack && <div
+                      {cnicBack && <div
                         id="FileUpload"
                         className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray dark:bg-meta-4"
                       >
-                         <span onClick={e=>setCnicBack("")} className='text-danger top-3 right-3 absolute'>
-                          <FaTimesCircle/>
+                        <span onClick={e => setCnicBack("")} className='text-danger top-3 right-3 absolute'>
+                          <FaTimesCircle />
                         </span>
-                        <img src={CONFIG.BaseUrl+cnicBack}/>
-                        </div>}
-                        {!cnicBack && <div
+                        <img src={CONFIG.BaseUrl + cnicBack} />
+                      </div>}
+                      {!cnicBack && <div
                         id="FileUpload"
                         className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
                       >
@@ -297,7 +303,7 @@ const Settings = () => {
                     </div>
                   </div>
 
-                  {user.userType == 2 && <div className="mb-5.5">
+                  <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="Username"
@@ -329,9 +335,6 @@ const Settings = () => {
                         (files && files) ? files.map((img, i) => <div key={i} className='relative'>
                           <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f => f.filter((item: any, ndx: number) => ndx !== i))}>
                             <FaTimesCircle />
-                        (files && files) ? files.map((img, i) => <div key={i} className='relative'>
-                          <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f => f.filter((item: any, ndx: number) => ndx !== i))}>
-                            <FaTimesCircle />
                           </div>
                           <img style={{ height: "6rem", width: "6rem" }} src={CONFIG.BaseUrl + img.file} />
                         </div>) : null
@@ -345,15 +348,15 @@ const Settings = () => {
                       }
                     </div>
                   </div>
-                  
+
 
                   <div className="flex justify-end gap-4.5">
-                    <button
+                    {/* <button
                       className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                       type="submit"
                     >
                       Cancel
-                    </button>
+                    </button> */}
                     <button
                       disabled={files?.length == 0}
                       className={(files?.length == 0 ? "bg-opacity-30 " : "") + "flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1"}
@@ -395,7 +398,6 @@ const Settings = () => {
                       </span>
                     </div> */}
                   </div>
-
                   <div
                     id="FileUpload"
                     className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
@@ -406,7 +408,8 @@ const Settings = () => {
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                       onChange={handleOnProfileImageChange}
                     />
-                    <div className="flex flex-col items-center justify-center space-y-3">
+                    {user.profileImage && <img src={CONFIG.BaseUrl + user.profileImage} />}
+                    {!user.profileImage && <div className="flex flex-col items-center justify-center space-y-3">
                       <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
                         <FaUpload />
                       </span>
@@ -417,9 +420,10 @@ const Settings = () => {
                       <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
                       <p>(max, 800 X 800px)</p>
                     </div>
+                    }
                   </div>
 
-                  <div className="flex justify-end gap-4.5">
+                  {/* <div className="flex justify-end gap-4.5">
                     <button
                       className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                       type="submit"
@@ -432,7 +436,7 @@ const Settings = () => {
                     >
                       Save
                     </button>
-                  </div>
+                  </div> */}
                 </form>
               </div>
             </div>

@@ -8,7 +8,7 @@ import CONFIG from "../../utils/config.util";
 
 export default function CarListPage() {
     const [cars, setCars] = useState<CarModel[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const initialData = async () => {
         setIsLoading(true)
         const result = await getRequest<CarModel[]>('car-rental/all-cars');
@@ -42,55 +42,61 @@ export default function CarListPage() {
         );
     }
     return (<>
-        {isLoading && <Loader />}
-        {
-            !isLoading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
-                {
-                    cars && cars.length > 0 && cars.map((e: CarModel, i: number) => {
-                        return <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
-                            <div className="flex flex-col sm:grid-cols-2">
-                                <img src={CONFIG.BaseUrl + e.images[0]} alt="" onError={handleOnImageError} className="mb-3"/>
-                                <div className="flex justify-between px-3">
-                                    <b>
-                                        Name:
-                                    </b>
-                                    <span>
-                                        {e.name}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between px-3">
-                                    <b>
-                                        Model:
-                                    </b>
-                                    <span>
-                                        {e.model}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between px-3">
-                                    <b>
-                                        Color:
-                                    </b>
-                                    <span>
-                                        {e.color}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between px-3 pb-3">
-                                    <b>
-                                        Rent:
-                                    </b>
-                                    <span>
-                                        PKR {e.rent}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between px-3 pb-3">
-                                    {e.description}
+
+        <div className="p-3 bg-white dark:bg-boxdark">
+        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">Your cars</h4>
+            {isLoading && <Loader />}
+            {
+                !isLoading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
+                    {
+                        cars && cars.length > 0 && cars.map((e: CarModel, i: number) => {
+                            return <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
+                                <div className="flex flex-col sm:grid-cols-2">
+                                    <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" />
+                                    <div className="flex justify-between px-3">
+                                        <b>
+                                            Name:
+                                        </b>
+                                        <span>
+                                            {e.name}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-3">
+                                        <b>
+                                            Model:
+                                        </b>
+                                        <span>
+                                            {e.model}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-3">
+                                        <b>
+                                            Color:
+                                        </b>
+                                        <span>
+                                            {e.color}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-3 pb-3">
+                                        <b>
+                                            Rent:
+                                        </b>
+                                        <span>
+                                            PKR {e.rent}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between px-3 pb-3">
+                                        {e.description}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    })
-                }
-            </div>
-        }
+                        })
+                    }
+
+
+                </div>
+            }
+        </div>
     </>
     )
 }

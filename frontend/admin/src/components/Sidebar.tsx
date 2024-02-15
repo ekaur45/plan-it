@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../images/logo/logo.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import { FaArrowLeft, FaCaretDown, FaCaretUp, FaDashcube, FaHamburger } from 'react-icons/fa';
+import { FaArrowLeft, FaCar, FaCaretDown, FaCaretUp, FaDashcube, FaHamburger, FaListOl, FaPlus } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
 
 interface SidebarProps {
@@ -94,200 +94,88 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Dashboard
                 </NavLink>
               </li>
+              {user.userRole != "admin" && user.userType == "1" && <>
+                <li>
+                  <NavLink
+                    to="/car-rental/cars"
+                    className={({ isActive }) =>
+                      'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                      (isActive && '!text-white')
+                    }
+                  >
+                    <FaCar />
+                    Cars
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/car-rental/add-car"
+                    className={({ isActive }) =>
+                      'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                      (isActive && '!text-white')
+                    }
+                  >
+                    <FaPlus />
+                    Add Car
+                  </NavLink>
+                </li>
+              </>}
 
               {
-                user.userRole != "admin" && user.userType == "1" && <SidebarLinkGroup
-                  activeCondition={
-                    pathname === '/car-rental' || pathname.includes('car-rental')
-                  }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <React.Fragment>
-                        <NavLink
-                          to="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/car-rental' ||
-                              pathname.includes('car-rental')) &&
-                            'bg-graydark dark:bg-meta-4'
-                            }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-                          Car Rental
-                          <div className='absolute right-4 top-1/2 -translate-y-1/2 fill-current'>
-                            {open ? <FaCaretUp /> : <FaCaretDown />}
-                          </div>
-                        </NavLink>
-                        {/* <!-- Dropdown Menu Start --> */}
-                        <div
-                          className={`translate transform overflow-hidden ${!open && 'hidden'
-                            }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
-                                to="/car-rental/cars"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Cars
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
-                                to="/car-rental/add-car"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Add Car
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                        {/* <!-- Dropdown Menu End --> */}
-                      </React.Fragment>
-                    );
-                  }}
-                </SidebarLinkGroup>
-              }
+                user.userRole != "admin" && user.userType == "2" && <>
+                  <li>
+                    <NavLink
+                      to="/event/events"
+                      className={({ isActive }) =>
+                        'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                        (isActive && '!text-white')
+                      }
+                    >
+                      Decorations
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/event/add-event"
+                      className={({ isActive }) =>
+                        'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                        (isActive && '!text-white')
+                      }
+                    >
+                      Add Decoration
+                    </NavLink>
+                  </li>
+                </>
 
-              {
-                user.userRole != "admin"&& user.userType == "2" && <SidebarLinkGroup
-                  activeCondition={
-                    pathname === '/event' || pathname.includes('event')
-                  }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <React.Fragment>
-                        <NavLink
-                          to="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/event' ||
-                              pathname.includes('event')) &&
-                            'bg-graydark dark:bg-meta-4'
-                            }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
-
-                          Event Decorator
-                          <div className='absolute right-4 top-1/2 -translate-y-1/2 fill-current'>
-                            {open ? <FaCaretUp /> : <FaCaretDown />}
-                          </div>
-                        </NavLink>
-                        {/* <!-- Dropdown Menu Start --> */}
-                        <div
-                          className={`translate transform overflow-hidden ${!open && 'hidden'
-                            }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
-                                to="/event/events"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Events
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
-                                to="/event/add-event"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Add Event
-                              </NavLink>
-                            </li>
-
-
-                          </ul>
-                        </div>
-                        {/* <!-- Dropdown Menu End --> */}
-                      </React.Fragment>
-                    );
-                  }}
-                </SidebarLinkGroup>
               }
               {
-                user.userRole != "admin" && user.userType == "3" && <SidebarLinkGroup
-                  activeCondition={
-                    pathname === '/venue' || pathname.includes('venue')
-                  }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <React.Fragment>
-                        <NavLink
-                          to="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/venue' ||
-                              pathname.includes('venue')) &&
-                            'bg-graydark dark:bg-meta-4'
-                            }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
-                          }}
-                        >
+                user.userRole != "admin" && user.userType == "3" && <>
+                  <li>
+                    <NavLink
+                      to="/venue/venues"
+                      className={({ isActive }) =>
+                        'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                        (isActive && '!text-white')
+                      }
+                    >
+                      <FaListOl/>
+                      Venues
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/venue/add-venue"
+                      className={({ isActive }) =>
+                        'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                        (isActive && '!text-white')
+                      }
+                    >
+                      <FaPlus/>
+                      Add Venue
+                    </NavLink>
+                  </li>
 
-                          Venues
-                          <div className='absolute right-4 top-1/2 -translate-y-1/2 fill-current'>
-                            {open ? <FaCaretUp /> : <FaCaretDown />}
-                          </div>
-                        </NavLink>
-                        {/* <!-- Dropdown Menu Start --> */}
-                        <div
-                          className={`translate transform overflow-hidden ${!open && 'hidden'
-                            }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
-                                to="/venue/venues"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Venues
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
-                                to="/venue/add-venue"
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
-                                }
-                              >
-                                Add Venue
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                        {/* <!-- Dropdown Menu End --> */}
-                      </React.Fragment>
-                    );
-                  }}
-                </SidebarLinkGroup>
+                </>
               }
               {
                 user.userRole == "admin" &&
@@ -302,7 +190,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <NavLink
                           to="#"
                           className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/users' ||
-                              pathname.includes('users')) &&
+                            pathname.includes('users')) &&
                             'bg-graydark dark:bg-meta-4'
                             }`}
                           onClick={(e) => {
