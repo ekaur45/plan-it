@@ -18,7 +18,7 @@ export default function AddCarBookingPage() {
     const result = await getRequest<CarModel[]>("car-rental/all-cars");
     setIsLoadingCar(false);
     if (result.status == 200) {
-      result.data = [{ name: "Select car", _id: "", color: "", images: [], model: "", rent: 0 }, ...result.data];
+      result.data = [{ name: "Select car", _id: "", color: "", images: [], model: "", rent: 0, description:"" }, ...result.data];
       setCars(result.data);
       if (result.data.length > 0)
         setSelectedCars(result.data[0]);

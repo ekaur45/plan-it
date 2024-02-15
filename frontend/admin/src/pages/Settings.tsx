@@ -35,7 +35,7 @@ const Settings = () => {
 
   const handleOnFormSubmit = async (e: any) => {
     e.preventDefault();
-    let d = { documents: files.map(e => e.file), firstName, lastName,phoneNumber,cnicFront,cnicBack,cnicNumber };
+    let d = { documents: files.map(e => e.file), firstName,  lastName,phoneNumber,cnicFront,cnicBack,cnicNumber };
     const result = await postRequest("auth/update-profile", d);
     if (result.status == 200) {
       toast("Profile updated", { type: "success", draggable: true })
@@ -297,7 +297,7 @@ const Settings = () => {
                     </div>
                   </div>
 
-                  <div className="mb-5.5">
+                  {user.userType == 2 && <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="Username"
@@ -326,6 +326,9 @@ const Settings = () => {
                     </div>
                     <div className='flex gap-2'>
                       {
+                        (files && files) ? files.map((img, i) => <div key={i} className='relative'>
+                          <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f => f.filter((item: any, ndx: number) => ndx !== i))}>
+                            <FaTimesCircle />
                         (files && files) ? files.map((img, i) => <div key={i} className='relative'>
                           <div className='text-[#CD5D5D] absolute right-0 top-0 bg-gray' onClick={() => setFiles(f => f.filter((item: any, ndx: number) => ndx !== i))}>
                             <FaTimesCircle />

@@ -70,6 +70,11 @@ carRentalService.getMyRental = async (userId) => {
 carRentalService.getSingleCar = async carId =>{
     const carDoc = await mongoUtil.runner(dbConstants.CARS);
     const carDocsCollection = await carDoc.findOne({"_id":new ObjectId(carId)});
+    if(carDocsCollection){
+        const carRatingDocs = await mongoUtil.runner(dbConstants.CAR_RATING);
+        const carRating = carRatingDocs.find({carId:carDocsCollection._id+""}).toArray();
+        carDocsCollection["rating"] = carRating;
+    }
     return carDocsCollection;
 }
 

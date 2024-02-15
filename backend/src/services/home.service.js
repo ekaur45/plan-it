@@ -1,3 +1,5 @@
+const { ObjectId } = require("bson");
+const CarRatingModel = require("../models/car-rating.model");
 const dbConstants = require("../models/db.constants");
 const ServiceTypes = require("../models/enums");
 const mongoUtil = require("../utils/mongo-db.util");
@@ -20,15 +22,24 @@ homeService.getCarRentals = async ()=>{
     const all = await allPromise.toArray();
     return all;
 }
+homeService.getVenues = async ()=>{
+    const docs = await mongoUtil.runner(dbConstants.VENUES);
+    const allPromise = await docs.find({});
+    const all = await allPromise.toArray();
+    return all;
+}
 homeService.getMyBookings = async userId =>{
     const carBookingsDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
     const venueBookingsDoc = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
+    const bookingRatingDoc = await mongoUtil.runner(dbConstants.CAR_RATING);
     const _carBookings = await carBookingsDocs.find({"userId":userId}).toArray();
     const carBookings  = await Promise.all(_carBookings.map(async cb=>{
         const user = await userService.getUserSingle(cb.userId);
         cb["user"] = user;
         const car = await carRentalService.getSingleCar(cb.carId);
         cb["car"] = car;
+        const bookingRating = await bookingRatingDoc.find({bookingId:cb._id+""}).toArray();
+        cb["rating"] = bookingRating;
         return cb;
     }));
     const venueBookings = await venueBookingsDoc.find({"userId":userId}).toArray();
@@ -36,5 +47,16 @@ homeService.getMyBookings = async userId =>{
         carBookings,
         venueBookings
     }
+}
+
+/**
+ * 
+ * @param {CarRatingModel} model 
+ */
+homeService.addCarRating = async model=>{
+    console.log(model);
+    const carDocs = await mongoUtil.runner(dbConstants.CAR_RATING);    
+    const update = await carDocs.insertOne(model);
+    return update;
 }
 module.exports = homeService;

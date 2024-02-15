@@ -8,4 +8,5 @@ export default class CarBookingModel{
     car:CarModel = new CarModel();
     rentDate:Date = new Date();
     returnDate:Date = new Date();
+    rating:any[] = [];
 }
