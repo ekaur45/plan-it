@@ -13,7 +13,6 @@ const userTypes:Array<{name:string,value:string}> = [
 ]
 const SignUp = () => {
   const redirect = useNavigate();
-  const [userType,setType] = useState("1");
   const [firstName,setFirstName] = useState("");
   const [selectedType,setSelectedType] = useState<{name:string,value:string}>(userTypes[0]);
   const [lastName,setLastName] = useState("");
@@ -21,7 +20,7 @@ const SignUp = () => {
   const [password,setPassword] = useState("");
   const handleOnFormSubmit = async (e:React.SyntheticEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    const result = await postRequest<any>("auth/signup",{userType,firstName,lastName,email,password});
+    const result = await postRequest<any>("auth/signup",{userType:selectedType.value,firstName,lastName,email,password});
     if(result.status == 200){
       StorageUtil.setUser(result.data);
       redirect("/");
@@ -169,7 +168,6 @@ const SignUp = () => {
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Sign Up to Plan-IT
               </h2>
-
               <form onSubmit={handleOnFormSubmit}>
                 <div className="mb-4">
                 <label className="mb-2.5 block font-medium text-black dark:text-white">

@@ -2,9 +2,9 @@ import VenueModel from "../../models/venue/venue.model";
 import { getRequest } from "../../utils/api.util";
 import { useEffect, useState } from "react";
 import CONFIG from "../../utils/config.util";
-function VenueImage(venue:any){
-    if(venue && venue.images&&venue.images.length>0){
-        return <><img src={CONFIG.BaseUrl+venue.images[0]}/></>
+function VenueImage(venue: any) {
+    if (venue && venue.images && venue.images.length > 0) {
+        return <><img src={CONFIG.BaseUrl + venue.images[0]} /></>
     }
     return <>No Image</>
 }
@@ -17,39 +17,46 @@ export default function VenueListPage() {
             setVenues(result.data);
         }
     }
+    const handleOnImageError = (e: any) => {
+        e.target.src = "/assets/images/no-image.png";
+    }
     useEffect(() => {
         handleFetchInitialData();
     }, [])
     return (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sr#</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Capacity</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        venues.map((e: VenueModel, i: number) => {
-                            return <tr>
-                                <td>{i+1}</td>
-                                <td><VenueImage venue={e}/></td>
-                                <td>{e.name}</td>
-                                <td>{e.location}</td>
-                                <td>{e.capacity}</td>
-                                <td>{e.price}</td>
-                                <td>Actions</td>
-                            </tr>
-                        })
-                    }
-                </tbody>
-            </table>
-        </div>
+        <>
+            <div className="p-3 bg-white dark:bg-boxdark">
+                <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">Your venues</h4>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
+                    {venues.map((e: VenueModel, i: number) => <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
+                        <div className="flex flex-col sm:grid-cols-2">
+                            <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" />
+                            <div className="flex justify-between px-3">
+                                <b>
+                                    Name:
+                                </b>
+                                {e.name}
+                            </div>
+                            <div className="flex justify-between px-3">
+                                <b><em className="fa fa-location"></em>Location:</b>
+                                {e.location}
+                            </div>
+                            <div className="flex justify-between px-3">
+                                <b>Capacity:</b>
+                                {e.capacity}
+                            </div>
+                            <div className="flex justify-between px-3">
+                                <b>Price per head</b>
+                                {e.price ?? "-"}
+                            </div>
+                            
+                            <p className="mb-3  px-3">
+                                {e.description}
+                            </p>
+                        </div>
+                    </div>)}
+                </div>
+            </div>
+        </>
     )
 }

@@ -1,11 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { getRequest } from "../../utils/api.util";
-import CarBookingModel from "../../models/car-booking.model";
 import { Link } from "react-router-dom";
 import MyBookingModel from "../../models/bookings/my-booking.model";
 import moment from "moment";
 import VenueBookingModel from "../../models/venue/venue-booking.model";
-
+import CarBookingComponent from "../../components/bookings/CarBookingComponent";
 export default function BookingListPage() {
     const [bookings, setBookings] = useState<MyBookingModel>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -63,30 +62,8 @@ export default function BookingListPage() {
                             Car Booking
                         </td>
                     </tr>
-                    {bookings?.carBookings.map((booking: CarBookingModel, ndx: number) => <Fragment key={booking._id}>
-                        <tr>
-                            <td>
-                                {ndx + 1}
-                            </td>
-                            <td>
-                                <span>{booking.car.name} {booking.car.model}</span>
-                                PKR - {booking.car.rent} /-
-                            </td>
-                            <td>
-                                <span>{booking.user.firstName} {booking.user.lastName}</span>
-                                {booking.user.phoneNumber}
-                            </td>
-                            <td>
-                                {moment(booking.rentDate).format("YYYY-MM-DD")}
-                            </td>
-                            <td>
-                                {moment(booking.returnDate).format("YYYY-MM-DD")}
-                            </td>
-                            <td>
-                                Actions
-                            </td>
-                        </tr>
-                    </Fragment>)}
+                    {bookings&&bookings.carBookings&&bookings.carBookings.length>0&&<CarBookingComponent ratingChanged={initialData} bookings={bookings.carBookings}/>}
+                    
                     <tr>
                         <td>
                             Venue Booking

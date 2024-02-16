@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { postFormRequest, postRequest } from "../../utils/api.util";
 import { toast } from "react-toastify";
 
@@ -6,23 +6,28 @@ import { toast } from "react-toastify";
 export default function AddVenuePage() {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
   const [capacity, setCapacity] = useState(0);
-  const [images,setImages] = useState<any[]>([]);
-  const handleOnSubmit =async (e:any) => {
-    let d = {name,location,capacity,images};
-    const result = await postRequest<any>('venue/add',d);
-    if(result&&result.status == 200){
-      toast(result.message,{type:"success"});
+  const [pricePerHead, setPricePerHead] = useState(1);
+  const [images, setImages] = useState<any[]>([]);
+  const handleOnSubmit = async (e: any) => {
+    let d = { name, location, capacity, images,description,pricePerHead };
+    const result = await postRequest<any>('venue/add', d);
+    if (result && result.status == 200) {
+      toast(result.message, { type: "success" });
     }
   }
-  const handleOnImageChange = async (e:any) =>{
+  const handleOnImageChange = async (e: any) => {
     const image = e.target.files[0];
     const form = new FormData();
-    form.append("image",image);
-    const result = await postFormRequest("upload",form);
-    if(result.status == 200){
-      setImages(pre=>[...pre,result.data]);
+    form.append("image", image);
+    const result = await postFormRequest("upload", form);
+    if (result.status == 200) {
+      setImages(pre => [...pre, result.data]);
     }
+  }
+  const descriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
   }
   return (
     <>
@@ -31,7 +36,7 @@ export default function AddVenuePage() {
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
-                Add Car
+                Add Venue
               </h3>
             </div>
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 p-6.5 pb-0">
@@ -42,7 +47,7 @@ export default function AddVenuePage() {
                 <input
                   type="text"
                   value={name}
-                  onChange={e=>setName(e.target.value)}
+                  onChange={e => setName(e.target.value)}
                   placeholder="Name"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
@@ -56,7 +61,7 @@ export default function AddVenuePage() {
                   type="text"
                   placeholder="Location"
                   value={location}
-                  onChange={e=>setLocation(e.target.value)}
+                  onChange={e => setLocation(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:bg-form-input"
                 />
               </div>
@@ -70,13 +75,42 @@ export default function AddVenuePage() {
                   type="number"
                   placeholder="Capacity"
                   value={capacity}
-                  onChange={e=>setCapacity(e.target.valueAsNumber)}
+                  onChange={e => setCapacity(e.target.valueAsNumber)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div>
+              <div>
+                <label className="mb-3 block font-medium text-black dark:text-white">
+                  Price per head
+                </label>
+                <input
+                  type="number"
+                  placeholder="Capacity"
+                  value={pricePerHead}
+                  onChange={e => setPricePerHead(e.target.valueAsNumber)}
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+              </div>
+
+              <div>
+                <label className="mb-3 block font-medium text-black dark:text-white">
+                  Description
+                </label>
+
+                <textarea
+                  className="w-full rounded border border-stroke bg-gray py-3 pl-4.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  name="bio"
+                  id="bio"
+                  rows={8}
+                  onChange={descriptionChange}
+                  placeholder="Write your bio here"
+                  value={description}
+                  defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet."
+                >{description}</textarea>
+              </div>
               <div
                 id="FileUpload"
-                className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
+                className="relative mt-9 mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
               >
                 <input
                   type="file"
@@ -121,13 +155,13 @@ export default function AddVenuePage() {
                   <p>(max, 800 X 800px)</p>
                 </div>
               </div>
-            {
-              images&&images.length>0&&<>{images.length} image{images.length==1?"":"s"} added.</>
-            }
+              {
+                images && images.length > 0 && <>{images.length} image{images.length == 1 ? "" : "s"} added.</>
+              }
             </div>
             <div className="pl-6.5 pr-6.5 pb-6.5">
               <button
-              onClick={handleOnSubmit}
+                onClick={handleOnSubmit}
                 className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70"
                 type="submit"
               >

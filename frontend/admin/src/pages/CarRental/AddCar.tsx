@@ -1,23 +1,27 @@
 import { toast } from "react-toastify";
 import { postFormRequest, postRequest } from "../../utils/api.util";
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 
 export default function AddCarPage() {
   const [name,setName] = useState("");
   const [model,setModel] = useState("");
   const [color,setColor] = useState("");
   const [rent,setRent] = useState("");
+  const [description,setDescription] = useState<string>("");
   const [images,setImages] = useState<any[]>([]);
   const [isSubmiting,setIsSubmiting] = useState<boolean>(false);
   const handleOnAddSubmit = async (e:any)=>{
     //e.target.preventDefault();
-    let d = {name,model,color,rent,images:[""]};
+    let d = {name,model,color,rent,images:[...images],description};
     setIsSubmiting(true);
     const result = await postRequest<any>('car-rental/add',d);
     setIsSubmiting(false);
     toast(result.message,{type:result.status == 200 ?"success":"error"});
     if(result&&result.status == 200){
     }
+  }
+  const descriptionChange = (e:ChangeEvent<HTMLTextAreaElement>)=>{
+      setDescription(e.target.value);
   }
   const handleOnImageChange = async (e:any) =>{
     const image = e.target.files[0];
@@ -53,11 +57,11 @@ export default function AddCarPage() {
 
             <div>
               <label className="mb-3 block text-black dark:text-white">
-                Model
+                Model year
               </label>
               <input
                 type="text"
-                placeholder="Model"
+                placeholder="Model year"
                 value={model}
                 onChange={e=>setModel(e.target.value)}
                 className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:bg-form-input"
@@ -87,6 +91,21 @@ export default function AddCarPage() {
                 placeholder="Rent"
                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
+            </div>
+            <div>
+              <label className="mb-3 block font-medium text-black dark:text-white">
+                Description
+              </label>
+              
+              <textarea
+                        className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        name="bio"
+                        id="bio"
+                        rows={6}
+                        placeholder="Write your bio here"
+                        onChange={descriptionChange}
+                        defaultValue=""
+                      ></textarea>
             </div>
             <div
               id="FileUpload"
