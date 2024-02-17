@@ -1,5 +1,5 @@
 export default function AddUserPage(){
     return(<>
-    Add User
+   <h4>Coming soon...</h4>
     </>);
 }

@@ -3,8 +3,9 @@ import CarModel from "../../models/car/car.model";
 import Loader from "../../common/Loader";
 import { getRequest } from "../../utils/api.util";
 import { Link } from "react-router-dom";
-import { FaBan } from "react-icons/fa";
+import { FaBan, FaTrashAlt } from "react-icons/fa";
 import CONFIG from "../../utils/config.util";
+import { toast } from "react-toastify";
 
 export default function CarListPage() {
     const [cars, setCars] = useState<CarModel[]>([]);
@@ -50,7 +51,12 @@ export default function CarListPage() {
                 !isLoading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
                     {
                         cars && cars.length > 0 && cars.map((e: CarModel, i: number) => {
-                            return <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
+                            return <div className="relative rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
+                                <div className="actions absolute right-3 top-3">
+                                    <span className="text-danger cursor-pointer" onClick={()=>toast("Feature coming soon...",{type:"info"})}>
+                                        <FaTrashAlt/>
+                                    </span>
+                                </div>
                                 <div className="flex flex-col sm:grid-cols-2">
                                     <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" />
                                     <div className="flex justify-between px-3">
