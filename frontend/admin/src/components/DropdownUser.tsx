@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, redirect } from 'react-router-dom';
-enum UserType  {
+export enum UserType  {
   "Car Rental"=1,
   "Event Decorator"=2,
   "Venue Provider"=3
