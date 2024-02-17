@@ -35,7 +35,7 @@ export default function UserListPage() {
     }, []);
     return (<>
         <div className="flex justify-end">
-            <button className="bg-primary border border-primary cursor-pointer hover:bg-opacity-90 px-4 py-2 rounded-lg text-white transition mb-2">Add new</button>
+            <Link to={"/users/add"} className="bg-primary border border-primary cursor-pointer hover:bg-opacity-90 px-4 py-2 rounded-lg text-white transition mb-2">Add new</Link>
         </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
