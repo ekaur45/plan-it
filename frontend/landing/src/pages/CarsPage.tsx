@@ -98,7 +98,7 @@ export default function CarPage() {
                 {
                     cars && cars.length > 0 && cars.map((car: CarModel, ndx: number) => <div key={car._id} className="col-md-4 mb-3">
                         <div className="card">
-                            <img onError={handleOnImageError} src={CONFIG.BaseUrl + car.images[0].file} alt="" className="card-image" />
+                            <img onError={handleOnImageError} src={CONFIG.BaseUrl + car.images[0].file} alt="" className="card-image" style={{maxHeight:"200px"}} />
                             <div className="card-body">
                                 <div className="d-flex w-100 justify-content-between">
                                     <b>Car: </b><span>{car.name}</span>
@@ -114,7 +114,7 @@ export default function CarPage() {
                                 </p>
                             </div>
                             <div className="mt-3">
-                                <button className="btn btn-primary btn-sm btn-block" onClick={e => handBookCarSubmit(car)}>
+                                <button className="btn btn-primary btn-block" onClick={e => handBookCarSubmit(car)}>
                                     Book
                                 </button>
                             </div>

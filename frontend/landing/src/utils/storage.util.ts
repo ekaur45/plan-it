@@ -3,6 +3,7 @@ interface IStorageUtil{
     getUser:()=>any
     clearStorage:()=>any
     isLoggedIn:()=>boolean
+    updateUser:(u:any)=>void
 }
 const StorageUtil:IStorageUtil = {
     setUser:(user:object)=>{
@@ -16,6 +17,10 @@ const StorageUtil:IStorageUtil = {
     },
     clearStorage:()=>{
         localStorage.clear();
+    },
+    updateUser:(u:any)=>{
+        const {access_token} = StorageUtil.getUser();
+        StorageUtil.setUser({access_token,...u});
     }
 };
 export default StorageUtil;

@@ -20,8 +20,11 @@ export const globalSlice = createSlice({
         },
         setIsLoggedInTrue:(state,)=>{
             state.isLoggedIn = true
+        },
+        updateUser:(state,values)=>{
+            state.user = {...values.payload,access_token:state.user.access_token}
         }
     }
 })
-export const {showGlobalLogin,hideGlobalLogin,setIsLoggedInFalse,setIsLoggedInTrue} = globalSlice.actions;
+export const {showGlobalLogin,hideGlobalLogin,setIsLoggedInFalse,setIsLoggedInTrue,updateUser} = globalSlice.actions;
 export default globalSlice.reducer;
