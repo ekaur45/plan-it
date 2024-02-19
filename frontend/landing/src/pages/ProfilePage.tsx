@@ -6,7 +6,6 @@ export default function ProfilePage() {
     const user = useGlobalSelector((state) => state.globalReducer.user);
     const [firstName, setFirstName] = useState<string>(user.firstName);
     const [lastName, setLastName] = useState<string>(user.lastName);
-    console.log(user);
     return (<Fragment>
         <section className="single_slider" style={{ height: "78px" }}>
 
@@ -22,6 +21,7 @@ export default function ProfilePage() {
                             <label>First name</label>
                             <input type="text" className="form-control"
                                 value={firstName}
+                                required
                                 onChange={e => setFirstName(e.target.value)}
                             />
                         </div>
@@ -29,6 +29,7 @@ export default function ProfilePage() {
                             <label>Last name</label>
                             <input type="text" className="form-control"
                                 value={lastName}
+                                required
                                 onChange={e => setLastName(e.target.value)}
                             />
                         </div>
@@ -36,6 +37,7 @@ export default function ProfilePage() {
                             <label>Email</label>
                             <input type="text" className="form-control"
                                 value={user.email}
+                                onChange={e=>{}}
                             />
                         </div>
                         <div className="col-md-12">

@@ -104,7 +104,6 @@ export default function AddCarPage() {
                         rows={6}
                         placeholder="Write your bio here"
                         onChange={descriptionChange}
-                        defaultValue=""
                       ></textarea>
             </div>
             <div
