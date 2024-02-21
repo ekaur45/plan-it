@@ -69,7 +69,7 @@ export default function BookingListPage() {
                             Venue Booking
                         </td>
                     </tr>
-                    {(bookings?.venueBookings || bookings?.venueBookings.length == 0) && <>No Venue booking</>}
+                    {(bookings?.venueBookings || bookings?.venueBookings.length === 0) && <>No Venue booking</>}
                     {bookings?.venueBookings.map((booking: VenueBookingModel, ndx: number) => <Fragment key={booking._id}>
                         <tr>
                             <td>

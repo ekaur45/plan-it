@@ -51,7 +51,13 @@ export default function CarPage() {
     }
     const handleOnSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const formData = new FormData(e.currentTarget) as any;
+        const queryParams = (new URLSearchParams(formData)).toString();
+        const result = await getRequest<CarModel[]>("home/car-rentals?"+queryParams);
+        if (result.status === 200) {
+            setCars(result.data);
 
+        }
     }
     useEffect(() => {
         getCars();
