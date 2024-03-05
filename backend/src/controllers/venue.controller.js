@@ -13,7 +13,8 @@ const venueController = {};
 
 venueController.add = async (req,res,next)=>{
     const model = new VenueModel(req.body);
-    if(!model.isValid) return res.BadRequest(model);
+    model.userId = req.user?._id;
+    if(!model.isValid) return res.BadRequest(model,"Invalid request.");
     const result = await venueRentalService.addVenue(model);
     return res.Ok(result,"Venue added succesfully.");
 }
@@ -45,7 +46,18 @@ venueController.bookVenue = async (req,res,next)=>{
     const result = await venueRentalService.bookVenue(model);
     return res.Ok(result,"Booked successfuly.");
 }
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
 
+venueController.deleteVenue = async (req,res,next)=>{
+    let id = req.query.id;
+    const result = await venueRentalService.deleteVenue(id);
+    return res.Ok(result,"Venue deleted successfuly.");
+}
 /**
  * 
  * @param {import("express").Request} req 
