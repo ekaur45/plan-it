@@ -22,6 +22,13 @@ export default function VenueListPage() {
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
     }
+    const deleteVenue = async (_id:string)=>{
+        const result = await getRequest<any>('venue/delete-venue?id='+_id);
+        toast(result.message,{type:result.status == 200 ?"success":"error"});
+        if (result.status == 200) {
+            handleFetchInitialData()
+        }
+    }
     useEffect(() => {
         handleFetchInitialData();
     }, [])
@@ -30,14 +37,15 @@ export default function VenueListPage() {
             <div className="p-3 bg-white dark:bg-boxdark">
                 <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">Your venues</h4>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
+                    {venues.length == 0 &&<>No data</>}
                     {venues.map((e: VenueModel, i: number) => <div key={i} className="relative rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
                     <div className="actions absolute right-3 top-3">
-                                    <span className="text-danger cursor-pointer" onClick={()=>toast("Feature coming soon...",{type:"info",draggable:true})}>
+                                    <span className="text-danger cursor-pointer" onClick={()=>deleteVenue(e._id)}>
                                         <FaTrashAlt/>
                                     </span>
                                 </div>
                         <div className="flex flex-col sm:grid-cols-2">
-                            <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" />
+                            <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" style={{maxHeight:"200px"}} />
                             <div className="flex justify-between px-3">
                                 <b>
                                     Name:
