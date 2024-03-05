@@ -1,3 +1,4 @@
+const { ObjectId } = require("bson");
 const dbConstants = require("../models/db.constants");
 const VenueModel = require("../models/venue.model");
 const mongoUtil = require("../utils/mongo-db.util");
@@ -25,5 +26,10 @@ venueRentalService.getVenues = async (userId)=>{
 venueRentalService.bookVenue = async model =>{
     const docs = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
     return await docs.insertOne(model);
+}
+
+venueRentalService.deleteVenue = async _id =>{
+    const docs = await mongoUtil.runner(dbConstants.VENUES);
+    return await docs.deleteOne({"_id":new ObjectId(_id)});
 }
 module.exports = venueRentalService;
