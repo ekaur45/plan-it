@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { postFormRequest, postRequest } from "../../utils/api.util";
 import { toast } from "react-toastify";
 import { FaSpinner, FaTimesCircle } from "react-icons/fa";
@@ -6,6 +6,8 @@ import { FaSpinner, FaTimesCircle } from "react-icons/fa";
 
 export default function AddEventPage() {
   const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>(1);
+  const [description, setDescription] = useState<string>("");
   const [files, setFile] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const handleFileChanged = async (e: any) => {
@@ -19,9 +21,12 @@ export default function AddEventPage() {
       setFile(pre => [...pre, result.data]);
     }
   }
+  const descriptionChange = (e:ChangeEvent<HTMLTextAreaElement>)=>{
+    setDescription(e.target.value);
+}
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
-    const d = { documents: files.map(f => f.file), name };
+    const d = { documents: files.map(f => f.file), name,price,description };
     const result = await postRequest("event/add", d);
     toast(result.message, { type: result.status == 200 ? "success" : "error" });
   }
@@ -48,6 +53,30 @@ export default function AddEventPage() {
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div>
+              <div>
+                <label className="mb-3 block text-black dark:text-white">Price</label>
+                <input
+                  type="number"
+                  placeholder="Price"
+                  value={price}
+                  onChange={e => setPrice(e.target.valueAsNumber)}
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+              </div>
+              <div>
+              <label className="mb-3 block font-medium text-black dark:text-white">
+                Description
+              </label>
+              
+              <textarea
+                        className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        name="bio"
+                        id="bio"
+                        rows={6}
+                        placeholder="Write your bio here"
+                        onChange={descriptionChange}
+                      ></textarea>
+            </div>
               <div
                 id="FileUpload"
                 className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"

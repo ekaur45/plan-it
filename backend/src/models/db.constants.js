@@ -2,6 +2,7 @@ module.exports = Object.freeze({
     "USERS":"users",
     "CARS":"cars",
     "CAR_RATING":"cars_rating",
+    "EVENT":"event",
     "EVENT_DECORATOR":"event_decorator",
     "VENUES":"venues",
     "VENUE_BOOKING":"venues",
