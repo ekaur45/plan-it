@@ -52,9 +52,49 @@ export default function HomePage() {
                                 <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0].file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
                                     className="w-100" />
                             </figure>
+                            <div className="card-content">
 
-                            <div className="card-content"></div></div>
+                                <div className="card-title-wrapper">
+                                    <h3 className="h3 card-title">
+                                        {ed.name}
+                                    </h3>
 
+                                    <data className="year" value="2021">{ed.model}</data>
+                                </div>
+
+                                <ul className="card-list">
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-users"></em>
+                                        <span className="card-item-text">4 People</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-bolt"></em>
+                                        <span className="card-item-text">Hybrid</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-tachometer"></em>
+                                        <span className="card-item-text">6.1km / 1-litre</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-microchip"></em>
+                                        <span className="card-item-text">Automatic</span>
+                                    </li>
+                                    <li className="card-list-item">
+                                        {ed.description}
+                                    </li>
+                                </ul>
+                                <div className="card-price-wrapper">
+                                    <p className="card-price">
+                                        <strong>{ed.rent}</strong> / month
+                                    </p>
+                                    <Link className="btn btn-outline-primary" to={"/cars"}>Rent now</Link>
+                                </div>
+                            </div>
+                        </div>
                     </li>)}
                 </ul>
             </div>
@@ -70,7 +110,17 @@ export default function HomePage() {
                 </div>
                 <ul className="featured-car-list">
                     {
-                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any) => <li></li>)
+                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any) => <li>
+                            <div className="featured-car-card">
+
+                                <figure className="card-banner">
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0].file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                        className="w-100" />
+                                </figure>
+
+                                <div className="card-content"></div>
+                            </div>
+                        </li>)
                     }
                 </ul>
             </div>
@@ -86,7 +136,19 @@ export default function HomePage() {
                 </div>
                 <ul className="featured-car-list">
                     {
-                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li></li>)
+                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li>
+                            <div className="featured-car-card">
+
+                                <figure className="card-banner">
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.profile} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                        className="w-100" />
+                                </figure>
+
+                                <div className="card-content">
+                                    
+                                </div>
+                            </div>
+                        </li>)
                     }
                 </ul>
             </div>

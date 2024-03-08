@@ -133,25 +133,21 @@ export default function CarsPage() {
                                         <ul className="card-list">
 
                                             <li className="card-list-item">
-                                                {/* <PeopleOutline cssClasses={"ion-icon"} /> */}
                                                 <em className="fa fa-users"></em>
                                                 <span className="card-item-text">4 People</span>
                                             </li>
 
                                             <li className="card-list-item">
-                                                {/* <ion-icon name="flash-outline"></ion-icon> */}
                                                 <em className="fa fa-bolt"></em>
                                                 <span className="card-item-text">Hybrid</span>
                                             </li>
 
                                             <li className="card-list-item">
-                                                {/* <ion-icon name="speedometer-outline"></ion-icon> */}
                                                 <em className="fa fa-tachometer"></em>
                                                 <span className="card-item-text">6.1km / 1-litre</span>
                                             </li>
 
                                             <li className="card-list-item">
-                                                {/* <ion-icon name="hardware-chip-outline"></ion-icon> */}
                                                 <em className="fa fa-microchip"></em>
                                                 <span className="card-item-text">Automatic</span>
                                             </li>
@@ -163,9 +159,6 @@ export default function CarsPage() {
                                             <p className="card-price">
                                                 <strong>{car.rent}</strong> / month
                                             </p>
-                                            {/* <button className="btn fav-btn" aria-label="Add to favourite list">
-                                                <em className="fa fa-heart"></em>
-                                            </button> */}
                                             <button className="btn btn-outline-primary" onClick={e => handBookCarSubmit(car)}>Rent now</button>
                                         </div>
                                     </div>

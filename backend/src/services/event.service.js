@@ -11,4 +11,13 @@ eventService.bookDecorator = async model =>{
     const docs = await mongoUtil.runner(dbConstants.EVENT_DECORATORS);
     return await docs.insertOne(model);
 }
+
+eventService.add = async model =>{
+    const docs = await mongoUtil.runner(dbConstants.EVENT);
+    return await docs.insertOne(model);
+}
+eventService.getAll = async _=>{
+    const docs = await mongoUtil.runner(dbConstants.EVENT);
+    return await docs.find({}).toArray();
+}
 module.exports = eventService;
