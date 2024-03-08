@@ -9,7 +9,7 @@ import './header.css';
 export default function Header() {
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
     const dispatch = useGlobalDispatch();
-    const user = useGlobalSelector(state=>state.globalReducer.user);    
+    const user = useGlobalSelector(state => state.globalReducer.user);
     const handleLogout = () => {
         StorageUtil.clearStorage();
         dispatch(updateUser(StorageUtil.getUser()));
@@ -18,78 +18,81 @@ export default function Header() {
     useEffect(() => {
         dispatch(updateUser(StorageUtil.getUser()));
     }, []);
-    return (
-        <section className="header_area">
-            <div className="header_navbar">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <nav className="navbar navbar-expand-lg">
-                                <Link className="navbar-brand text-white" to="/">
-                                    {/* <img src={require("../assets/images/logo.png")} alt="Logo" /> */}
-                                    Plan-IT
-                                </Link>
-                                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span className="toggler-icon"></span>
-                                    <span className="toggler-icon"></span>
-                                    <span className="toggler-icon"></span>
-                                </button>
+    return (<>
+        <header className="header" data-header>
+            <div className="container">
 
-                                <div className="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                    <ul id="nav" className="navbar-nav ml-auto">
-                                        <li className="nav-item active">
-                                            <Link className="page-scroll" to={"/"}>Home</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="page-scroll" to="/cars">Rent a Car</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="page-scroll" to="/event">Event Decorators</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                            <Link className="page-scroll" to="/venue">Venue Providers</Link>
-                                        </li>
-                                        {isLoggedIn && <Fragment>
-                                            <li className="nav-item">
-                                                <Link to={"/bookings"}>My Bookings</Link>
-                                            </li>
-                                            <li className="nav-item">
-                                                <div className="dropdown">
-                                                    <button className="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <img src={CONFIG.BaseUrl+user.profileImage??"/assets/images/author-1.jpg"} 
-                                                        style={{borderRadius:"50%",height:"35px",width:"35px"}}
-                                                        alt="" />
-                                                    </button>
-                                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <Link to={"/profile"} className="dropdown-item text-black c-p">
-                                                            <em className="fa fa-user mr-2"></em>
-                                                            {user.firstName} {user.lastName}</Link>                                                        
-                                                        <Link to={"/bookings"} className="dropdown-item text-black c-p">
-                                                            <em className="fa fa-list mr-2"></em>
-                                                            Bookings</Link>
-                                                        <span className="dropdown-item text-black c-p" onClick={handleLogout}>
-                                                            <em className="fa fa-sign-out mr-2"></em>
-                                                            Logout
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </Fragment>
-                                        }
-                                        {
-                                            !isLoggedIn && <Fragment>
-                                                <li className="nav-item">
-                                                    <Link className="page-scroll" to={CONFIG.AdminUrl + "auth/signin"}>Login / Signup</Link>
-                                                </li>
-                                            </Fragment>
-                                        }
-                                    </ul>
-                                </div>
-                            </nav>
+                <div className="overlay" data-overlay></div>
+
+                <Link to="/" className="logo">
+                    Plant-IT
+                </Link>
+
+                <nav className="navbar" data-navbar>
+                    <ul className="navbar-list">
+
+                        <li>
+                            <Link to={"/"} className="navbar-link" data-nav-link>Home</Link>
+                        </li>
+
+                        <li>
+                            <Link to={"/cars"} className="navbar-link" data-nav-link>Explore cars</Link>
+                        </li>
+
+                        <li>
+                            <Link to={""} className="navbar-link" data-nav-link>Venues</Link>
+                        </li>
+
+                        <li>
+                            <Link to={""} className="navbar-link" data-nav-link>Decorator</Link>
+                        </li>
+                        {isLoggedIn && <li >    
+                            <Link className="navbar-link" to={"/bookings"}>My Bookings</Link>
+                        </li>
+                        }
+                    </ul>
+                </nav>
+
+                <div className="header-actions">
+                    {isLoggedIn && <Fragment>
+                        <div className="dropdown">
+                            <button className="btn user-btn" aria-label="Profile" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src={CONFIG.BaseUrl + user.profileImage ?? "/assets/images/author-1.jpg"}
+                                        style={{ borderRadius: "50%", height: "35px", width: "35px" }}
+                                        alt="" />
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <Link to={"/profile"} className="dropdown-item text-black c-p">
+                                    <em className="fa fa-user mr-2"></em>
+                                    {user.firstName} {user.lastName}</Link>
+                                <Link to={"/bookings"} className="dropdown-item text-black c-p">
+                                    <em className="fa fa-list mr-2"></em>
+                                    Bookings</Link>
+                                <span className="dropdown-item text-black c-p" onClick={handleLogout}>
+                                    <em className="fa fa-sign-out mr-2"></em>
+                                    Logout
+                                </span>
+                            </div>
                         </div>
-                    </div>
+
+                    </Fragment>
+                    }
+                    {
+                        !isLoggedIn && <Fragment>
+                            <li className="nav-item">
+                                <Link className="page-scroll" to={CONFIG.AdminUrl + "auth/signin"}>Login / Signup</Link>
+                            </li>
+                        </Fragment>
+                    }
+                    <button className="nav-toggle-btn" data-nav-toggle-btn aria-label="Toggle Menu">
+                        <span className="one"></span>
+                        <span className="two"></span>
+                        <span className="three"></span>
+                    </button>
                 </div>
             </div>
-        </section>
+        </header>
+ 
+    </>
     )
 }

@@ -1,13 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import CarsPage from './pages/CarsPage';
 import DefaultLayout from './components/DefaultLayout';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import BookingListPage from './pages/bookings/BookingListPage';
 import DecoratorsPage from './pages/DecoratorsPage';
-import VenuesPage from './pages/VenuesPage';
+// import VenuesPage from './pages/VenuesPage';
+import VenuesPage from './pages/Venues';
 import ProfilePage from './pages/ProfilePage';
+import CarsPage from './pages/Cars';
 
 function App() {
   return (
