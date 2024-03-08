@@ -15,6 +15,12 @@ venueRentalService.addVenue = async (obj)=>{
 }
 venueRentalService.getVenues = async (userId)=>{
     const docs = await mongoUtil.runner(dbConstants.VENUES);
+    const result = await docs.find({"userId":userId})
+    return result.toArray();
+}
+
+venueRentalService.getAllVenues = async (userId)=>{
+    const docs = await mongoUtil.runner(dbConstants.VENUES);
     const result = await docs.find({})//.find({"userId":userId})
     return result.toArray();
 }

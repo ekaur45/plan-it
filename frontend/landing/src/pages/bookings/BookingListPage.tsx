@@ -5,98 +5,105 @@ import MyBookingModel from "../../models/bookings/my-booking.model";
 import moment from "moment";
 import VenueBookingModel from "../../models/venue/venue-booking.model";
 import CarBookingComponent from "../../components/bookings/CarBookingComponent";
+import CarBookingModel from "../../models/car-booking.model";
+import CONFIG from "../../utils/config.util";
 export default function BookingListPage() {
     const [bookings, setBookings] = useState<MyBookingModel>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const initialData = async () => {
-        // Set isLoading to true
         setIsLoading(true);
-        // Make a request to the server to get the bookings data
         const result = await getRequest<MyBookingModel>("home/bookings");
-        // Set isLoading to false
         setIsLoading(false);
-        // If the request returns a status of 200
         if (result.status == 200) {
-            // Set the bookings state variable to the data returned from the request
             setBookings(result.data);
         }
     }
-    // Use the useEffect hook to call the initialData function when the component is first mounted
+    
+    const handleOnImageError = (e: any) => {
+        e.target.src = "/assets/images/no-image.png";
+    }
     useEffect(() => {
         initialData();
     }, []);
-    return (<Fragment>
-        <section className="single_slider" style={{ height: "78px" }}>
-
-        </section>
+    return (<> <section className="section featured-car" id="featured-car">
         <div className="container">
-        {isLoading && <>Loading...</>}
-        {!isLoading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
-            <Link to={"/cars"}>Add</Link>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Sr#
-                        </th>
-                        <th>
-                            Car
-                        </th>
-                        <th>
-                            User
-                        </th>
-                        <th>
-                            Date
-                        </th>
-                        <th>
-                            No. of days
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            Car Booking
-                        </td>
-                    </tr>
-                    {bookings&&bookings.carBookings&&bookings.carBookings.length>0&&<CarBookingComponent ratingChanged={initialData} bookings={bookings.carBookings}/>}
-                    
-                    <tr>
-                        <td>
-                            Venue Booking
-                        </td>
-                    </tr>
-                    {(bookings?.venueBookings || bookings?.venueBookings.length === 0) && <>No Venue booking</>}
-                    {bookings?.venueBookings.map((booking: VenueBookingModel, ndx: number) => <Fragment key={booking._id}>
-                        <tr>
-                            <td>
-                                {ndx + 1}
-                            </td>
-                            <td>
-                                <span>{booking.venue.name} {booking.venue.location}</span>
-                                PKR - {booking.venue.price} /-
-                            </td>
-                            <td>
-                                <span>{booking.user.firstName} {booking.user.lastName}</span>
-                                {booking.user.phoneNumber}
-                            </td>
-                            <td>
-                                {moment(booking.bookingDate).format("YYYY-MM-DD")}
-                            </td>
-                            <td>
-                                {moment(booking.bookingEndDate).format("YYYY-MM-DD")}
-                            </td>
-                            <td>
-                                Actions
-                            </td>
-                        </tr>
-                    </Fragment>)}
-                </tbody>
-            </table>
-        </div>}
+            <div className="title-wrapper">
+                <h2 className="h2 section-title">Car Bookings</h2>
+            </div>
+            <ul className="featured-car-list">
+                {
+                    bookings && bookings.carBookings && bookings.carBookings.length > 0 && bookings.carBookings.map((booking: CarBookingModel, ndx: number) => <li key={ndx}>
+                        <div className="featured-car-card">
+
+                            <figure className="card-banner">
+                                <img onError={handleOnImageError} src={CONFIG.BaseUrl + booking.car.images[0].file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                    className="w-100" />
+                            </figure>
+
+                            <div className="card-content">
+
+                                <div className="card-title-wrapper">
+                                    <h3 className="h3 card-title">
+                                        <a href="/">{booking.car.name}</a>
+                                    </h3>
+
+                                    <data className="year" value="2021">{booking.car.model}</data>
+                                </div>
+
+                                <ul className="card-list">
+
+                                    <li className="card-list-item">
+                                        {/* <PeopleOutline cssClasses={"ion-icon"} /> */}
+                                        <em className="fa fa-users"></em>
+                                        <span className="card-item-text">4 People</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        {/* <ion-icon name="flash-outline"></ion-icon> */}
+                                        <em className="fa fa-bolt"></em>
+                                        <span className="card-item-text">Hybrid</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        {/* <ion-icon name="speedometer-outline"></ion-icon> */}
+                                        <em className="fa fa-tachometer"></em>
+                                        <span className="card-item-text">6.1km / 1-litre</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        {/* <ion-icon name="hardware-chip-outline"></ion-icon> */}
+                                        <em className="fa fa-microchip"></em>
+                                        <span className="card-item-text">Automatic</span>
+                                    </li>
+                                    <li className="card-list-item">
+                                        {booking.car.description}
+                                    </li>
+                                </ul>
+                                <div className="card-price-wrapper">
+                                    <p className="card-price">
+                                        <strong>{booking.car.rent}</strong> / month
+                                    </p>
+                                    <button className="btn fav-btn" aria-label="Add to favourite list">
+                                        3.5(12) <em className="fa fa-heart text-danger"></em>
+                                    </button>
+                                    {/* <button className="btn">Rent now</button> */}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    )}
+
+            </ul>
+
+            <div className="title-wrapper">
+                <h2 className="h2 section-title">Venue Bookings</h2>
+            </div>
+            <ul className="featured-car-list"></ul>
+
+            <div className="title-wrapper">
+                <h2 className="h2 section-title">Decorators Bookings</h2>
+            </div>
+            <ul className="featured-car-list"></ul>
         </div>
-    </Fragment>)
+    </section></>)
 }

@@ -26,7 +26,7 @@ export default function Venues(){
                         Live in Pakistan!
                     </p>
                 </div>
-                <div className="hero-banner"></div>
+                <div className="hero-banner-venue"></div>
                 <form action="" className="hero-form">
                     <div className="input-wrapper">
                         <label htmlFor="input-1" className="input-label">Venue, location, or capacity</label>
@@ -49,11 +49,7 @@ export default function Venues(){
         <section className="section featured-car" id="featured-car">
             <div className="container">
                 <div className="title-wrapper">
-                    <h2 className="h2 section-title">Featured cars</h2>
-                    <a href="/" className="featured-car-link">
-                        <span>View more</span>
-                        <em className="fa fa-arrow-right"></em>
-                    </a>
+                    <h2 className="h2 section-title">Featured Venues</h2>
                 </div>
                 <ul className="featured-car-list">
                     {

@@ -12,7 +12,7 @@ export default function LoginPage() {
         </section>
         <section className="container">
             <div className="row">
-                <div className="col-12 justify-content-center d-flex">
+                <div className="col-12 col-md-6 offset-md-3 justify-content-center d-flex">
                     <LoginComponent />
                 </div>
             </div>

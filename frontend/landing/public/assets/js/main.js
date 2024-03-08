@@ -14,11 +14,9 @@ $(function () {
     $(window).on('scroll', function (event) {
         var scroll = $(window).scrollTop();
         if (scroll < 20) {
-            $(".header_navbar").removeClass("sticky");
-            $(".header_navbar navbar img").attr("src", "assets/images/logo.png");
+            $(".header").removeClass("sticky");            
         } else {
-            $(".header_navbar").addClass("sticky");
-            $(".header_navbar navbar img").attr("src", "assets/images/logo-2.png");
+            $(".header").addClass("sticky");
         }
     });
     

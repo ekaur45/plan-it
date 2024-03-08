@@ -1,19 +1,46 @@
 import { useEffect, useState } from "react";
-import { getRequest } from "../utils/api.util";
+import { getRequest, postRequest } from "../utils/api.util";
 import CarModel from "../models/cars.model";
 import { useGlobalDispatch, useGlobalSelector } from "../hooks";
 import CONFIG from "../utils/config.util";
-
+import { showGlobalLogin } from "../stores/reducers/global-reducer";
+import { Modal } from "react-bootstrap";
 export default function CarsPage() {
     const isGlobalLoginVisible = useGlobalSelector((state) => state.globalReducer.isGlobalLoginVisible);
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
     const dispatch = useGlobalDispatch();
     const [cars, setCars] = useState<CarModel[]>([]);
+    const [selectedCar, setSelectedCar] = useState<CarModel>();
+    const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(new Date());
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
     const getCars = async () => {
         const result = await getRequest<CarModel[]>("home/car-rentals");
         if (result.status === 200) {
             setCars(result.data);
 
+        }
+    }
+    const handBookCarSubmit = (e: CarModel) => {
+        setSelectedCar(e);
+        setIsModalVisible(true);
+        if (!isLoggedIn) {
+            dispatch(showGlobalLogin());
+        }
+    }
+    const handleOnAddBooking = async () => {
+        if (!isLoggedIn) {
+            return;
+            //return redirect("/auth/login");
+        }
+        const d = { carId: selectedCar?._id, rentDate: selectedStartDate, returnDate: selectedEndDate };
+        setIsSubmiting(true);
+        const result = await postRequest<any>('/car-rental/rent-car', d);
+        setIsSubmiting(false);
+        if (result.status === 200) {
+            setIsModalVisible(false);
+            setSelectedCar(new CarModel());
         }
     }
     const handleOnImageError = (e: any) => {
@@ -48,11 +75,33 @@ export default function CarsPage() {
                             <label htmlFor="input-3" className="input-label">Make Year</label>
                             <input type="text" name="year" id="input-3" className="input-field" placeholder="Add a minimal make year" />
                         </div>
-                        <button type="submit" className="btn">Search</button>
+                        <button type="submit" className="btn btn-primary">Search</button>
                     </form>
                 </div>
             </section>
             <section className="section featured-car" id="featured-car">
+            <Modal show={isModalVisible && isLoggedIn && !isGlobalLoginVisible}>
+                <Modal.Header>
+                    <h3>
+                        Book a car
+                    </h3>
+                </Modal.Header>
+                <Modal.Body>
+
+                    <div className="form-group">
+                        <label htmlFor="">From date</label>
+                        <input type="text" name="" id="" className="form-control" value={selectedStartDate?.toDateString()} onChange={e => setSelectedStartDate(e.target.valueAsDate)} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="">To date</label>
+                        <input type="text" name="" id="" className="form-control" value={selectedEndDate?.toDateString()} onChange={e => setSelectedEndDate(e.target.valueAsDate)} />
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-light" onClick={() => setIsModalVisible(false)}>Cancel</button>
+                    <button className="btn btn-primary" onClick={handleOnAddBooking}>{!isLoggedIn ? "Login to continue" : isSubmiting ? "Saving..." : "Save"}</button>
+                </Modal.Footer>
+            </Modal>
                 <div className="container">
                     <div className="title-wrapper">
                         <h2 className="h2 section-title">Featured cars</h2>
@@ -75,7 +124,7 @@ export default function CarsPage() {
 
                                         <div className="card-title-wrapper">
                                             <h3 className="h3 card-title">
-                                                <a href="/">{car.name}</a>
+                                                {car.name}
                                             </h3>
 
                                             <data className="year" value="2021">{car.model}</data>
@@ -84,7 +133,6 @@ export default function CarsPage() {
                                         <ul className="card-list">
 
                                             <li className="card-list-item">
-                                                <em></em>
                                                 {/* <PeopleOutline cssClasses={"ion-icon"} /> */}
                                                 <em className="fa fa-users"></em>
                                                 <span className="card-item-text">4 People</span>
@@ -115,11 +163,10 @@ export default function CarsPage() {
                                             <p className="card-price">
                                                 <strong>{car.rent}</strong> / month
                                             </p>
-                                            <button className="btn fav-btn" aria-label="Add to favourite list">
-                                                {/* <ion-icon name="heart-outline"></ion-icon> */}
+                                            {/* <button className="btn fav-btn" aria-label="Add to favourite list">
                                                 <em className="fa fa-heart"></em>
-                                            </button>
-                                            <button className="btn">Rent now</button>
+                                            </button> */}
+                                            <button className="btn btn-outline-primary" onClick={e => handBookCarSubmit(car)}>Rent now</button>
                                         </div>
                                     </div>
                                 </div>

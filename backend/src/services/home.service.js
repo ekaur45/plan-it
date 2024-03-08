@@ -5,15 +5,17 @@ const ServiceTypes = require("../models/enums");
 const mongoUtil = require("../utils/mongo-db.util");
 const carRentalService = require("./car-rental.service");
 const userService = require("./user.service");
+const venueRentalService = require("./venue.service");
 
 const homeService = {};
 homeService.getHomeData = async ()=>{
     const docs = await mongoUtil.runner(dbConstants.USERS);
     const allPromise = await docs.find({"$nor":[{"userRole":"admin"}]});
     const all = await allPromise.toArray();
-    const carRentals = all.filter(e=>e.userType == ServiceTypes.CarRental);
+    const carRentals = await carRentalService.getAllCars();//all.filter(e=>e.userType == ServiceTypes.CarRental);
+    //carRentals.map(e=>e["images"]=[]);
     const eventDecorators = all.filter(e=>e.userType == ServiceTypes.Decorator);
-    const venueProviders = all.filter(e=>e.userType == ServiceTypes.VenueProvider);
+    const venueProviders =await venueRentalService.getAllVenues();//all.filter(e=>e.userType == ServiceTypes.VenueProvider);
     return {carRentals,eventDecorators,venueProviders};
 }
 homeService.getCarRentals = async ({name,minPrice,maxPrice,modelYear})=>{

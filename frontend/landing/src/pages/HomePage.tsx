@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getRequest } from "../utils/api.util";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import CONFIG from "../utils/config.util";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
     const [carRentals, setCarRentals] = useState([]);
@@ -17,128 +17,78 @@ export default function HomePage() {
             console.log({ carRentals, venueProviders, eventDecorators });
         }
     }
+    const handleOnImageError = (e: any) => {
+        e.target.src = "/assets/images/no-image.png";
+    }
     useEffect(() => {
         fetchData();
     }, []);
     return <>
-        <section>
-            <div id="home" className="header_slider slider-active">
-                <div className="single_slider bg_cover d-flex align-items-center" style={{ backgroundImage: "url(assets/images/slider-1.jpg)" }}>
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-lg-10">
-                                <div className="slider_content text-center">
-                                    <h5 className="slider_sub_title" data-animation="fadeInUp" data-delay="0.2s">WE ARE GETTING MARRIED</h5>
-                                    <h2 className="slider_title" data-animation="fadeInUp" data-delay="0.7s">Michael <span>&</span> Jessica</h2>
-                                    <span className="location" data-animation="fadeInUp" data-delay="1s">The Big Church, New York, USA</span>
-                                    <p data-animation="fadeInUp" data-delay="1.4s"><img src="assets/images/header-shape-1.png" alt="Shape" />20 December 2023<img src="assets/images/header-shape-2.png" alt="Shape" /></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <section className="section hero" id="home">
+            <div className="container">
+                <div className="hero-content">
+                    <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                    <p className="hero-text">
+                        Live in Pakistan!
+                    </p>
                 </div>
+                <div className="hero-banner"></div>
             </div>
         </section>
-        <section id="event" className="event_area pt-120 pb-130">
+        <section className="section featured-car" id="featured-car">
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="section_title text-center pb-30">
-                            <h3 className="title">Event Decorators</h3>
-                            <img src="assets/images/section_shape.png" alt="Shape" />
-                        </div>
-                    </div>
+                <div className="title-wrapper">
+                    <h2 className="h2 section-title">Featured cars</h2>
+                    <Link to={"/cars"} className="featured-car-link">
+                        <span>View more</span>
+                        <em className="fa fa-arrow-right"></em>
+                    </Link>
                 </div>
-                <div className="row justify-content-center">
-                    {
-                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <div key={ed._id} className="col-lg-4 col-md-7">
-                            <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                                <div className="event_image">
-                                    <img src="assets/images/event-1.jpg" alt="event" />
-                                </div>
-                                <div className="event_content">
-                                    {/* <span className="date">02 Feb 2023</span> */}
-                                    <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
-                                    {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
-                                    <a className="more" href="#">View Services...</a>
-                                </div>
-                            </div>
-                        </div>)
-                    }
-                    {
-                        (!eventDecorators || eventDecorators.length == 0) && <div>
-                            Event Decorators coming soon...
-                        </div>
-                    }
-                </div>
+                <ul className="featured-car-list">
+                    {carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <li>
+                        <div className="featured-car-card">
+
+                            <figure className="card-banner">
+                                <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0].file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                    className="w-100" />
+                            </figure>
+
+                            <div className="card-content"></div></div>
+
+                    </li>)}
+                </ul>
             </div>
         </section>
-        <section id="event" className="event_area pt-120 pb-130">
+        <section className="section featured-car" id="featured-car">
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="section_title text-center pb-30">
-                            <h3 className="title">Car Rental</h3>
-                            <img src="assets/images/section_shape.png" alt="Shape" />
-                        </div>
-                    </div>
+                <div className="title-wrapper">
+                    <h2 className="h2 section-title">Featured Venues</h2>
+                    <Link to={"/venue"} className="featured-car-link">
+                        <span>View more</span>
+                        <em className="fa fa-arrow-right"></em>
+                    </Link>
                 </div>
-                <div className="row justify-content-center">
+                <ul className="featured-car-list">
                     {
-                        carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <div key={ed._id} className="col-lg-4 col-md-7">
-                            <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                                <div className="event_image">
-                                    <img src="assets/images/event-1.jpg" alt="event" />
-                                </div>
-                                <div className="event_content">
-                                    {/* <span className="date">02 Feb 2023</span> */}
-                                    <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
-                                    {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
-                                    <a className="more" href="#">View Services...</a>
-                                </div>
-                            </div>
-                        </div>)
+                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any) => <li></li>)
                     }
-                    {
-                        (!carRentals || carRentals.length == 0) && <div>
-                            Car Rental coming soon...
-                        </div>
-                    }
-                </div>
+                </ul>
             </div>
         </section>
-        <section id="event" className="event_area pt-120 pb-130">
+        <section className="section featured-car" id="featured-car">
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="section_title text-center pb-30">
-                            <h3 className="title">Venue Providers</h3>
-                            <img src="assets/images/section_shape.png" alt="Shape" />
-                        </div>
-                    </div>
+                <div className="title-wrapper">
+                    <h2 className="h2 section-title">Featured Decorators</h2>
+                    <a href="/" className="featured-car-link">
+                        <span>View more</span>
+                        <em className="fa fa-arrow-right"></em>
+                    </a>
                 </div>
-                <div className="row justify-content-center">
+                <ul className="featured-car-list">
                     {
-                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any) => <div key={ed._id} className="col-lg-4 col-md-7">
-                            <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                                <div className="event_image">
-                                    <img src="assets/images/event-1.jpg" alt="event" />
-                                </div>
-                                <div className="event_content">
-                                    {/* <span className="date">02 Feb 2023</span> */}
-                                    <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
-                                    {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
-                                    <a className="more" href="#">View Services...</a>
-                                </div>
-                            </div>
-                        </div>)
+                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li></li>)
                     }
-                    {
-                        (!venueProviders || venueProviders.length == 0) ? <div>
-                            Venues Provider coming soon...
-                        </div> : <></>
-                    }
-                </div>
+                </ul>
             </div>
         </section>
     </>

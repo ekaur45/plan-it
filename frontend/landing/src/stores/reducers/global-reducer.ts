@@ -19,7 +19,8 @@ export const globalSlice = createSlice({
             state.isLoggedIn = false
         },
         setIsLoggedInTrue:(state,)=>{
-            state.isLoggedIn = true
+            state.isLoggedIn = true;
+            state.user = StorageUtil.getUser()
         },
         updateUser:(state,values)=>{
             state.user = {...values.payload,access_token:state.user.access_token}

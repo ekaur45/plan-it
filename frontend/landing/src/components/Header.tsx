@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import CONFIG from "../utils/config.util";
 import StorageUtil from "../utils/storage.util";
 import { Fragment, useEffect } from "react";
@@ -32,22 +32,22 @@ export default function Header() {
                     <ul className="navbar-list">
 
                         <li>
-                            <Link to={"/"} className="navbar-link" data-nav-link>Home</Link>
+                            <NavLink to={"/"} className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} data-nav-link>Home</NavLink>
                         </li>
 
                         <li>
-                            <Link to={"/cars"} className="navbar-link" data-nav-link>Explore cars</Link>
+                            <NavLink to={"/cars"} className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} data-nav-link>Explore cars</NavLink>
                         </li>
 
                         <li>
-                            <Link to={""} className="navbar-link" data-nav-link>Venues</Link>
+                            <NavLink to={"/venue"} className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} data-nav-link>Venues</NavLink>
                         </li>
 
                         <li>
-                            <Link to={""} className="navbar-link" data-nav-link>Decorator</Link>
+                            <NavLink to={"/event"} className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} data-nav-link>Decorator</NavLink>
                         </li>
                         {isLoggedIn && <li >    
-                            <Link className="navbar-link" to={"/bookings"}>My Bookings</Link>
+                            <NavLink className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} to={"/bookings"}>My Bookings</NavLink>
                         </li>
                         }
                     </ul>
@@ -80,7 +80,10 @@ export default function Header() {
                     {
                         !isLoggedIn && <Fragment>
                             <li className="nav-item">
-                                <Link className="page-scroll" to={CONFIG.AdminUrl + "auth/signin"}>Login / Signup</Link>
+                                <Link className="page-scroll" to={"/auth/login"}>Login / Signup</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="page-scroll" to={CONFIG.AdminUrl + "auth/signin"}>Login / Signup as provider</Link>
                             </li>
                         </Fragment>
                     }

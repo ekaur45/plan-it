@@ -28,6 +28,7 @@ export default function LoginComponent(props:LoginComponentProps) {
                 dispatch(hideGlobalLogin());
                 dispatch(setIsLoggedInTrue())
             }else{
+                dispatch(setIsLoggedInTrue())
                 const rd = "" + (fallback?fallback:"/");
                 redirect(rd);
             }
@@ -36,21 +37,24 @@ export default function LoginComponent(props:LoginComponentProps) {
         }
     }
     return (
-        <div className="card login-card">
-            <form className="card-body" onSubmit={handleLoginSubmit}>
+        <section className={"w-100 "+(props.hideSignup===true ?"":"section") }>
+        <div className={"w-100 p-3 "+(props.hideSignup===true?"":"login-card")}>
+            <form className="card-content" onSubmit={handleLoginSubmit}>
                 <header></header>
-                <div className="form-group">
-                    <label htmlFor="">Email</label>
-                    <input type="text" className="form-control form-control-md"
+                <div className="input-wrapper border-none">
+                    <label className="input-label">Email</label>
+                    <input type="text" className="input-field"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        placeholder="Enter your email"
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="">Password</label>
-                    <input type="password" className="form-control form-control-md"
+                <div className="input-wrapper border-none">
+                    <label className="input-label">Password</label>
+                    <input type="password" className="input-field"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        placeholder="Enter your password."
                     />
                 </div>
                 <button
@@ -63,5 +67,6 @@ export default function LoginComponent(props:LoginComponentProps) {
                 
             </form>
         </div>
+        </section>
     )
 }
