@@ -43,3 +43,10 @@
     --toastify-color-progress-error: var(--toastify-color-error);
     --toastify-color-progress-bgo: 0.2;
 }
+
+.multiline-overflow-ellipsis{
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }

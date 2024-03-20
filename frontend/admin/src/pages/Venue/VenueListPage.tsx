@@ -1,9 +1,11 @@
 import VenueModel from "../../models/venue/venue.model";
 import { getRequest } from "../../utils/api.util";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CONFIG from "../../utils/config.util";
 import { toast } from "react-toastify";
 import { FaTrashAlt } from "react-icons/fa";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 function VenueImage(venue: any) {
     if (venue && venue.images && venue.images.length > 0) {
         return <><img src={CONFIG.BaseUrl + venue.images[0]} /></>
@@ -45,7 +47,13 @@ export default function VenueListPage() {
                                     </span>
                                 </div>
                         <div className="flex flex-col sm:grid-cols-2">
-                            <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" style={{maxHeight:"200px"}} />
+                        <Carousel showArrows={true} showThumbs={false} showIndicators={false} showStatus={false} infiniteLoop={true} autoPlay={true} interval={5000} className="h-165 c-carosel">
+
+{e.images.map((img, ndx) => <Fragment key={e._id + ndx}>
+        <img src={CONFIG.BaseUrl + img.file} onError={handleOnImageError} alt="Image 1" />
+</Fragment>)}
+</Carousel>
+                            {/* <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" style={{maxHeight:"200px"}} /> */}
                             <div className="flex justify-between px-3">
                                 <b>
                                     Name:

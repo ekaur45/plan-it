@@ -134,27 +134,27 @@ export default function CarsPage() {
 
                                             <li className="card-list-item">
                                                 <em className="fa fa-users"></em>
-                                                <span className="card-item-text">4 People</span>
+                                                <span className="card-item-text">{car.capacity} People</span>
                                             </li>
 
                                             <li className="card-list-item">
                                                 <em className="fa fa-bolt"></em>
-                                                <span className="card-item-text">Hybrid</span>
+                                                <span className="card-item-text text-capitalize">{car.fuelType}</span>
                                             </li>
 
                                             <li className="card-list-item">
                                                 <em className="fa fa-tachometer"></em>
-                                                <span className="card-item-text">6.1km / 1-litre</span>
+                                                <span className="card-item-text">{car.fuelAverage}km / 1-litre</span>
                                             </li>
 
                                             <li className="card-list-item">
                                                 <em className="fa fa-microchip"></em>
-                                                <span className="card-item-text">Automatic</span>
-                                            </li>
-                                            <li className="card-list-item">
-                                                {car.description}
+                                                <span className="card-item-text text-capitalize">{car.transmission}</span>
                                             </li>
                                         </ul>
+                                            <p className="card-list-item multiline-overflow-ellipsis" style={{display:"-webkit-box"}}>
+                                                {car.description}
+                                            </p>
                                         <div className="card-price-wrapper">
                                             <p className="card-price">
                                                 <strong>{car.rent}</strong> / month

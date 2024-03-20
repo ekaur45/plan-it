@@ -16,7 +16,7 @@ export default function AddCarPage() {
   const [isSubmiting,setIsSubmiting] = useState<boolean>(false);
   const handleOnAddSubmit = async (e:any)=>{
     //e.target.preventDefault();
-    let d = {name,model,color,rent,images:[...images],description};
+    let d = {name,model,color,rent,images:[...images],description,capacity,fuelType,fuelAverage,transmission};
     setIsSubmiting(true);
     const result = await postRequest<any>('car-rental/add',d);
     setIsSubmiting(false);

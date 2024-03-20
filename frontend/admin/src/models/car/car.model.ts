@@ -6,4 +6,5 @@ export default class CarModel{
     description:string="";
     rent:number=0;
     images:any[]=[];
+    expanded:boolean = false;
 }
