@@ -45,7 +45,7 @@
 }
 
 .multiline-overflow-ellipsis{
-    display: -webkit-box;
+    display: -webkit-box !important;
     -webkit-line-clamp: 3; /* Number of lines to show */
     -webkit-box-orient: vertical;
     overflow: hidden;

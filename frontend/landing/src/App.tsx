@@ -9,6 +9,9 @@ import DecoratorsPage from './pages/DecoratorsPage';
 import VenuesPage from './pages/Venues';
 import ProfilePage from './pages/ProfilePage';
 import CarsPage from './pages/Cars';
+import CarBookingList from './pages/bookings/CarBookingList';
+import VenueBookingList from './pages/bookings/VenueBookingList';
+import DecoratorBookingList from './pages/bookings/DecoratorBookingList';
 
 function App() {
   return (
@@ -19,7 +22,11 @@ function App() {
         <Route path={"/cars"} element={<CarsPage />} />
         <Route path={"/event"} element={<DecoratorsPage />} />
         <Route path={"/venue"} element={<VenuesPage />} />
-        <Route path={"/bookings"} element={<BookingListPage />} />
+        <Route path={"/bookings"} element={<BookingListPage />}>
+          <Route path={"car"} element={<CarBookingList/>}/>
+          <Route path={"venue"} element={<VenueBookingList/>}/>
+          <Route path={"decor"} element={<DecoratorBookingList/>}/>
+        </Route>
         <Route path={"/profile"} element={<ProfilePage />} />
         <Route path={'/auth/login'} element={<LoginPage />} />
         <Route path={'/auth/signup'} element={<SignupPage />} />
