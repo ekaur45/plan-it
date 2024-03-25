@@ -13,6 +13,7 @@ class UserModel{
     userRole
     isUserVerified
     isProfileCompleted
+    isEmailVerified
     constructor(obj={}){
         this.firstName = obj.firstName??"";
         this.lastName = obj.lastName??"";
@@ -20,7 +21,7 @@ class UserModel{
         this.password = obj.password??"";
         this.userType = obj.userType??"";
         this.userRole = obj.userRole??"user";
-
+        this.isEmailVerified = false;
     }
     get isValid(){
         return this.firstName && this.lastName && this.email && this.password && this.userType;

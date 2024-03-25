@@ -6,6 +6,8 @@ const config = require("../utils/config");
 const jwtUtil = require("../utils/jwt.util");
 const mongoUtil = require("../utils/mongo-db.util");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const { EmailUtil } = require("../utils/email");
 const authService = {};
 
 
@@ -14,7 +16,13 @@ authService.alreadyExist = async (email)=>{
     const user = await users.findOne({"email":email});
     return user;
 }
-
+authService.generateUserVerificationToken = async (id,email)=>{
+ const buffer = crypto.randomBytes(48);
+ const token = buffer.toString("hex");
+ const userTokenDoc = await mongoUtil.runner(dbConstants.USER_TOKEN);
+ await userTokenDoc.insertOne({userId:id,token,dateAdded:new Date(),email});
+ await EmailUtil.sendSignup(email,token);
+}
 /**
  * 
  * @param {UserModel} data 
@@ -73,5 +81,21 @@ authService.updateProfileImage =async d=>{
     const userDoc = await mongoUtil.runner(dbConstants.USERS);
     const user = userDoc.updateOne({_id:new ObjectId(d.userId)},{$set:{profileImage:d.img}});
     return user;
+}
+authService.verifyUserEmail = async token =>{
+    const userTokenDoc = await mongoUtil.runner(dbConstants.USER_TOKEN);
+    const result = await userTokenDoc.findOne({token});
+    if(result){
+        const userDoc = await mongoUtil.runner(dbConstants.USERS);
+        const user = await userDoc.findOne({_id:new ObjectId(result.userId)});
+        if(user){
+           const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true}});
+            const {_id,password,...rest} = user;
+            const token = jwtUtil.sign(rest);
+            rest["token"] =token;
+            return rest;
+        }
+    }
+    return null;
 }
 module.exports = authService;

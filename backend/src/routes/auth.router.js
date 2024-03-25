@@ -6,6 +6,8 @@ const authRouter = require("express").Router();
 authRouter.post("/signup",authController.signup);
 authRouter.post("/login",authController.signin);
 authRouter.get("/all",authController.getAllUsers);
+authRouter.get("/test",authController.sendMail);
+authRouter.get("/verifyuseremail",authController.verifyUserEmail);
 authRouter.post("/update-profile",checkAuth(),authController.updateProfile);
 authRouter.get("/me",checkAuth(),authController.getMyProfile);
 authRouter.post("/update-profile-image",checkAuth(),authController.updateProfileImage);

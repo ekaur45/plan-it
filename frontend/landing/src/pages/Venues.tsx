@@ -65,41 +65,39 @@ export default function Venues(){
 
                                     <div className="card-title-wrapper">
                                         <h3 className="h3 card-title">
-                                            <a href="/">Toyota RAV4</a>
+                                            <a>{venue.name}</a>
                                         </h3>
-                                        <data className="year" value="2021">2021</data>
                                     </div>
 
                                     <ul className="card-list">
 
                                         <li className="card-list-item">
-                                            <em></em>
-                                            {/* <PeopleOutline cssClasses={"ion-icon"} /> */}
                                             <em className="fa fa-users"></em>
-                                            <span className="card-item-text">4 People</span>
+                                            <span className="card-item-text">{venue.capacity} People</span>
                                         </li>
 
                                         <li className="card-list-item">
                                             {/* <ion-icon name="flash-outline"></ion-icon> */}
-                                            <em className="fa fa-bolt"></em>
-                                            <span className="card-item-text">Hybrid</span>
+                                            <em className="fa fa-location"></em>
+                                            <span className="card-item-text">{venue.location}</span>
                                         </li>
-
+{/* 
                                         <li className="card-list-item">
-                                            {/* <ion-icon name="speedometer-outline"></ion-icon> */}
                                             <em className="fa fa-tachometer"></em>
-                                            <span className="card-item-text">6.1km / 1-litre</span>
+                                            <span className="card-item-text">{venue.location}</span>
                                         </li>
 
                                         <li className="card-list-item">
-                                            {/* <ion-icon name="hardware-chip-outline"></ion-icon> */}
                                             <em className="fa fa-microchip"></em>
-                                            <span className="card-item-text">Automatic</span>
-                                        </li>
+                                            <span className="card-item-text">{venue.capacity}</span>
+                                        </li> */}
                                     </ul>
+                                    <div className="multiline-overflow-ellipsis">
+                                        {venue.description}
+                                    </div>
                                     <div className="card-price-wrapper">
                                         <p className="card-price">
-                                            <strong>$440</strong> / month
+                                            <strong>{venue.price}</strong> / Person
                                         </p>
                                         <button className="btn fav-btn" aria-label="Add to favourite list">
                                             {/* <ion-icon name="heart-outline"></ion-icon> */}
