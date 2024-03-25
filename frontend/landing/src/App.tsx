@@ -12,6 +12,7 @@ import CarsPage from './pages/Cars';
 import CarBookingList from './pages/bookings/CarBookingList';
 import VenueBookingList from './pages/bookings/VenueBookingList';
 import DecoratorBookingList from './pages/bookings/DecoratorBookingList';
+import CarBookings from './pages/CarBooking';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path={"/"} element={<HomePage />} />
         <Route path={"/cars"} element={<CarsPage />} />
+        <Route path={"/booking/:carid"} element={<CarBookings />} />
         <Route path={"/event"} element={<DecoratorsPage />} />
         <Route path={"/venue"} element={<VenuesPage />} />
         <Route path={"/bookings"} element={<BookingListPage />}>

@@ -5,6 +5,8 @@ import { useGlobalDispatch, useGlobalSelector } from "../hooks";
 import CONFIG from "../utils/config.util";
 import { showGlobalLogin } from "../stores/reducers/global-reducer";
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import ReactDatePicker from "react-datepicker";
 export default function CarsPage() {
     const isGlobalLoginVisible = useGlobalSelector((state) => state.globalReducer.isGlobalLoginVisible);
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
@@ -15,6 +17,9 @@ export default function CarsPage() {
     const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(new Date());
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+    const [disabledDates,setDisabledDate] = useState<any[]>([]);
+    const [carDetails,setCarDetails] = useState<any>();
+    const redirect = useNavigate();
     const getCars = async () => {
         const result = await getRequest<CarModel[]>("home/car-rentals");
         if (result.status === 200) {
@@ -23,11 +28,12 @@ export default function CarsPage() {
         }
     }
     const handBookCarSubmit = (e: CarModel) => {
+        if (!isLoggedIn) {
+            return dispatch(showGlobalLogin());
+        }
         setSelectedCar(e);
         setIsModalVisible(true);
-        if (!isLoggedIn) {
-            dispatch(showGlobalLogin());
-        }
+        getCarBookingSlots(e._id);
     }
     const handleOnAddBooking = async () => {
         if (!isLoggedIn) {
@@ -45,6 +51,13 @@ export default function CarsPage() {
     }
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
+    }
+    const getCarBookingSlots = async (id:any)=>{
+        const result = await getRequest<any>("car-rental/booking-slots?id="+id );
+        if(result.status == 200){
+            setCarDetails(result.data);
+            setDisabledDate(result.data.disabledDates);
+        }
     }
     useEffect(() => {
         getCars();
@@ -80,6 +93,7 @@ export default function CarsPage() {
                 </div>
             </section>
             <section className="section featured-car" id="featured-car">
+                {/* {isModalVisible && isLoggedIn && !isGlobalLoginVisible &&<>{redirect("/booking/"+selectedCar?._id)}</>} */}
             <Modal show={isModalVisible && isLoggedIn && !isGlobalLoginVisible}>
                 <Modal.Header>
                     <h3>
@@ -90,12 +104,19 @@ export default function CarsPage() {
 
                     <div className="form-group">
                         <label htmlFor="">From date</label>
-                        <input type="text" name="" id="" className="form-control" value={selectedStartDate?.toDateString()} onChange={e => setSelectedStartDate(e.target.valueAsDate)} />
+                        {/* <input type="text" name="" id="" className="form-control" value={selectedStartDate?.toDateString()} onChange={e => setSelectedStartDate(e.target.valueAsDate)} /> */}
+                        <ReactDatePicker className="w-100"
+                 selected={selectedStartDate} 
+                 onChange={(date:Date) => setSelectedStartDate(date)}
+                 startDate={new Date()}
+                 minDate={new Date()}
+                 excludeDates={disabledDates}
+                 />
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label htmlFor="">To date</label>
                         <input type="text" name="" id="" className="form-control" value={selectedEndDate?.toDateString()} onChange={e => setSelectedEndDate(e.target.valueAsDate)} />
-                    </div>
+                    </div> */}
                 </Modal.Body>
                 <Modal.Footer>
                     <button className="btn btn-light" onClick={() => setIsModalVisible(false)}>Cancel</button>

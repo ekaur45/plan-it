@@ -120,4 +120,17 @@ carRentalService.getBookings = async (userId,userRole,userType)=>{
     //     return await carRentalService.getMyCarsRental(userId);
     // }
 }
+carRentalService.getCarBookingSlots = async _id =>{
+    const carDocs = await mongoUtil.runner(dbConstants.CARS);
+    const car = await carDocs.findOne({_id:new ObjectId(_id)});
+    if(!car) return null;
+    const bookingDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
+    const d = new Date();
+    const dq = d.getFullYear()+"-"+(d.getMonth()+1>9?"":"0")+(d.getMonth()+1)+"-"+d.getDate();
+    const bookingsList = await bookingDocs.find({carId:car._id.toString(),"rentDate":{$gte:dq}}).toArray();
+    car["bookings"] = bookingsList;
+    car["disabledDates"] = bookingsList.map(x=>x.rentDate);
+    return car;
+    
+}
 module.exports = carRentalService;

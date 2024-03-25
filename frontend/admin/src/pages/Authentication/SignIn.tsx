@@ -16,8 +16,6 @@ const SignIn = () => {
     if(result!=null && result.status == 200){
       localStorage.setItem("user",JSON.stringify(result.data));
       redirect("/");
-    }else{
-      toast(result.message,{type:"error"});
     }
   }
   return (
