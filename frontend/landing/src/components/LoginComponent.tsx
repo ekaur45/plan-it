@@ -61,9 +61,14 @@ export default function LoginComponent(props:LoginComponentProps) {
                     disabled={isLoading}
                     type="submit" className="btn btn-outline-primary btn-sm btn-block mt-3">Login</button>
                     {!props.hideSignup&&<><div className="align-items-center d-flex justify-content-center" style={{ gap: "1rem" }}>
+                        
                     <hr className="w-100" /> or <hr className="w-100" />
                 </div>
-                <Link to={"/auth/signup"} className="w-100 text-center">Signup</Link></>}
+                <div className="d-flex justify-content-between align-items-center">
+                <span className="d-flex"><Link className="mr-2" to={"/auth/forgot"}>Forgot</Link> password</span>
+                <span><Link to={"/auth/signup"} className="w-100 text-center">Signup</Link></span>
+                </div>
+                </>}
                 
             </form>
         </div>

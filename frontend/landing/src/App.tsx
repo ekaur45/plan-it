@@ -13,6 +13,7 @@ import CarBookingList from './pages/bookings/CarBookingList';
 import VenueBookingList from './pages/bookings/VenueBookingList';
 import DecoratorBookingList from './pages/bookings/DecoratorBookingList';
 import CarBookings from './pages/CarBooking';
+import ForgotPassword from './pages/ForgotPasswordPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path={"/profile"} element={<ProfilePage />} />
         <Route path={'/auth/login'} element={<LoginPage />} />
         <Route path={'/auth/signup'} element={<SignupPage />} />
+        <Route path={'/auth/forgot'} element={<ForgotPassword />} />
       </Route>
     </Routes>
   );

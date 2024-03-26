@@ -134,10 +134,39 @@ authController.sendMail = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+authController.sendMail = async (req,res,next)=>{
+    if(!req.body.email) return res.BadRequest({},"Email is required.");
+    const result = await authService.sendOtp(req.body.email);
+    if(!result) return res.BadRequest({});
+    return res.Ok();
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 authController.verifyUserEmail = async (req,res,next)=>{
     const token = req.query.verification_token??"";
     if(!token) return res.BadRequest({},"Invalid request.");
     const result = await authService.verifyUserEmail(token);
+    if(!result)return res.BadRequest({},"Invalid request.");
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+authController.verifyUserOtp = async (req,res,next)=>{
+    const {email,otp,password} = req.body;
+    if(!(email&&otp&&password)) return res.BadRequest({},"Invalid request.");
+    const result = await authService.verifyUserOtp(email,otp,password);
     if(!result)return res.BadRequest({},"Invalid request.");
     return res.Ok(result);
 }
