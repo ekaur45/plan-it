@@ -163,10 +163,25 @@ authController.verifyUserEmail = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
-authController.verifyUserOtp = async (req,res,next)=>{
+authController.resetPassword = async (req,res,next)=>{
     const {email,otp,password} = req.body;
     if(!(email&&otp&&password)) return res.BadRequest({},"Invalid request.");
-    const result = await authService.verifyUserOtp(email,otp,password);
+    const result = await authService.resetPassword(email,otp,password);
+    if(!result)return res.BadRequest({},"Invalid request.");
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+authController.verifyUserOtp = async (req,res,next)=>{
+    const {email,otp,password} = req.body;
+    if(!(email&&otp)) return res.BadRequest({},"Invalid request.");
+    const result = await authService.verifyUserOtp(email,otp);
     if(!result)return res.BadRequest({},"Invalid request.");
     return res.Ok(result);
 }

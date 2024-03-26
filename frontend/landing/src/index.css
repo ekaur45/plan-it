@@ -50,3 +50,12 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .react-datepicker-wrapper{
+    width:100%;
+  }
+  .react-datepicker__input-container input{
+    border: 1.5px solid #c9c9c9;
+    width: 100% !important;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }

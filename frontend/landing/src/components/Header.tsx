@@ -47,7 +47,7 @@ export default function Header() {
                             <NavLink to={"/event"} className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} data-nav-link>Decorator</NavLink>
                         </li>
                         {isLoggedIn && <li >    
-                            <NavLink className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} to={"/bookings"}>My Bookings</NavLink>
+                            <NavLink className={({ isActive }) => isActive == true? "navbar-link active":"navbar-link"} to={"/bookings/car"}>My Bookings</NavLink>
                         </li>
                         }
                     </ul>

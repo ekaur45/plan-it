@@ -23,7 +23,7 @@ export default function BookingListPage() {
         e.target.src = "/assets/images/no-image.png";
     }
     useEffect(() => {
-        initialData();
+        //initialData();
     }, []);
     return (<> <section className="section featured-car" id="featured-car">
         <div className="container">

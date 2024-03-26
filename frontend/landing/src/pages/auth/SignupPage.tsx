@@ -19,12 +19,25 @@ export default function SignupPage() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isOtp, setIsOtp] = useState<boolean>(false);
     const [email, setEmail] = useState("");
+    const [otp, setOtp] = useState("");
     const [password, setPassword] = useState("");
     const handleSignupSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const result = await postRequest<any>("auth/signup", { userType, firstName, lastName, email, password });
         if (result.status === 200) {
+            setIsOtp(true);
+            //StorageUtil.setUser(result.data);
+            //redirect("/");
+            
+        }
+    }
+    const handleOnOtpSubmit = async (e:any)=>{
+        e.preventDefault();
+        const result = await postRequest<any>("auth/verify-otp",{email,otp});
+        if(result.status == 200){
+            setIsOtp(false);
             StorageUtil.setUser(result.data);
             redirect("/");
         }
@@ -35,7 +48,7 @@ export default function SignupPage() {
             <div className="row">
                 <div className="col-12 justify-content-center d-flex">
                     <div className="card login-card my-5 w-50">
-                        <form className="card-body" onSubmit={handleSignupSubmit}>
+                       {!isOtp&& <form className="card-body" onSubmit={handleSignupSubmit}>
                             <header>Signup</header>
                             <div className="form-group">
                                 <label htmlFor=""></label>
@@ -84,7 +97,22 @@ export default function SignupPage() {
                                  <hr className="w-100" /> or <hr className="w-100"/>
                                  </div>
                             <Link to={"/auth/login"} className="w-100 text-center">Login</Link>
-                        </form>
+                        </form>}
+                        {isOtp&&<form className="card-body" onSubmit={handleOnOtpSubmit}>
+                        <header>Signup</header>
+                            <div className="form-group">
+                            <div className="form-group">
+                                <label htmlFor="">OTP</label>
+                                <input type="text" className="form-control form-control-md"
+                                value={otp}
+                                onChange={e=>setOtp(e.target.value)}
+                                />
+                            </div>
+                            <button
+                                disabled={isLoading}
+                                type="submit" className="btn btn-outline-primary btn-sm btn-block mt-3">Signup</button>
+                                </div>
+                            </form>}
                     </div>
                 </div>
             </div>

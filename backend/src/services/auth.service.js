@@ -35,6 +35,8 @@ authService.signup = async (data)=>{
     data.isProfileCompleted = false;
     const {id, ...rest} = data;
     const result = await users.insertOne(rest);
+    const userOtpDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+    authService.sendOtp(rest.email);
     rest["access_token"] = jwtUtil.sign(rest);
     return rest;
 }
@@ -100,7 +102,7 @@ authService.verifyUserEmail = async token =>{
     return null;
 }
 
-authService.verifyUserOtp = async (email,otp,_password) =>{
+authService.resetPassword = async (email,otp,_password) =>{
     const userTokenDoc = await mongoUtil.runner(dbConstants.USER_OTP);
     const result = await userTokenDoc.findOne({email,otp});
     if(result){
@@ -108,6 +110,23 @@ authService.verifyUserOtp = async (email,otp,_password) =>{
         const user = await userDoc.findOne({_id:new ObjectId(result.userId)});
         if(user){
            const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true,password:bcrypt.hashSync(_password,10)}});
+           await userTokenDoc.updateOne({_id:new ObjectId(result._id.toString())},{$set:{isUsed:true}});
+            const {_id,password,...rest} = user;
+            const token = jwtUtil.sign(rest);
+            rest["token"] =token;
+            return rest;
+        }
+    }
+    return null;
+}
+authService.verifyUserOtp = async (email,otp) =>{
+    const userTokenDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+    const result = await userTokenDoc.findOne({email,otp});
+    if(result){
+        const userDoc = await mongoUtil.runner(dbConstants.USERS);
+        const user = await userDoc.findOne({_id:new ObjectId(result.userId)});
+        if(user){
+           const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true}});
            await userTokenDoc.updateOne({_id:new ObjectId(result._id.toString())},{$set:{isUsed:true}});
             const {_id,password,...rest} = user;
             const token = jwtUtil.sign(rest);

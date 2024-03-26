@@ -99,7 +99,7 @@ carRentalService.getBookings = async (userId,userRole,userType)=>{
     //Get the carRental document from the mongoUtil
     const carBookingDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
     //If the userRole is admin, get all the bookings from the carBookingDocs
-    // if(userRole == "admin"){
+    if(userRole == "admin"){
         const carBookingCollection = await carBookingDocs.find();
         const carBookingList = await carBookingCollection.toArray();
         //Map the carBookingList and get the user and car details
@@ -110,15 +110,15 @@ carRentalService.getBookings = async (userId,userRole,userType)=>{
             cb["car"] = car;
             return cb;
         }));
-    // }
+    }
     // //If the userRole is user and userType is not ServiceTypes.CarRental, get myCarsRental from the carRentalService
-    // if(userRole == "user" && userType != ServiceTypes.CarRental){
-    //     return await this.getMyCarsRental(userId);
-    // }
+    if(userRole == "user" && userType != ServiceTypes.CarRental){
+        return await this.getMyCarsRental(userId);
+    }
     // //If the userRole is user and userType is ServiceTypes.CarRental, get myCarsRental from the carRentalService
-    // if(userRole == "user" && userType == ServiceTypes.CarRental){
-    //     return await carRentalService.getMyCarsRental(userId);
-    // }
+    if(userRole == "user" && userType == ServiceTypes.CarRental){
+        return await carRentalService.getMyRental(userId);
+    }
 }
 carRentalService.getCarBookingSlots = async _id =>{
     const carDocs = await mongoUtil.runner(dbConstants.CARS);
