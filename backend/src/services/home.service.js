@@ -6,7 +6,7 @@ const mongoUtil = require("../utils/mongo-db.util");
 const carRentalService = require("./car-rental.service");
 const userService = require("./user.service");
 const venueRentalService = require("./venue.service");
-
+const moment = require("moment");
 const homeService = {};
 homeService.getHomeData = async ()=>{
     const docs = await mongoUtil.runner(dbConstants.USERS);
@@ -49,12 +49,13 @@ homeService.getMyBookings = async userId =>{
     const carBookingsDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
     const venueBookingsDoc = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
     const bookingRatingDoc = await mongoUtil.runner(dbConstants.CAR_RATING);
-    const _carBookings = await carBookingsDocs.find({"userId":userId}).toArray();
+    const _carBookings = await carBookingsDocs.find({"userId":userId,"rentDate":{"$lte":moment(new Date()).format("YYYY-MM-DD")}}).toArray();
     const carBookings  = await Promise.all(_carBookings.map(async cb=>{
         const user = await userService.getUserSingle(cb.userId);
         cb["user"] = user;
         const car = await carRentalService.getSingleCar(cb.carId);
         cb["car"] = car;
+        cb["car"]["rating"] = await bookingRatingDoc.find({carId:cb["car"]._id+""}).toArray();
         const bookingRating = await bookingRatingDoc.find({bookingId:cb._id+""}).toArray();
         cb["rating"] = bookingRating;
         return cb;

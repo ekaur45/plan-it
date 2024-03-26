@@ -74,7 +74,7 @@ carRentalService.getMyCarsRental = async (userId)=>{
 
 carRentalService.getMyRental = async (userId) => {
     const docs = await mongoUtil.runner(dbConstants.CAR_RENT);
-    const carRentCollection = docs.find({"userId":userId});
+    const carRentCollection = docs.find({"userId":userId,rentDate:{"$lte":new Date()}});
     const carRentList = await carRentCollection.toArray();
     return carRentList.map(async cr=>{
         cr["car"] = await this.getSingleCar(cr.cardId);
