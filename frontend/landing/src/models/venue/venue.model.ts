@@ -7,4 +7,5 @@ export default class VenueModel {
     capacity: number = 0;
     price: number = 0;
     images: any[] = [];
+    rating:any[] = [];
 }

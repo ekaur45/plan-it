@@ -77,5 +77,19 @@ venueController.getVenueBookin = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+venueController.getVenueRatings = async (req,res,next)=>{
+    const venueId = req.query.id;
+    const result = await venueRentalService.getVenueRatings(venueId);
+    return res.Ok(result);
+}
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 venueController.example = (req,res,next)=>{}
 module.exports = venueController;

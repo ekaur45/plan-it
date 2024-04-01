@@ -1,6 +1,20 @@
-import { Fragment } from "react";
-
-export default function DecoratorsPage(){
+import { Fragment, useEffect, useState } from "react";
+import { getRequest } from "../utils/api.util"
+import CONFIG from "../utils/config.util";
+export default function DecoratorsPage() {
+    const [events, setEvents] = useState<any[]>([]);
+    const getInitData = async () => {
+        const result = await getRequest<any[]>("home/decorations");
+        if (result.status == 200) {
+            setEvents(result.data);
+        }
+    }
+    const handleOnImageError = (e: any) => {
+        e.target.src = "/assets/images/no-image.png";
+    }
+    useEffect(() => {
+        getInitData();
+    }, []);
     return (<article>
         <section className="section hero" id="home">
             <div className="container">
@@ -36,7 +50,44 @@ export default function DecoratorsPage(){
                     <h2 className="h2 section-title">Featured Decorators</h2>
                 </div>
                 <ul className="featured-car-list">
-                    
+                    {events && events.length > 0 && events.map((e, i) => <Fragment key={e._id}>
+                        <li>
+                            <div className="featured-car-card">
+                                <figure className="card-banner">
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + e.files[0]} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                        className="w-100" />
+                                </figure>
+                                <div className="card-content">
+
+                                    <div className="card-title-wrapper">
+                                        <h3 className="h3 card-title">
+                                            {e.name}
+                                        </h3>
+                                    </div>
+
+                                    <ul className="card-list">
+
+
+                                    </ul>
+                                    <p className="card-list-item multiline-overflow-ellipsis" style={{ display: "-webkit-box" }}>
+                                        {e.description}
+                                    </p>
+                                    <div className="card-price-wrapper">
+                                        <p className="card-price">
+                                            <strong>{e.price}</strong> PKR / month
+                                        </p>
+                                        <button className="btn btn-outline-primary" onClick={e => alert("Hi")}>Rent now</button>
+                                    </div>
+                                </div>
+
+                                {/* {e.name}
+                        {e.description}
+                        {e.user?.firstName}
+                        {e.user?.lastName}
+                        {e.user?.lastName} */}
+                            </div>
+                        </li>
+                    </Fragment>)}
                 </ul>
             </div>
         </section>

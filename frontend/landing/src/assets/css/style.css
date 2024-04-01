@@ -448,8 +448,8 @@ button, a { transition: var(--transition); }
 }
 
 .featured-car-card {
-  background: var(--gradient);
-  border: 1px solid var(--white);
+  background: var(--white);
+  border: 1px solid var(--gradient);
   border-radius: var(--radius-18);
   padding: 10px;
   box-shadow: var(--shadow-1);

@@ -10,4 +10,5 @@ export default class VenueBookingModel{
     bookingDate:string = "";
     bookingEndDate:string = "";
     bookingTime:string = "";
+    rating:any[] = [];
 }

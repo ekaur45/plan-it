@@ -26,4 +26,8 @@ homeController.addCarRating = async (req,res,next)=>{
     const result = await homeService.addCarRating(carRatingModel);
     return res.Ok(result);
 }
+homeController.getDecoration = async (req,res,next)=>{
+    const result = await homeService.getDecoration();
+    return res.Ok(result);
+}
 module.exports = homeController;
