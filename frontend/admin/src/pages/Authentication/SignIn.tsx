@@ -18,6 +18,7 @@ const SignIn = () => {
     e.preventDefault();
     const result = await postRequest<any>("auth/login", { email, password })
     toast(result.message, { type: result.status == 200 ? "success" : "error" });
+    debugger
     if (result != null && result.status == 200) {
       if (result.data.isEmailVerified != true) {
         setIsOtpScreen(true);
