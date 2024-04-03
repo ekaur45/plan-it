@@ -14,7 +14,6 @@ export default function HomePage() {
             setCarRentals(carRentals)
             setVenueProviders(venueProviders);
             setEventDecorators(eventDecorators);
-            console.log({ carRentals, venueProviders, eventDecorators });
         }
     }
     const handleOnImageError = (e: any) => {
@@ -35,7 +34,7 @@ export default function HomePage() {
                 <div className="hero-banner"></div>
             </div>
         </section>
-        <section className="section featured-car" id="featured-car">
+        <section className="section featured-car pt-3 pb-3" id="featured-car">
             <div className="container">
                 <div className="title-wrapper">
                     <h2 className="h2 section-title">Featured cars</h2>
@@ -45,7 +44,7 @@ export default function HomePage() {
                     </Link>
                 </div>
                 <ul className="featured-car-list">
-                    {carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <li>
+                    {carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <li key={ed._id}>
                         <div className="featured-car-card">
 
                             <figure className="card-banner">
@@ -83,10 +82,10 @@ export default function HomePage() {
                                         <em className="fa fa-microchip"></em>
                                         <span className="card-item-text">Automatic</span>
                                     </li>
-                                    <li className="card-list-item">
-                                        {ed.description}
-                                    </li>
                                 </ul>
+                                <p className="multiline-overflow-ellipsis">
+                                    {ed.description}
+                                </p>
                                 <div className="card-price-wrapper">
                                     <p className="card-price">
                                         <strong>{ed.rent}</strong> / month
@@ -99,7 +98,7 @@ export default function HomePage() {
                 </ul>
             </div>
         </section>
-        <section className="section featured-car" id="featured-car">
+        <section className="section featured-car pt-3 pb-3" id="featured-car">
             <div className="container">
                 <div className="title-wrapper">
                     <h2 className="h2 section-title">Featured Venues</h2>
@@ -110,42 +109,106 @@ export default function HomePage() {
                 </div>
                 <ul className="featured-car-list">
                     {
-                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any) => <li>
+                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any, i) => <li key={ed._id}>
                             <div className="featured-car-card">
 
                                 <figure className="card-banner">
-                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0].file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0]?.file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
                                         className="w-100" />
                                 </figure>
 
-                                <div className="card-content"></div>
+
+                                <div className="card-content">
+
+                                    <div className="card-title-wrapper">
+                                        <h3 className="h3 card-title">
+                                            <a>{ed.name}</a>
+                                        </h3>
+                                    </div>
+
+                                    <ul className="card-list">
+
+                                        <li className="card-list-item">
+                                            <em className="fa fa-users"></em>
+                                            <span className="card-item-text">{ed.capacity} People</span>
+                                        </li>
+
+                                        <li className="card-list-item">
+                                            {/* <ion-icon name="flash-outline"></ion-icon> */}
+                                            <em className="fa fa-location"></em>
+                                            <span className="card-item-text">{ed.location}</span>
+                                        </li>
+                                        {/* 
+                                        <li className="card-list-item">
+                                            <em className="fa fa-tachometer"></em>
+                                            <span className="card-item-text">{venue.location}</span>
+                                        </li>
+
+                                        <li className="card-list-item">
+                                            <em className="fa fa-microchip"></em>
+                                            <span className="card-item-text">{venue.capacity}</span>
+                                        </li> */}
+                                    </ul>
+                                    <div className="multiline-overflow-ellipsis">
+                                        {ed.description}
+                                    </div>
+                                    <div className="card-price-wrapper mt-3">
+                                        <p className="card-price">
+                                            <strong>{ed.price}</strong> PKR / Person
+                                        </p>
+                                        <button className="btn fav-btn" aria-label="Add to favourite list">
+                                            {/* <ion-icon name="heart-outline"></ion-icon> */}
+                                            <em className="fa fa-heart"></em>
+                                        </button>
+                                        <Link to={"/venue"} className="btn btn-outline-primary">Rent now</Link>
+                                    </div>
+                                </div>
                             </div>
                         </li>)
                     }
                 </ul>
             </div>
         </section>
-        <section className="section featured-car" id="featured-car">
+        <section className="section featured-car pt-3 pb-3" id="featured-car">
             <div className="container">
                 <div className="title-wrapper">
                     <h2 className="h2 section-title">Featured Decorators</h2>
-                    <a href="/" className="featured-car-link">
+                    <Link to="/event" className="featured-car-link">
                         <span>View more</span>
                         <em className="fa fa-arrow-right"></em>
-                    </a>
+                    </Link>
                 </div>
                 <ul className="featured-car-list">
                     {
-                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li>
+                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li key={ed._id}>
                             <div className="featured-car-card">
 
                                 <figure className="card-banner">
-                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.profile} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.files[0]} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
                                         className="w-100" />
                                 </figure>
 
                                 <div className="card-content">
-                                    
+
+                                    <div className="card-title-wrapper">
+                                        <h3 className="h3 card-title">
+                                            {ed.name}
+                                        </h3>
+                                    </div>
+
+                                    <ul className="card-list">
+
+
+                                    </ul>
+                                    <p className="card-list-item multiline-overflow-ellipsis" style={{ display: "-webkit-box" }}>
+                                        {ed.description}
+                                    </p>
+                                    <div className="card-price-wrapper">
+                                        <p className="card-price">
+                                            <strong>{ed.price}</strong> PKR / month
+                                        </p>
+                                        <button className="btn btn-outline-primary" onClick={e => alert("Hi")}>Rent now</button>
+                                    </div>
                                 </div>
                             </div>
                         </li>)

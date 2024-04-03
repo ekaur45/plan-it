@@ -97,7 +97,7 @@ export default function CarsPage() {
             <Modal show={isModalVisible && isLoggedIn && !isGlobalLoginVisible}>
                 <Modal.Header>
                     <h3>
-                        Book a car
+                        Rent a car
                     </h3>
                 </Modal.Header>
                 <Modal.Body>

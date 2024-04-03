@@ -11,6 +11,7 @@ import ProfilePage from './pages/ProfilePage';
 import CarsPage from './pages/Cars';
 import CarBookingList from './pages/bookings/CarBookingList';
 import VenueBookingList from './pages/bookings/VenueBookingList';
+import VenueBookingComment from './pages/bookings/VenueBookingComment';
 import DecoratorBookingList from './pages/bookings/DecoratorBookingList';
 import CarBookings from './pages/CarBooking';
 import ForgotPassword from './pages/ForgotPasswordPage';
@@ -27,7 +28,9 @@ function App() {
         <Route path={"/venue"} element={<VenuesPage />} />
         <Route path={"/bookings"} element={<BookingListPage />}>
           <Route path={"car"} element={<CarBookingList/>}/>
-          <Route path={"venue"} element={<VenueBookingList/>}/>
+          <Route path={"venue"} element={<VenueBookingList/>}>
+            <Route path={":id/comments"} element={<VenueBookingComment/>}/>
+          </Route>
           <Route path={"decor"} element={<DecoratorBookingList/>}/>
         </Route>
         <Route path={"/profile"} element={<ProfilePage />} />
