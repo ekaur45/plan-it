@@ -1,16 +1,51 @@
 import { Fragment, useEffect, useState } from "react";
-import { getRequest } from "../utils/api.util"
+import { getRequest, postRequest } from "../utils/api.util"
 import CONFIG from "../utils/config.util";
+import { Modal } from "react-bootstrap";
+import ReactDatePicker from "react-datepicker";
+import { useGlobalDispatch, useGlobalSelector } from "../hooks";
+import { showGlobalLogin } from "../stores/reducers/global-reducer";
 export default function DecoratorsPage() {
+    const isGlobalLoginVisible = useGlobalSelector<any>((state) => state.globalReducer.isGlobalLoginVisible);
+    const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
+    const dispatch = useGlobalDispatch();
     const [events, setEvents] = useState<any[]>([]);
+    const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(new Date());
+    const [isBookingModalVisible, setIsBookingModalVisible] = useState<boolean>(false);
+    const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+    const [disabledDates, setDisabledDate] = useState<any[]>([]);
+
     const getInitData = async () => {
         const result = await getRequest<any[]>("home/decorations");
-        if (result.status == 200) {
+        if (result.status === 200) {
             setEvents(result.data);
         }
     }
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
+    }
+    const handleOnAddBooking = async (e: any) => {
+        if (!isLoggedIn) {
+            return;
+            //return redirect("/auth/login");
+        }
+        const d = { decoratorId: selectedEvent?._id, bookingDate: selectedStartDate, bookingEndDate: selectedStartDate };
+        setIsSubmiting(true);
+        const result = await postRequest<any>('event/book-event', d);
+        setIsSubmiting(false);
+        if (result.status === 200) {
+            setIsBookingModalVisible(false);
+            setSelectedEvent(null);
+        }
+    }
+    const handleEventBookSubmit = (e: any) => {
+        setSelectedEvent(e);
+        if (!isLoggedIn) {
+            return dispatch(showGlobalLogin());
+        }
+        setIsBookingModalVisible(true);
+        
     }
     useEffect(() => {
         getInitData();
@@ -45,6 +80,30 @@ export default function DecoratorsPage() {
             </div>
         </section>
         <section className="section featured-car" id="featured-car">
+            <Modal show={isBookingModalVisible && !isGlobalLoginVisible}>
+                <Modal.Header>
+                    <div>
+                        Book <strong>{selectedEvent?.name}</strong>
+                    </div>
+                </Modal.Header>
+                <Modal.Body>
+                <div className="form-group">
+                        <label htmlFor="">From date</label>
+                        {/* <input type="text" name="" id="" className="form-control" value={selectedStartDate?.toDateString()} onChange={e => setSelectedStartDate(e.target.valueAsDate)} /> */}
+                        <ReactDatePicker className="w-100"
+                            selected={selectedStartDate}
+                            onChange={(date: Date) => setSelectedStartDate(date)}
+                            startDate={new Date()}
+                            minDate={new Date()}
+                            excludeDates={disabledDates}
+                        />
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-light" onClick={() => setIsBookingModalVisible(false)}>Cancel</button>
+                    <button className="btn btn-primary" onClick={handleOnAddBooking}>{!isLoggedIn ? "Login to continue" : isSubmiting ? "Saving..." : "Save"}</button>
+                </Modal.Footer>
+            </Modal>
             <div className="container">
                 <div className="title-wrapper">
                     <h2 className="h2 section-title">Featured Decorators</h2>
@@ -76,7 +135,7 @@ export default function DecoratorsPage() {
                                         <p className="card-price">
                                             <strong>{e.price}</strong> PKR / month
                                         </p>
-                                        <button className="btn btn-outline-primary" onClick={e => alert("Hi")}>Rent now</button>
+                                        <button className="btn btn-outline-primary" onClick={c => handleEventBookSubmit(e)}>Rent now</button>
                                     </div>
                                 </div>
 

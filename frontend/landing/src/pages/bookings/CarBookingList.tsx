@@ -7,6 +7,7 @@ import CarBookingModel from "../../models/car-booking.model";
 import { Modal } from "react-bootstrap";
 import { useGlobalSelector } from "../../hooks";
 import StarRatings from "react-star-ratings";
+import { Link, Outlet } from "react-router-dom";
 
 export default function CarBookingList() {
     const user = useGlobalSelector(state => state.globalReducer.user);
@@ -41,6 +42,7 @@ export default function CarBookingList() {
         initialData();
     }, []);
     return (<>
+    <Outlet/>
         <Modal show={selectedCar ? true : false}>
             <Modal.Header>
                 <div className="d-flex justify-content-between w-100">
@@ -142,12 +144,16 @@ export default function CarBookingList() {
                                     {booking.car.rating.length > 0 && <>{average(booking.car.rating.map(cc=>cc.rating))}({booking.car.rating.length})</>}
                                     {booking.car.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.rating.length==0 && setSelectedCar(booking)} className="fa fa-heart text-danger"></em>
                                 </button>
+                                <Link to={"/bookings/car/" + booking.car._id + "/comments"}>Comments</Link>
                                 {/* <button className="btn">Rent now</button> */}
                             </div>
                         </div>
                     </div>
                 </li>
                 )}
+            {
+                !isLoading && bookings?.carBookings.length === 0 && <>No Car booking</>
+            }
 
         </ul>
     </>);

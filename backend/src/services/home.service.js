@@ -49,9 +49,10 @@ homeService.getVenues = async () => {
 }
 homeService.getMyBookings = async userId => {
     const carBookingsDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
+    const eventBookingDocs = await mongoUtil.runner(dbConstants.EVENT_DECORATOR);
     const venueBookingsDoc = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
     const bookingRatingDoc = await mongoUtil.runner(dbConstants.CAR_RATING);
-    const _carBookings = await carBookingsDocs.find({ "userId": userId, "rentDate": { "$lte": moment(new Date()).format("YYYY-MM-DD") } }).toArray();
+    const _carBookings = await carBookingsDocs.find({ "userId": userId, "rentDate": { "$gte": moment(new Date()).format("YYYY-MM-DD") } }).toArray();
     const carBookings = await Promise.all(_carBookings.map(async cb => {
         const user = await userService.getUserSingle(cb.userId);
         cb["user"] = user;
@@ -72,9 +73,20 @@ homeService.getMyBookings = async userId => {
         e["rating"] = bookingRating;
         return e;
     }))
+    const eventBookingList = await eventBookingDocs.find({ "userId": userId }).toArray();
+    const eventBookings = await Promise.all(eventBookingList.map(async e=>{
+        const user = await userService.getUserSingle(e.userId);
+        e["user"] = user;
+        e["event"] = await eventService.getSingle(e.decoratorId);
+        e["event"]["rating"] = await bookingRatingDoc.find({ eventId: e["decoratorId"] + "" }).toArray();
+        const bookingRating = await bookingRatingDoc.find({ bookingId: e._id + "", eventId: e["decoratorId"] }).toArray();
+        e["rating"] = bookingRating;
+        return e;
+    }));
     return {
         carBookings,
-        venueBookings
+        venueBookings,
+        eventBookings
     }
 }
 

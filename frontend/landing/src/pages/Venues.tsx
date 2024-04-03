@@ -7,17 +7,17 @@ import ReactDatePicker from "react-datepicker";
 import { useGlobalDispatch, useGlobalSelector } from "../hooks";
 import { showGlobalLogin } from "../stores/reducers/global-reducer";
 
-export default function Venues(){
-    const isGlobalLoginVisible = useGlobalSelector((state) => state.globalReducer.isGlobalLoginVisible);
+export default function Venues() {
+    const isGlobalLoginVisible = useGlobalSelector<any>((state) => state.globalReducer.isGlobalLoginVisible);
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
     const dispatch = useGlobalDispatch();
     const [venues, setVenues] = useState<VenueModel[]>([]);
     const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(new Date());
     const [selectedEndDate, setSelectedEndDate] = useState<Date | null>(new Date());
-    const [disabledDates,setDisabledDate] = useState<any[]>([]);
-    const [isBookingModalVisible,setIsBookingModalVisible] = useState<boolean>(true);
+    const [disabledDates, setDisabledDate] = useState<any[]>([]);
+    const [isBookingModalVisible, setIsBookingModalVisible] = useState<boolean>(false);
     const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
-    const [selectedVenue,setSelectedVenue] = useState<any>(null);
+    const [selectedVenue, setSelectedVenue] = useState<any>(null);
     const getVenues = async () => {
         const result = await getRequest<VenueModel[]>("home/venues");
         if (result.status === 200) {
@@ -27,7 +27,7 @@ export default function Venues(){
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
     }
-    const handleOnAddBooking = async (e:any)=>{
+    const handleOnAddBooking = async (e: any) => {
         if (!isLoggedIn) {
             return;
             //return redirect("/auth/login");
@@ -41,8 +41,8 @@ export default function Venues(){
             setSelectedVenue(null);
         }
     }
-    const handleVenueBookSubmit = (e:any)=>{
-        if(!isLoggedIn){
+    const handleVenueBookSubmit = (e: any) => {
+        if (!isLoggedIn) {
             return dispatch(showGlobalLogin());
         }
         setIsBookingModalVisible(true);
@@ -51,7 +51,7 @@ export default function Venues(){
     useEffect(() => {
         getVenues()
     }, [])
-    return( <article>
+    return (<article>
         <section className="section hero" id="home">
             <div className="container">
                 <div className="hero-content">
@@ -81,34 +81,34 @@ export default function Venues(){
             </div>
         </section>
         <section className="section featured-car" id="featured-car">
-            <Modal show={isBookingModalVisible}>
+            <Modal show={isBookingModalVisible && !isGlobalLoginVisible}>
                 <Modal.Header>
                     <div>
-                    Book <strong>{selectedVenue?.name}</strong>
+                        Book <strong>{selectedVenue?.name}</strong>
                     </div>
                 </Modal.Header>
                 <Modal.Body>
 
-<div className="form-group">
-    <label htmlFor="">From date</label>
-    {/* <input type="text" name="" id="" className="form-control" value={selectedStartDate?.toDateString()} onChange={e => setSelectedStartDate(e.target.valueAsDate)} /> */}
-    <ReactDatePicker className="w-100"
-selected={selectedStartDate} 
-onChange={(date:Date) => setSelectedStartDate(date)}
-startDate={new Date()}
-minDate={new Date()}
-excludeDates={disabledDates}
-/>
-</div>
-{/* <div className="form-group">
+                    <div className="form-group">
+                        <label htmlFor="">From date</label>
+                        {/* <input type="text" name="" id="" className="form-control" value={selectedStartDate?.toDateString()} onChange={e => setSelectedStartDate(e.target.valueAsDate)} /> */}
+                        <ReactDatePicker className="w-100"
+                            selected={selectedStartDate}
+                            onChange={(date: Date) => setSelectedStartDate(date)}
+                            startDate={new Date()}
+                            minDate={new Date()}
+                            excludeDates={disabledDates}
+                        />
+                    </div>
+                    {/* <div className="form-group">
     <label htmlFor="">To date</label>
     <input type="text" name="" id="" className="form-control" value={selectedEndDate?.toDateString()} onChange={e => setSelectedEndDate(e.target.valueAsDate)} />
 </div> */}
-</Modal.Body>
-<Modal.Footer>
-<button className="btn btn-light" onClick={() => setIsBookingModalVisible(false)}>Cancel</button>
-<button className="btn btn-primary" onClick={handleOnAddBooking}>{!isLoggedIn ? "Login to continue" : isSubmiting ? "Saving..." : "Save"}</button>
-</Modal.Footer>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-light" onClick={() => setIsBookingModalVisible(false)}>Cancel</button>
+                    <button className="btn btn-primary" onClick={handleOnAddBooking}>{!isLoggedIn ? "Login to continue" : isSubmiting ? "Saving..." : "Save"}</button>
+                </Modal.Footer>
             </Modal>
             <div className="container">
                 <div className="title-wrapper">
@@ -144,7 +144,7 @@ excludeDates={disabledDates}
                                             <em className="fa fa-location"></em>
                                             <span className="card-item-text">{venue.location}</span>
                                         </li>
-{/* 
+                                        {/* 
                                         <li className="card-list-item">
                                             <em className="fa fa-tachometer"></em>
                                             <span className="card-item-text">{venue.location}</span>
@@ -162,8 +162,8 @@ excludeDates={disabledDates}
                                         <p className="card-price">
                                             <strong>{venue.price}</strong> PKR / Person
                                         </p>
-                                       
-                                        <button className="btn btn-outline-primary" onClick={()=>handleVenueBookSubmit(venue)}>Rent now</button>
+
+                                        <button className="btn btn-outline-primary" onClick={() => handleVenueBookSubmit(venue)}>Rent now</button>
                                     </div>
                                 </div>
                             </div>

@@ -3,10 +3,10 @@ module.exports = Object.freeze({
     "USER_TOKEN":"user_token",
     "USER_OTP":"user_otp",
     "CARS":"cars",
-    "CAR_RATING":"cars_rating",
+    "CAR_RATING":"rating",
     "EVENT":"event",
-    "EVENT_DECORATOR":"event_decorator",
+    "EVENT_DECORATOR":"event_booking",
     "VENUES":"venues",
-    "VENUE_BOOKING":"venues",
+    "VENUE_BOOKING":"venue_booking",
     "CAR_RENT":"car_rent"
 });

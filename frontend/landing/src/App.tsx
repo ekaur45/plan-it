@@ -15,6 +15,8 @@ import VenueBookingComment from './pages/bookings/VenueBookingComment';
 import DecoratorBookingList from './pages/bookings/DecoratorBookingList';
 import CarBookings from './pages/CarBooking';
 import ForgotPassword from './pages/ForgotPasswordPage';
+import EventBookingComments from './pages/bookings/EventBookingComment';
+import CarBookingComments from './pages/bookings/CarBookingComment';
 
 function App() {
   return (
@@ -27,11 +29,15 @@ function App() {
         <Route path={"/event"} element={<DecoratorsPage />} />
         <Route path={"/venue"} element={<VenuesPage />} />
         <Route path={"/bookings"} element={<BookingListPage />}>
-          <Route path={"car"} element={<CarBookingList/>}/>
+          <Route path={"car"} element={<CarBookingList/>}>
+            <Route path={":id/comments"} element={<CarBookingComments/>}/>
+          </Route>
           <Route path={"venue"} element={<VenueBookingList/>}>
             <Route path={":id/comments"} element={<VenueBookingComment/>}/>
           </Route>
-          <Route path={"decor"} element={<DecoratorBookingList/>}/>
+          <Route path={"decor"} element={<DecoratorBookingList/>}>
+            <Route path={":id/comments"} element={<EventBookingComments/>}/>
+          </Route>
         </Route>
         <Route path={"/profile"} element={<ProfilePage />} />
         <Route path={'/auth/login'} element={<LoginPage />} />
