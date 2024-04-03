@@ -1,21 +1,30 @@
-import { Link,  useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import { useState } from 'react';
-import {postRequest} from '../../utils/api.util';
+import { postRequest } from '../../utils/api.util';
 import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const redirect = useNavigate();
-  const [email,setEmail] = useState("admin@email.com");
-  const [password,setPassword] = useState("123456");
-  const handleLoginClick = async (e:any)=>{
+  const [email, setEmail] = useState("admin@email.com");
+  const [password, setPassword] = useState("123456");
+  const [isOtpScreen, setIsOtpScreen] = useState<boolean>(false);
+  const handleLoginClick = async (e: any) => {
+    setIsOtpScreen(false);
     e.preventDefault();
-    const result = await postRequest<any>("auth/login",{email,password})
-    toast(result.message,{type:result.status==200?"success" : "error"});
-    if(result!=null && result.status == 200){
-      localStorage.setItem("user",JSON.stringify(result.data));
-      redirect("/");
+    const result = await postRequest<any>("auth/login", { email, password })
+    toast(result.message, { type: result.status == 200 ? "success" : "error" });
+    if (result != null && result.status == 200) {
+      if (result.data.isEmailVerified != true) {
+        setIsOtpScreen(true);
+      } else {
+        localStorage.setItem("user", JSON.stringify(result.data));
+        redirect("/");
+      }
+    }
+    if (result.status == 405) {
+      setIsOtpScreen(true)
     }
   }
   return (
@@ -165,7 +174,7 @@ const SignIn = () => {
                 Sign In to Plant-IT
               </h2>
 
-              <form>
+              {!isOtpScreen && <form>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
@@ -173,7 +182,7 @@ const SignIn = () => {
                   <div className="relative">
                     <input
                       type="email"
-                      onChange={e=>setEmail(e.target.value)}
+                      onChange={e => setEmail(e.target.value)}
                       value={email}
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -206,7 +215,7 @@ const SignIn = () => {
                   <div className="relative">
                     <input
                       type="password"
-                      onChange={e=>setPassword(e.target.value)}
+                      onChange={e => setPassword(e.target.value)}
                       value={password}
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -290,7 +299,10 @@ const SignIn = () => {
                     </Link>
                   </p>
                 </div>
-              </form>
+              </form>}
+              {isOtpScreen && <>
+                <span onClick={() => setIsOtpScreen(false)}>Back</span>
+              </>}
             </div>
           </div>
         </div>

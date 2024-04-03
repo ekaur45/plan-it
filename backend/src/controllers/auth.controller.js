@@ -60,7 +60,7 @@ authController.signin = async (req,res,next)=>{
     if(!(email&&password)) return res.BadRequest(req.body,"Email/usename and password are required.");
     const result = await authService.signin({email,password});
     if(!result) return res.BadRequest(req.body,"Email/usename or password are invalid.");
-    if(!result.isEmailVerified) return res.BadRequest(req.body,"Please verify your email first.");
+    if(!result.isEmailVerified) return res.Response(req.body,"OTP sent. Please verify your email first.",405);
     return res.Ok(result,"Loggedin successful.");
 }
 

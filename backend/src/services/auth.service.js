@@ -61,6 +61,10 @@ authService.signin = async (obj)=>{
     if(!user) return null;
     if(!bcrypt.compareSync(obj.password,password)) return null;
     user["access_token"] = jwtUtil.sign(user);
+    if(user.isEmailVerified != true){
+        let otp = await EmailUtil.generateOTP();
+        EmailUtil.sendOtp(user.email,otp);
+    }
     return user;
     
 }

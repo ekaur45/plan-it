@@ -19,10 +19,13 @@ EmailUtil.sendSignup = async(email,verificationToken)=>{
                 resolve(info);
             }
         })
+        
     })
 }
 
 EmailUtil.sendOtp = async (email,otp) =>{
+    return new Promise((resolve,reject)=>{
+        try {
     const trasport = nodemailer.createTransport({
         service:"gmail",
         auth:{
@@ -33,14 +36,17 @@ EmailUtil.sendOtp = async (email,otp) =>{
     let html = require("fs").readFileSync("templates/otp.template.html").toString("utf-8");
     
     html = html.replace("{{OTP}}",otp);
-    return new Promise((resolve,reject)=>{
-        trasport.sendMail({from:`Pant IT - OTP<${process.env.GMAIL_USER}>`,to:email,subject:"Verification",html:html},(err,info)=>{
-            if(err){
-                reject(err);
-            }else{
-                resolve(info);
-            }
-        })
+        
+            trasport.sendMail({from:`Pant IT - OTP<${process.env.GMAIL_USER}>`,to:email,subject:"Verification",html:html},(err,info)=>{
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(info);
+                }
+            })
+        } catch (error) {
+            reject(error);
+        }
     })
 }
 
