@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { getRequest, postRequest } from "../../utils/api.util";
 export type UserRole = "admin" | "user";
 export default function AddUserPage() {
     const [firstName,setFirstName] = useState<string>("");
@@ -11,10 +12,25 @@ export default function AddUserPage() {
     const [isUserVerified,setIsUserVerified] = useState<boolean>(false);
     const [isEmailVerified,setIsEmailVerified] = useState<boolean>(false);
 
+    const checkEmail = async (email:string) =>{
+        const user= await getRequest("users/check/"+email);
+        return user.status === 200 && !!user.data;
+    }
     const handleOnUserSubmit = async (e:any)=>{
+    
         e.preventDefault();
         const d = {firstName,lastName,email,password,userRole,userType,isUserVerified,isEmailVerified};
+        const userExists = await checkEmail(email);
+        debugger
+        if(userExists===true){
+            alert("User already exists");
+            return;
+        }
         console.log({d});
+        const result = await postRequest("users/add",d);
+        if(result.status === 200){
+            alert("added");
+        }
     }
 
     return (<>
