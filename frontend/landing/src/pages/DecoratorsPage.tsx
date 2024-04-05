@@ -37,6 +37,13 @@ export default function DecoratorsPage() {
         if (result.status === 200) {
             setIsBookingModalVisible(false);
             setSelectedEvent(null);
+            setSelectedStartDate(null);
+        }
+    }
+    const getEventBookingSlots = async (id:any)=>{
+        const result = await getRequest<any>("event/booking-slots/"+id);
+        if(result.status == 200){
+            setDisabledDate(result.data["disabledDates"]);
         }
     }
     const handleEventBookSubmit = (e: any) => {
@@ -45,6 +52,7 @@ export default function DecoratorsPage() {
             return dispatch(showGlobalLogin());
         }
         setIsBookingModalVisible(true);
+        getEventBookingSlots(e._id);
         
     }
     useEffect(() => {
@@ -75,7 +83,7 @@ export default function DecoratorsPage() {
                         <label htmlFor="input-3" className="input-label">Payment (max)</label>
                         <input type="text" name="year" id="input-3" className="input-field" placeholder="Add an amount in PKR" />
                     </div>
-                    <button type="submit" className="btn">Search</button>
+                    <button type="submit" className="btn btn-primary">Search</button>
                 </form>
             </div>
         </section>

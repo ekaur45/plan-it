@@ -18,6 +18,7 @@ export default function Venues() {
     const [isBookingModalVisible, setIsBookingModalVisible] = useState<boolean>(false);
     const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
     const [selectedVenue, setSelectedVenue] = useState<any>(null);
+    const [venueDetails, setVenueDetails] = useState<any>(null);
     const getVenues = async () => {
         const result = await getRequest<VenueModel[]>("home/venues");
         if (result.status === 200) {
@@ -39,6 +40,14 @@ export default function Venues() {
         if (result.status === 200) {
             setIsBookingModalVisible(false);
             setSelectedVenue(null);
+            setSelectedStartDate(new Date());
+        }
+    }
+    const getVenueBookingSlots = async (id:any)=>{
+        const result = await getRequest<any>("venue/booking-slots/"+id );
+        if(result.status == 200){
+            setVenueDetails(result.data);
+            setDisabledDate(result.data.disabledDates);
         }
     }
     const handleVenueBookSubmit = (e: any) => {
@@ -47,6 +56,7 @@ export default function Venues() {
         }
         setIsBookingModalVisible(true);
         setSelectedVenue(e);
+        getVenueBookingSlots(e._id);
     }
     useEffect(() => {
         getVenues()
@@ -76,7 +86,7 @@ export default function Venues() {
                         <label htmlFor="input-3" className="input-label">Per head payment(max)</label>
                         <input type="text" name="year" id="input-3" className="input-field" placeholder="Add an amount in PKR" />
                     </div>
-                    <button type="submit" className="btn">Search</button>
+                    <button type="submit" className="btn btn-primary">Search</button>
                 </form>
             </div>
         </section>
