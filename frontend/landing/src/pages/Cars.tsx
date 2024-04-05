@@ -59,6 +59,16 @@ export default function CarsPage() {
             setDisabledDate(result.data.disabledDates);
         }
     }
+    const handleOnsearchSubmit = async (e:any)=>{
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget) as any;
+        const queryParams = (new URLSearchParams(formData)).toString();
+        const result = await getRequest<CarModel[]>("home/car-rentals?"+queryParams);
+        if (result.status === 200) {
+            setCars(result.data);
+
+        }
+    }
     useEffect(() => {
         getCars();
     }, []);
@@ -73,20 +83,20 @@ export default function CarsPage() {
                         </p>
                     </div>
                     <div className="hero-banner"></div>
-                    <form action="" className="hero-form">
+                    <form onSubmit={handleOnsearchSubmit} className="hero-form">
                         <div className="input-wrapper">
-                            <label htmlFor="input-1" className="input-label">Car, model, or brand</label>
-                            <input type="text" name="car-model" id="input-1" className="input-field"
+                            <label htmlFor="input-1" className="input-label">Name</label>
+                            <input type="text" name="name" id="input-1" className="input-field"
                                 placeholder="What car are you looking?" />
                         </div>
                         <div className="input-wrapper">
                             <label htmlFor="input-2" className="input-label">Max. monthly payment</label>
-                            <input type="text" name="monthly-pay" id="input-2" className="input-field" placeholder="Add an amount in $" />
+                            <input type="text" name="amount" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
                         </div>
 
                         <div className="input-wrapper">
                             <label htmlFor="input-3" className="input-label">Make Year</label>
-                            <input type="text" name="year" id="input-3" className="input-field" placeholder="Add a minimal make year" />
+                            <input type="text" name="modelYear" id="input-3" className="input-field" placeholder="Add a minimal make year" />
                         </div>
                         <button type="submit" className="btn btn-primary">Search</button>
                     </form>
@@ -126,10 +136,10 @@ export default function CarsPage() {
                 <div className="container">
                     <div className="title-wrapper">
                         <h2 className="h2 section-title">Featured cars</h2>
-                        <a href="/" className="featured-car-link">
+                        {/* <a href="/" className="featured-car-link">
                             <span>View more</span>
                             <em className="fa fa-arrow-right"></em>
-                        </a>
+                        </a> */}
                     </div>
                     <ul className="featured-car-list">
                         {

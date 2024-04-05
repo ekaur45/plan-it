@@ -7,8 +7,8 @@ homeController.getHomeData = async (req,res,nex)=>{
     return res.Ok(result);
 }
 homeController.getCarRentals = async (req,res,nex)=>{
-    const {name,minPrice,maxPrice,modelYear} = req.query;
-    const result = await homeService.getCarRentals({name,minPrice,maxPrice,modelYear});
+    const {name,amount,maxPrice,modelYear} = req.query;
+    const result = await homeService.getCarRentals({name,amount,modelYear});
     return res.Ok(result);
 }
 homeController.getMyBookings = async (req,res,nex)=>{

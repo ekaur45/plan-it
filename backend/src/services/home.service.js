@@ -20,19 +20,19 @@ homeService.getHomeData = async () => {
     const venueProviders = await venueRentalService.getAllVenues();//all.filter(e=>e.userType == ServiceTypes.VenueProvider);
     return { carRentals, eventDecorators, venueProviders };
 }
-homeService.getCarRentals = async ({ name, minPrice, maxPrice, modelYear }) => {
+homeService.getCarRentals = async ({ name, amount, modelYear }) => {
     const docs = await mongoUtil.runner(dbConstants.CARS);
     let query = {
 
     };
     if (name) {
-        query["name"] = { '$regex': name }
-    }
-    if (minPrice > 0) {
-        query["rent"] = { '$gte': minPrice };
-    }
-    if (maxPrice > 0) {
-        query["rent"] = { '$lte': maxPrice };
+        var regex = new RegExp([name].join(""), "i");
+        query["name"] =  regex ;    }
+    // if (amount > 0) {
+    //     query["rent"] = { '$gte': amount };
+    // }
+    if (amount > 0) {
+        query["rent"] = { '$lte': amount };
     }
     if (modelYear > 1900) {
         query["model"] = modelYear;
