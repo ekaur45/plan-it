@@ -132,4 +132,12 @@ carRentalService.getCarBookingSlots = async _id =>{
     car["disabledDates"] = bookingsList.map(x=>x.rentDate);
     return car;    
 }
+carRentalService.getCarRatings = async id =>{
+    const carRatingDocs = await mongoUtil.runner(dbConstants.CAR_RATING);
+    const ratingList =  await carRatingDocs.find({"carId":id}).toArray();
+    return await Promise.all(ratingList.map(async rate=>{
+        rate["user"] = await userService.getUserSingle(rate.userId);
+        return rate;
+    }))
+}
 module.exports = carRentalService;

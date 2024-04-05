@@ -9,5 +9,6 @@ carRentalRouter.get("/all-cars",carRentalController.getAllCars);
 carRentalRouter.get("/bookings",checkAuth(),carRentalController.getBookings);
 carRentalRouter.post('/rent-car',checkAuth(),carRentalController.rentCar);
 carRentalRouter.get('/booking-slots',checkAuth(),carRentalController.carBookingSlots);
+carRentalRouter.get("/car-comments",carRentalController.getCarRatings);
 
 module.exports = carRentalRouter;

@@ -3,6 +3,7 @@ const BookDecoratorModel = require("../models/book-decorator.model");
 const dbConstants = require("../models/db.constants");
 const mongoUtil = require("../utils/mongo-db.util");
 const moment = require("moment");
+const userService = require("./user.service");
 const eventService = {};
 /**
  * 
@@ -35,5 +36,13 @@ eventService.getBookingSlots = async id =>{
     event["bookings"] = bookingList;
     event["disabledDates"] = bookingList.map(x=>x.bookingDate);
     return event;
+}
+eventService.getEventComments = async id =>{
+    const eventRatingDocs = await mongoUtil.runner(dbConstants.CAR_RATING);
+    const rating = await eventRatingDocs.find({eventId:id}).toArray();
+    return await Promise.all(rating.map(async rate=>{
+        rate["user"] = await userService.getUserSingle(rate.userId);
+        return rate;
+    }))
 }
 module.exports = eventService;
