@@ -86,17 +86,17 @@ export default function CarsPage() {
                     <form onSubmit={handleOnsearchSubmit} className="hero-form">
                         <div className="input-wrapper">
                             <label htmlFor="input-1" className="input-label">Name</label>
-                            <input type="text" name="name" id="input-1" className="input-field"
+                            <input type="search" name="name" id="input-1" className="input-field"
                                 placeholder="What car are you looking?" />
                         </div>
                         <div className="input-wrapper">
                             <label htmlFor="input-2" className="input-label">Max. monthly payment</label>
-                            <input type="text" name="amount" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
+                            <input type="search" name="amount" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
                         </div>
 
                         <div className="input-wrapper">
                             <label htmlFor="input-3" className="input-label">Make Year</label>
-                            <input type="text" name="modelYear" id="input-3" className="input-field" placeholder="Add a minimal make year" />
+                            <input type="search" name="modelYear" id="input-3" className="input-field" placeholder="Add a minimal make year" />
                         </div>
                         <button type="submit" className="btn btn-primary">Search</button>
                     </form>

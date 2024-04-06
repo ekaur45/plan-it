@@ -41,9 +41,22 @@ homeService.getCarRentals = async ({ name, amount, modelYear }) => {
     const all = await allPromise.toArray();
     return all;
 }
-homeService.getVenues = async () => {
+homeService.getVenues = async ({name,monthlyPay,capacity}) => {
+    let query = {};
+    if(name){
+        var regex = new RegExp([name].join(""), "i");
+        // query["name"] =  regex;
+        // query["location"] =  regex;
+        query["$or"]=[{name:regex},{location:regex}]
+    }
+    if(monthlyPay){
+        query["price"] = {"$lte":Number(monthlyPay)};
+    }
+    if(capacity){
+        query["capacity"] = {"$gte":Number(capacity)};
+    }
     const docs = await mongoUtil.runner(dbConstants.VENUES);
-    const allPromise = await docs.find({});
+    const allPromise = await docs.find(query);
     const all = await allPromise.toArray();
     return all;
 }
@@ -100,9 +113,19 @@ homeService.addCarRating = async model => {
     return update;
 }
 
-homeService.getDecoration = async () => {
+homeService.getDecoration = async ({name,monthlyPay}) => {
+    let query = {};
+    if(name){
+        var regex = new RegExp([name].join(""), "i");
+        query["name"] =  regex;
+        // query["location"] =  regex;
+        //query["$or"]=[{name:regex},{location:regex}]
+    }
+    if(monthlyPay){
+        query["$expr"] = {"$lte":[{"$toInt":"$price"},Number(monthlyPay)]};
+    }
     const decDoc = await mongoUtil.runner(dbConstants.EVENT);
-    const events = await decDoc.find({}).toArray();
+    const events = await decDoc.find(query).toArray();
     const result = await Promise.all(events.map(async e => {
         e["user"] = await userService.getUserSingle(e.userId);
         return e;

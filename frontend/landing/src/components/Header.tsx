@@ -65,7 +65,7 @@ export default function Header() {
                                 <Link to={"/profile"} className="dropdown-item text-black c-p">
                                     <em className="fa fa-user mr-2"></em>
                                     {user.firstName} {user.lastName}</Link>
-                                <Link to={"/bookings"} className="dropdown-item text-black c-p">
+                                <Link to={"/bookings/car"} className="dropdown-item text-black c-p">
                                     <em className="fa fa-list mr-2"></em>
                                     Bookings</Link>
                                 <span className="dropdown-item text-black c-p" onClick={handleLogout}>

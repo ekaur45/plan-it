@@ -55,6 +55,15 @@ export default function DecoratorsPage() {
         getEventBookingSlots(e._id);
         
     }
+    const handleOnEventSearch = async (e:any) =>{
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget) as any;
+        const queryParams = (new URLSearchParams(formData)).toString();
+        const result = await getRequest<any[]>("home/decorations?"+queryParams);
+        if (result.status === 200) {
+            setEvents(result.data);
+        }
+    }
     useEffect(() => {
         getInitData();
     }, []);
@@ -68,21 +77,21 @@ export default function DecoratorsPage() {
                     </p>
                 </div>
                 <div className="hero-banner-decoration"></div>
-                <form action="" className="hero-form">
+                <form className="hero-form" style={{"gridTemplateColumns":"1fr 1fr 0.8fr"}} onSubmit={handleOnEventSearch}>
                     <div className="input-wrapper">
                         <label htmlFor="input-1" className="input-label">Type</label>
-                        <input type="text" name="car-model" id="input-1" className="input-field"
+                        <input type="search" name="name" id="input-1" className="input-field"
                             placeholder="What are you looking for?" />
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="input-2" className="input-label">Payment (min)</label>
-                        <input type="text" name="monthly-pay" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
+                        <input type="search" name="monthlyPay" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
                     </div>
 
-                    <div className="input-wrapper">
+                    {/* <div className="input-wrapper">
                         <label htmlFor="input-3" className="input-label">Payment (max)</label>
                         <input type="text" name="year" id="input-3" className="input-field" placeholder="Add an amount in PKR" />
-                    </div>
+                    </div> */}
                     <button type="submit" className="btn btn-primary">Search</button>
                 </form>
             </div>

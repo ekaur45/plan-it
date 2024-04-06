@@ -58,6 +58,15 @@ export default function Venues() {
         setSelectedVenue(e);
         getVenueBookingSlots(e._id);
     }
+    const handleOnVenueSearch = async (e:any)=>{
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget) as any;
+        const queryParams = (new URLSearchParams(formData)).toString();
+        const result = await getRequest<VenueModel[]>("home/venues?"+queryParams);
+        if (result.status === 200) {
+            setVenues(result.data);
+        }
+    }
     useEffect(() => {
         getVenues()
     }, [])
@@ -71,20 +80,20 @@ export default function Venues() {
                     </p>
                 </div>
                 <div className="hero-banner-venue"></div>
-                <form action="" className="hero-form">
+                <form noValidate onSubmit={handleOnVenueSearch} className="hero-form">
                     <div className="input-wrapper">
-                        <label htmlFor="input-1" className="input-label">Venue, location, or capacity</label>
-                        <input type="text" name="car-model" id="input-1" className="input-field"
+                        <label htmlFor="input-1" className="input-label">Venue, location</label>
+                        <input type="search" name="name" id="input-1" className="input-field"
                             placeholder="What venue are you looking?" />
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="input-2" className="input-label">Per head payment(min)</label>
-                        <input type="text" name="monthly-pay" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
+                        <input type="search" name="monthlyPay" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
                     </div>
 
                     <div className="input-wrapper">
-                        <label htmlFor="input-3" className="input-label">Per head payment(max)</label>
-                        <input type="text" name="year" id="input-3" className="input-field" placeholder="Add an amount in PKR" />
+                        <label htmlFor="input-3" className="input-label">Capacity</label>
+                        <input type="search" name="capacity" id="input-3" className="input-field" placeholder="Add an amount in PKR" />
                     </div>
                     <button type="submit" className="btn btn-primary">Search</button>
                 </form>
