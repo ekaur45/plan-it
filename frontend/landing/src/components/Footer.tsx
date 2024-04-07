@@ -8,10 +8,10 @@ export default function Footer(){
         <div className="container">
             <div className="footer_widget pt-80 pb-80 text-center">
                 <div className="footer_logo">
-                    <a href="#"><img src="assets/images/logo-2.png" alt="logo"/></a>
+                    <a href="#"><img src="assets/images/plan.png" alt="logo" width={300} height={125}/></a>
                 </div>
                 <div className="footer_title">
-                    <h3 className="title">Michael <span>&</span> Jessica</h3>
+                    <h3 className="title">Ahmed <span>&</span> Sara</h3>
                 </div>
                 <ul className="footer_menu">
                     <li><a href="#">Home</a></li>
@@ -23,7 +23,7 @@ export default function Footer(){
                 </ul>
             </div> 
             <div className="footer_copyright text-center">
-                <p>Designed and Developed by <a href="https://uideck.com" style={{"color": "#D59A57"}} rel="nofollow">UIdeck</a></p>
+                <p>Designed and Developed as <a href="#" style={{"color": "#D59A57"}} rel="nofollow">Final Year Project</a></p>
             </div>
         </div> 
     </footer>

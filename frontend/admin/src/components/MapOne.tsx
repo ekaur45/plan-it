@@ -16,7 +16,7 @@ const MapOne = () => {
         },
         hover: {
           fillOpacity: 1,
-          fill: '#3056D3',
+          fill: '#D59A57',
         },
       },
       regionLabelStyle: {

@@ -29,9 +29,9 @@ export default function HomePage() {
                             <div className="col-lg-10">
                                 <div className="slider_content text-center">
                                     <h5 className="slider_sub_title" data-animation="fadeInUp" data-delay="0.2s">WE ARE GETTING MARRIED</h5>
-                                    <h2 className="slider_title" data-animation="fadeInUp" data-delay="0.7s">Michael <span>&</span> Jessica</h2>
-                                    <span className="location" data-animation="fadeInUp" data-delay="1s">The Big Church, New York, USA</span>
-                                    <p data-animation="fadeInUp" data-delay="1.4s"><img src="assets/images/header-shape-1.png" alt="Shape" />20 December 2023<img src="assets/images/header-shape-2.png" alt="Shape" /></p>
+                                    <h2 className="slider_title" data-animation="fadeInUp" data-delay="0.7s">Ahmed <span>&</span> Sara</h2>
+                                    <span className="location" data-animation="fadeInUp" data-delay="1s">Deewan-e-Khaas, Sialkot, Punjab</span>
+                                    <p data-animation="fadeInUp" data-delay="1.4s"><img src="assets/images/header-shape-1.png" alt="Shape" />20 December 2024<img src="assets/images/header-shape-2.png" alt="Shape" /></p>
                                 </div>
                             </div>
                         </div>

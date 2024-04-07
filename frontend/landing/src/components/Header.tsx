@@ -26,8 +26,8 @@ export default function Header() {
                         <div className="col-lg-12">
                             <nav className="navbar navbar-expand-lg">
                                 <Link className="navbar-brand text-white" to="/">
-                                    {/* <img src={require("../assets/images/logo.png")} alt="Logo" /> */}
-                                    Plan-IT
+                                     <img src={require("../assets/images/plan.png")} alt="Logo" /> 
+                                    
                                 </Link>
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="toggler-icon"></span>

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Fragment, Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
@@ -22,7 +22,7 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <>
+    <Fragment>
       <Toaster
         position="top-right"
         reverseOrder={false}
@@ -36,6 +36,8 @@ function App() {
           <Route index element={ <Protected component={<ECommerce />} /> } />
           {routes.map((routes, index) => {
             const { path, component: Component,roles } = routes;
+
+
             return (
               routes.protected?<Route
               key={index}
@@ -58,7 +60,7 @@ function App() {
           })}
         </Route>
       </Routes>
-    </>
+    </Fragment>
   );
 }
 

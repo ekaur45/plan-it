@@ -20,7 +20,7 @@ const ChartFour: React.FC = () => {
   });
 
   const options: ApexOptions = {
-    colors: ['#3C50E0'],
+    colors: ['#D59A57'],
     chart: {
       fontFamily: 'Satoshi, sans-serif',
       type: 'bar',
