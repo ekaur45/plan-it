@@ -44,6 +44,7 @@ export default function HomePage() {
                     </Link>
                 </div>
                 <ul className="featured-car-list">
+                {carRentals && carRentals.length === 0 && <>No Cars Found</>}
                     {carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <li key={ed._id}>
                         <div className="featured-car-card">
 
@@ -108,6 +109,7 @@ export default function HomePage() {
                     </Link>
                 </div>
                 <ul className="featured-car-list">
+                    {venueProviders && venueProviders.length === 0&&<>No Venues Found</>}
                     {
                         venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any, i) => <li key={ed._id}>
                             <div className="featured-car-card">
@@ -179,6 +181,7 @@ export default function HomePage() {
                     </Link>
                 </div>
                 <ul className="featured-car-list">
+                    {eventDecorators && eventDecorators.length === 0 && <>No Decorators Found</>}
                     {
                         eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li key={ed._id}>
                             <div className="featured-car-card">

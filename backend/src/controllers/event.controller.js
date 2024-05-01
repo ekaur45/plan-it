@@ -80,5 +80,17 @@ eventController.eventComments = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+eventController.deleteEvent = async (req,res,next)=>{
+    const result = await eventService.deleteEvent(req.query.id);
+    return res.Ok(result,"Event deleted.");
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 eventController.example = (req,res,next)=>{}
 module.exports = eventController;

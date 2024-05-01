@@ -21,7 +21,6 @@ export default function AddUserPage() {
         e.preventDefault();
         const d = {firstName,lastName,email,password,userRole,userType,isUserVerified,isEmailVerified};
         const userExists = await checkEmail(email);
-        debugger
         if(userExists===true){
             alert("User already exists");
             return;

@@ -134,6 +134,7 @@ export default function Venues() {
                     <h2 className="h2 section-title">Featured Venues</h2>
                 </div>
                 <ul className="featured-car-list">
+                    {venues && venues.length === 0 &&<>No Venues Found</>}
                     {
                         venues && venues.length > 0 && venues.map((venue: VenueModel, ndx: number) => <li key={ndx}>
                             <div className="featured-car-card">

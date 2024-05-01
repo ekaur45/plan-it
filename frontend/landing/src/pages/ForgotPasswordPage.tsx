@@ -46,6 +46,7 @@ export default function ForgotPassword() {
                             <div className="input-wrapper border-none">
                                 <label className="input-label">OTP</label>
                                 <input type="text" className="input-field"
+                                autoComplete={""}
                                 value={otp}
                                 onChange={e=>setOtp(e.target.value)}
                                     placeholder="Enter OTP."

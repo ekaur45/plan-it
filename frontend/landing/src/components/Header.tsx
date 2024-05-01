@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import CONFIG from "../utils/config.util";
 import StorageUtil from "../utils/storage.util";
 import { Fragment, useEffect } from "react";
@@ -7,13 +7,15 @@ import { useGlobalDispatch, useGlobalSelector } from "../hooks";
 import { setIsLoggedInFalse, updateUser } from "../stores/reducers/global-reducer";
 import './header.css';
 export default function Header() {
+    const navigate = useNavigate();
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
     const dispatch = useGlobalDispatch();
     const user = useGlobalSelector(state => state.globalReducer.user);
     const handleLogout = () => {
         StorageUtil.clearStorage();
         dispatch(updateUser(StorageUtil.getUser()));
-        dispatch(setIsLoggedInFalse())
+        dispatch(setIsLoggedInFalse());
+        navigate("/");
     }
     useEffect(() => {
         dispatch(updateUser(StorageUtil.getUser()));

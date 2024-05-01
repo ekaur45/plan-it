@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { postRequest } from '../../utils/api.util';
 import { toast } from 'react-toastify';
 import StorageUtil from '../../utils/storage-util';
-
+import './Auth.css';
 const SignIn = () => {
   const redirect = useNavigate();
   const [email, setEmail] = useState("admin@email.com");

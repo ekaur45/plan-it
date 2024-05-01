@@ -45,4 +45,8 @@ eventService.getEventComments = async id =>{
         return rate;
     }))
 }
+eventService.deleteEvent = async id =>{
+    const docs = await mongoUtil.runner(dbConstants.EVENT);
+    return await docs.deleteOne({_id:new ObjectId(id)});
+}
 module.exports = eventService;

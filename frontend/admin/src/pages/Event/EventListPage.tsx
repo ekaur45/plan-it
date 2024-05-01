@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import EventsModel from "../../models/event/events.model";
-import { getRequest } from "../../utils/api.util";
+import { deleteRequest, getRequest } from "../../utils/api.util";
 import Loader from "../../common/Loader";
 import { Link } from "react-router-dom";
 import { FaBan, FaTrashAlt } from "react-icons/fa";
@@ -22,6 +22,15 @@ export default function EventListPage() {
     }
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
+    }
+    const handleOnDeleteEvent = async (_id: any) => {
+        if (confirm("Are you sure you want to delete?")) {
+            const result = await deleteRequest<any>('event/event-delete?id=' + _id);
+            toast(result.message, { type: result.status == 200 ? "success" : "error" });
+            if (result.status == 200) {
+                initialData()
+            }
+        }
     }
     useEffect(() => {
         initialData();
@@ -55,20 +64,20 @@ export default function EventListPage() {
             {
                 !isLoading && <div className="grid grid-cols-1 gap-5 p-3 sm:grid-cols-4">
                     {
-                        events && events.map((e: EventsModel, i: number) => {
+                        events && events.map((e: EventsModel) => {
                             return <div key={e._id} className="relative rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
-                                <div className="actions absolute right-3 top-3">
-                                    <span className="text-danger cursor-pointer" onClick={() => toast("Feature coming soon...", { type: "info" })}>
+                                <div className="actions absolute right-3 top-3 z-10">
+                                    <span className="text-danger cursor-pointer" onClick={() =>handleOnDeleteEvent(e._id)}>
                                         <FaTrashAlt />
                                     </span>
                                 </div>
                                 <div className="flex flex-col sm:grid-cols-2">
-                                <Carousel showArrows={true} showThumbs={false} showIndicators={false} showStatus={false} infiniteLoop={true} autoPlay={true} interval={5000} className="h-165 c-carosel">
+                                    <Carousel showArrows={true} showThumbs={false} showIndicators={false} showStatus={false} infiniteLoop={true} autoPlay={true} interval={5000} className="h-165 c-carosel">
 
-{e.files.map((img, ndx) => <Fragment key={e._id + ndx}>
-        <img src={CONFIG.BaseUrl + img} onError={handleOnImageError} alt="Image 1" />
-</Fragment>)}
-</Carousel>
+                                        {e.files.map((img, ndx) => <Fragment key={e._id + ndx}>
+                                            <img src={CONFIG.BaseUrl + img} onError={handleOnImageError} alt="Image 1" />
+                                        </Fragment>)}
+                                    </Carousel>
                                     {/* <img src={CONFIG.BaseUrl + e.files[0]} alt="" className="mb-3" /> */}
                                     <div className="flex justify-between px-3">
                                         <b>
@@ -99,15 +108,6 @@ export default function EventListPage() {
                 </div>
             }
         </div>
-        </>        // <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
-        //     {isLoading&&<>Loading...</>}
-        //     {!isLoading && events.map((event:EventsModel)=><Fragment key={event._id}>
-        //     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
-        //                 <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 p-6.5">
-        //                     {event.name} {event.files&&event.files.length}
-        //                 </div>
-        //             </div>
-        //     </Fragment>)}
-        // </div>
+        </> 
     )
 }

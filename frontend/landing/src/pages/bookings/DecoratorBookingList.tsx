@@ -28,7 +28,6 @@ export default function DecoratorBookingList() {
         e.target.src = "/assets/images/no-image.png";
     }
     const handleOnRatingChange = async () => {
-        debugger
         const d = Object.freeze({ userId: user._id, rating: rating, comments, event: selectedEvent.event._id, bookingId: selectedEvent._id });
         await postRequest('home/add-car-rating', d);
         setSelectedEvent(null);

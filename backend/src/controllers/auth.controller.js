@@ -183,7 +183,7 @@ authController.verifyUserOtp = async (req,res,next)=>{
     if(!(email&&otp)) return res.BadRequest({},"Invalid request.");
     const result = await authService.verifyUserOtp(email,otp);
     if(!result)return res.BadRequest({},"Invalid or expired OTP.");
-    return res.Ok(result);
+    return res.Ok(result,"OTP verified.");
 }
 
 /**

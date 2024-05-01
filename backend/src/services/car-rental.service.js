@@ -140,4 +140,8 @@ carRentalService.getCarRatings = async id =>{
         return rate;
     }))
 }
+carRentalService.deleteCar = async id=>{
+    const carDocs = await mongoUtil.runner(dbConstants.CARS);
+    return await carDocs.deleteOne({_id:new ObjectId(id)});
+}
 module.exports = carRentalService;

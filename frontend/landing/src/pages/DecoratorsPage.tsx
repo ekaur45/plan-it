@@ -126,6 +126,7 @@ export default function DecoratorsPage() {
                     <h2 className="h2 section-title">Featured Decorators</h2>
                 </div>
                 <ul className="featured-car-list">
+                {events && events.length === 0 &&<>No Decorators Found</>}
                     {events && events.length > 0 && events.map((e, i) => <Fragment key={e._id}>
                         <li>
                             <div className="featured-car-card">

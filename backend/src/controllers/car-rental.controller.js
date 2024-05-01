@@ -105,5 +105,17 @@ carRentalController.getCarRatings = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+carRentalController.deleteCar = async(req,res,next)=>{
+    const result = await carRentalService.deleteCar(req.query.id);
+    return res.Ok({},"Car deleted.");
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 carRentalController.example = (req,res,next)=>{}
 module.exports = carRentalController;

@@ -72,6 +72,7 @@ export default function CarsPage() {
     useEffect(() => {
         getCars();
     }, []);
+    
     return (<>
         <article>
             <section className="section hero" id="home">
@@ -142,6 +143,7 @@ export default function CarsPage() {
                         </a> */}
                     </div>
                     <ul className="featured-car-list">
+                    {cars && cars.length === 0 && <>No Cars Found</>}
                         {
                             cars && cars.length > 0 && cars.map((car: CarModel, ndx: number) => <li key={ndx}>
                                 <div className="featured-car-card">
