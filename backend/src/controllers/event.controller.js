@@ -54,5 +54,31 @@ eventController.getAll = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+eventController.getBookingSlots = async (req,res,next)=>{
+const result = await eventService.getBookingSlots(req.params.id);
+return res.Ok(result);
+
+}
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+eventController.eventComments = async (req,res,next)=>{
+    const result = await eventService.getEventComments(req.query.id);
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 eventController.example = (req,res,next)=>{}
 module.exports = eventController;

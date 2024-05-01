@@ -3,7 +3,7 @@ const dbConstants = require("../models/db.constants");
 const VenueModel = require("../models/venue.model");
 const mongoUtil = require("../utils/mongo-db.util");
 const userService = require("./user.service");
-
+const moment = require("moment");
 const venueRentalService = {};
 /**
  * 
@@ -52,5 +52,16 @@ venueRentalService.getVenueRatings = async _id =>{
         return e;
     }))
     return rating;
+}
+venueRentalService.getVenueBookingSlots = async id =>{
+    const venueDocs = await mongoUtil.runner(dbConstants.VENUES);
+    const venue = await  venueDocs.findOne({_id:new ObjectId(id)});
+    if(!venue) return null;
+    const bookingDocs = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
+    const d = moment(new Date()).format("YYYY-MM-DD");
+    const bookingList = await bookingDocs.find({venueId:venue._id.toString(),bookingDate:{$gte:d}}).toArray();
+    venue["bookings"] = bookingList;
+    venue["disabledDates"] = bookingList.map(x=>x.bookingDate);
+    return venue;
 }
 module.exports = venueRentalService;

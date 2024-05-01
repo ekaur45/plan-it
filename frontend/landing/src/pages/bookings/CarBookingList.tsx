@@ -140,11 +140,11 @@ export default function CarBookingList() {
                                 <p className="card-price">
                                     <strong>{booking.car.rent}</strong> / month
                                 </p>
-                                <button className="btn fav-btn" aria-label="Add to favourite list">
-                                    {booking.car.rating.length > 0 && <>{average(booking.car.rating.map(cc=>cc.rating))}({booking.car.rating.length})</>}
-                                    {booking.car.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.rating.length==0 && setSelectedCar(booking)} className="fa fa-heart text-danger"></em>
+                                <button className="align-items-center btn d-flex fav-btn justify-content-center" style={{gap:'5px'}} aria-label="Add to favourite list">
+                                    {booking.car.rating.length > 0 && <><Link to={"/bookings/car/" + booking.car._id + "/comments"}> {average(booking.car.rating.map(cc=>cc.rating))}({booking.car.rating.length})</Link></>}
+                                    {booking.car.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.car.rating.length==0 && setSelectedCar(booking)} className="fa fa-heart text-danger"></em>
                                 </button>
-                                <Link to={"/bookings/car/" + booking.car._id + "/comments"}>Comments</Link>
+                                {/* <Link to={"/bookings/car/" + booking.car._id + "/comments"}>Comments</Link> */}
                                 {/* <button className="btn">Rent now</button> */}
                             </div>
                         </div>

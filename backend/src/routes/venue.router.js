@@ -9,5 +9,6 @@ venueRouter.get("/venue-comments",venueController.getVenueRatings);
 
 venueRouter.post("/add",venueController.add);
 venueRouter.post('/book-venue',checkAuth(),venueController.bookVenue);
+venueRouter.get('/booking-slots/:id',checkAuth(),venueController.getBookingSlots);
 
 module.exports = venueRouter;

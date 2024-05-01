@@ -182,7 +182,7 @@ authController.verifyUserOtp = async (req,res,next)=>{
     const {email,otp,password} = req.body;
     if(!(email&&otp)) return res.BadRequest({},"Invalid request.");
     const result = await authService.verifyUserOtp(email,otp);
-    if(!result)return res.BadRequest({},"Invalid request.");
+    if(!result)return res.BadRequest({},"Invalid or expired OTP.");
     return res.Ok(result);
 }
 

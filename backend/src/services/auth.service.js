@@ -63,6 +63,8 @@ authService.signin = async (obj)=>{
     user["access_token"] = jwtUtil.sign(user);
     if(user.isEmailVerified != true){
         let otp = await EmailUtil.generateOTP();
+        const userOtpDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+        const resss = await userOtpDoc.insertOne({email:obj.email,otp:otp,userId:user._id,createdDate:new Date()});
         EmailUtil.sendOtp(user.email,otp);
     }
     return user;
