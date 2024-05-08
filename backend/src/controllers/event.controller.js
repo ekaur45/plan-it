@@ -1,4 +1,5 @@
 const BookDecoratorModel = require("../models/book-decorator.model");
+const { AddEventModel } = require("../models/event.model");
 const eventService = require("../services/event.service");
 
 const eventController = {};
@@ -18,6 +19,32 @@ eventController.bookDecorator = async (req,res,next)=>{
     return res.Ok(result,"Booked successfuly.");
 }
 
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+eventController.addEvent = async (req,res,next)=>{
+    const model = new AddEventModel(req.body);
+    model.userId = req.user?._id;
+    const result = await eventService.addEvent(model);
+    return res.Ok(result,"Decoration added successfuly.");
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+eventController.getEvent = async (req,res,next)=>{
+    const result = await eventService.getEvent();
+    return res.Ok(result);
+}
 
 /**
  * 

@@ -6,9 +6,8 @@ import './index.css';
 import './satoshi.css';
 import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  
     <Router>
       <App />
     </Router>
-  </React.StrictMode>
-);
+  );

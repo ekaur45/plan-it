@@ -105,7 +105,7 @@ export default function AddVenuePage() {
                   onChange={descriptionChange}
                   placeholder="Write your bio here"
                   value={description}
-                  defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet."
+                  
                 >{description}</textarea>
               </div>
               <div

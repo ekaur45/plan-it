@@ -75,7 +75,7 @@ authController.updateProfile = async (req,res,next)=>{
     if(!model.isValid) return res.BadRequest(model);
     const userId = req.user._id;
     const result = await authService.updateProfile(userId,model);
-    return res.Ok(result);
+    return res.Ok(result,"Profile updated.");
 }
 
 /**
@@ -111,7 +111,7 @@ authController.getMyBokings = async (req,res,next)=>{
 authController.updateProfileImage = async (req,res,next)=>{
     let d = {userId:req.user._id,img:req.body.img};
     const result = await authService.updateProfileImage(d);
-    return res.Ok(result);
+    return res.Ok(result,"Profile image updated.");
 }
 
 /**

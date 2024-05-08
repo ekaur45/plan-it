@@ -16,9 +16,24 @@ carRentalService.addCar = async (obj)=>{
     const result = await carDocs.insertOne(obj);
     return result;
 }
-carRentalService.getMyCars = async (userId)=>{
+carRentalService.getMyCars = async (userId,{name,minPrice,maxPrice,modelYear})=>{
     const carDocs = await mongoUtil.runner(dbConstants.CARS);
-    const result = await carDocs.find({"userId":userId})
+    let query = {
+        "userId":userId
+    };
+    if(name){
+        query["name"] = {'$regex': name}
+    }
+    if(minPrice >0){
+        query["rent"] = {'$gte': minPrice};
+    }
+    if(maxPrice>0){
+        query["rent"] = {'$lte': maxPrice};
+    }
+    if(modelYear>1900){
+        query["model"] = {'$gte': modelYear};
+    }
+    const result = await carDocs.find(query)
     return result.toArray();
 }
 carRentalService.getAllCars = async ()=>{

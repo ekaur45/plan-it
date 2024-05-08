@@ -4,3 +4,18 @@
 .sticky .navbar a.navbar-brand {
     color: #38424D;
 }
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem !important;
+    clear: both;
+    font-weight: 400;
+    color: #212529 !important;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+.c-p{
+    cursor: pointer;
+}

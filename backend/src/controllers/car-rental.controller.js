@@ -28,7 +28,8 @@ carRentalController.addCar = async (req,res,next)=>{
  */
 carRentalController.getMyCars = async (req,res,next)=>{
     let userId = req.user._id;
-    const result = await carRentalService.getMyCars(userId);
+    const {name,minPrice,maxPrice,modelYear} = req.query;
+    const result = await carRentalService.getMyCars(userId,{name,minPrice,maxPrice,modelYear});
     return res.Ok(result);
 }
 

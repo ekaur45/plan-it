@@ -7,6 +7,7 @@ import SignupPage from './pages/auth/SignupPage';
 import BookingListPage from './pages/bookings/BookingListPage';
 import DecoratorsPage from './pages/DecoratorsPage';
 import VenuesPage from './pages/VenuesPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path={"/event"} element={<DecoratorsPage />} />
         <Route path={"/venue"} element={<VenuesPage />} />
         <Route path={"/bookings"} element={<BookingListPage />} />
+        <Route path={"/profile"} element={<ProfilePage />} />
         <Route path={'/auth/login'} element={<LoginPage />} />
         <Route path={'/auth/signup'} element={<SignupPage />} />
       </Route>

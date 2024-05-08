@@ -1,23 +1,23 @@
 import { Link } from "react-router-dom";
 import CONFIG from "../utils/config.util";
 import StorageUtil from "../utils/storage.util";
-import { Fragment, useEffect, useState } from "react";
-import { useGlobalSelector } from "../hooks";
-import { useDispatch } from "react-redux";
-import { setIsLoggedInFalse } from "../stores/reducers/global-reducer";
+import { Fragment, useEffect } from "react";
+import { useGlobalDispatch, useGlobalSelector } from "../hooks";
+
+import { setIsLoggedInFalse, updateUser } from "../stores/reducers/global-reducer";
 import './header.css';
 export default function Header() {
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
-    const dispatch = useDispatch();
-    const [user,setUser] = useState(StorageUtil.getUser());
-    const handleLogout = ()=>{
+    const dispatch = useGlobalDispatch();
+    const user = useGlobalSelector(state=>state.globalReducer.user);    
+    const handleLogout = () => {
         StorageUtil.clearStorage();
-        setUser(StorageUtil.getUser());
+        dispatch(updateUser(StorageUtil.getUser()));
         dispatch(setIsLoggedInFalse())
     }
-    useEffect(()=>{
-        setUser(StorageUtil.getUser());        
-    },[]);
+    useEffect(() => {
+        dispatch(updateUser(StorageUtil.getUser()));
+    }, []);
     return (
         <section className="header_area">
             <div className="header_navbar">
@@ -51,18 +51,35 @@ export default function Header() {
                                         </li>
                                         {isLoggedIn && <Fragment>
                                             <li className="nav-item">
-                                            <Link to={"/bookings"}>My Bookings</Link>
+                                                <Link to={"/bookings"}>My Bookings</Link>
                                             </li>
                                             <li className="nav-item">
-                                                    <Link className="page-scroll" to={"/"}>{StorageUtil.getUser().firstName} {StorageUtil.getUser().lastName}</Link>
-                                                    <button className="btn btn-sm btn-primary" onClick={handleLogout}>Logout</button>
-                                                </li>
-                                            </Fragment>
+                                                <div className="dropdown">
+                                                    <button className="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src={CONFIG.BaseUrl+user.profileImage??"/assets/images/author-1.jpg"} 
+                                                        style={{borderRadius:"50%",height:"35px",width:"35px"}}
+                                                        alt="" />
+                                                    </button>
+                                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <Link to={"/profile"} className="dropdown-item text-black c-p">
+                                                            <em className="fa fa-user mr-2"></em>
+                                                            {user.firstName} {user.lastName}</Link>                                                        
+                                                        <Link to={"/bookings"} className="dropdown-item text-black c-p">
+                                                            <em className="fa fa-list mr-2"></em>
+                                                            Bookings</Link>
+                                                        <span className="dropdown-item text-black c-p" onClick={handleLogout}>
+                                                            <em className="fa fa-sign-out mr-2"></em>
+                                                            Logout
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </Fragment>
                                         }
                                         {
                                             !isLoggedIn && <Fragment>
                                                 <li className="nav-item">
-                                                    <Link className="page-scroll" to={CONFIG.AdminUrl+"auth/signin"}>Login / Signup</Link>
+                                                    <Link className="page-scroll" to={CONFIG.AdminUrl + "auth/signin"}>Login / Signup</Link>
                                                 </li>
                                             </Fragment>
                                         }

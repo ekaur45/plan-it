@@ -16,9 +16,24 @@ homeService.getHomeData = async ()=>{
     const venueProviders = all.filter(e=>e.userType == ServiceTypes.VenueProvider);
     return {carRentals,eventDecorators,venueProviders};
 }
-homeService.getCarRentals = async ()=>{
+homeService.getCarRentals = async ({name,minPrice,maxPrice,modelYear})=>{
     const docs = await mongoUtil.runner(dbConstants.CARS);
-    const allPromise = await docs.find({});
+    let query = {
+        
+    };
+    if(name){
+        query["name"] = {'$regex': name}
+    }
+    if(minPrice >0){
+        query["rent"] = {'$gte': minPrice};
+    }
+    if(maxPrice>0){
+        query["rent"] = {'$lte': maxPrice};
+    }
+    if(modelYear>1900){
+        query["model"] = modelYear;
+    }    
+    const allPromise = await docs.find(query);
     const all = await allPromise.toArray();
     return all;
 }
