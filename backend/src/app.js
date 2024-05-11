@@ -9,6 +9,8 @@ const multer = require("multer")();
 const cors = require("cors")({origin:"*"})
 app.use(cors);
 const responser = require("./utils/res.util");
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 const { writeFileSync } = require("fs");
 const defaultData = require("./utils/default.data");
 app.use(responser);
@@ -31,13 +33,14 @@ app.post("/api/upload",multer.any(),async (req,res,nex)=>{
 })
 app.use("/api",apiRouter);
 
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 app.use("*",(req,res,next)=>{
     res.NotFound(req.originalUrl,"Resource not found.");
 })
-
 const port = config.PORT || 3000;
 server.listen(port,()=>{
-    console.log(`http://localhost:${port}/api-doc`);
+    console.log(`http://localhost:${port}/api-docs`);
 })
 // let dd = defaultData;
 

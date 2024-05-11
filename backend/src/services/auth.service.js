@@ -6,6 +6,9 @@ const config = require("../utils/config");
 const jwtUtil = require("../utils/jwt.util");
 const mongoUtil = require("../utils/mongo-db.util");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const moment = require("moment");
+const { EmailUtil } = require("../utils/email");
 const authService = {};
 
 
@@ -14,7 +17,13 @@ authService.alreadyExist = async (email)=>{
     const user = await users.findOne({"email":email});
     return user;
 }
-
+authService.generateUserVerificationToken = async (id,email)=>{
+ const buffer = crypto.randomBytes(48);
+ const token = buffer.toString("hex");
+ const userTokenDoc = await mongoUtil.runner(dbConstants.USER_TOKEN);
+ await userTokenDoc.insertOne({userId:id,token,dateAdded:new Date(),email});
+ await EmailUtil.sendSignup(email,token);
+}
 /**
  * 
  * @param {UserModel} data 
@@ -26,6 +35,8 @@ authService.signup = async (data)=>{
     data.isProfileCompleted = false;
     const {id, ...rest} = data;
     const result = await users.insertOne(rest);
+    const userOtpDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+    authService.sendOtp(rest.email);
     rest["access_token"] = jwtUtil.sign(rest);
     return rest;
 }
@@ -50,6 +61,12 @@ authService.signin = async (obj)=>{
     if(!user) return null;
     if(!bcrypt.compareSync(obj.password,password)) return null;
     user["access_token"] = jwtUtil.sign(user);
+    if(user.isEmailVerified != true){
+        let otp = await EmailUtil.generateOTP();
+        const userOtpDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+        const resss = await userOtpDoc.insertOne({email:obj.email,otp:otp,userId:user._id,createdDate:new Date()});
+        EmailUtil.sendOtp(user.email,otp);
+    }
     return user;
     
 }
@@ -73,5 +90,65 @@ authService.updateProfileImage =async d=>{
     const userDoc = await mongoUtil.runner(dbConstants.USERS);
     const user = userDoc.updateOne({_id:new ObjectId(d.userId)},{$set:{profileImage:d.img}});
     return user;
+}
+authService.verifyUserEmail = async token =>{
+    const userTokenDoc = await mongoUtil.runner(dbConstants.USER_TOKEN);
+    const result = await userTokenDoc.findOne({token});
+    if(result){
+        const userDoc = await mongoUtil.runner(dbConstants.USERS);
+        const user = await userDoc.findOne({_id:new ObjectId(result.userId)});
+        if(user){
+           const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true}});
+            const {_id,password,...rest} = user;
+            const token = jwtUtil.sign(rest);
+            rest["token"] =token;
+            return rest;
+        }
+    }
+    return null;
+}
+
+authService.resetPassword = async (email,otp,_password) =>{
+    const userTokenDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+    const result = await userTokenDoc.findOne({email,otp});
+    if(result){
+        const userDoc = await mongoUtil.runner(dbConstants.USERS);
+        const user = await userDoc.findOne({_id:new ObjectId(result.userId)});
+        if(user){
+           const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true,password:bcrypt.hashSync(_password,10)}});
+           await userTokenDoc.updateOne({_id:new ObjectId(result._id.toString())},{$set:{isUsed:true}});
+            const {_id,password,...rest} = user;
+            const token = jwtUtil.sign(rest);
+            rest["token"] =token;
+            return rest;
+        }
+    }
+    return null;
+}
+authService.verifyUserOtp = async (email,otp) =>{
+    const userTokenDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+    const result = await userTokenDoc.findOne({email,otp});
+    if(result){
+        const userDoc = await mongoUtil.runner(dbConstants.USERS);
+        const user = await userDoc.findOne({_id:new ObjectId(result.userId)});
+        if(user){
+           const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true}});
+           await userTokenDoc.updateOne({_id:new ObjectId(result._id.toString())},{$set:{isUsed:true}});
+            const {_id,password,...rest} = user;
+            const token = jwtUtil.sign(rest);
+            rest["token"] =token;
+            return rest;
+        }
+    }
+    return null;
+}
+authService.sendOtp = async email =>{
+    const userDoc = await mongoUtil.runner(dbConstants.USERS);
+    const user = await userDoc.findOne({email:email});
+    if(!user) return null;
+    const otp = await EmailUtil.generateOTP();
+    const userOtpDoc = await mongoUtil.runner(dbConstants.USER_OTP);
+    const resss = await userOtpDoc.insertOne({email,otp:otp,userId:user._id,createdDate:new Date()});
+    return await EmailUtil.sendOtp(email,otp);
 }
 module.exports = authService;

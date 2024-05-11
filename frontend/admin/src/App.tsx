@@ -10,6 +10,7 @@ import routes from './routes';
 import Protected from './guards/Protected';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import VerficationPage from './pages/Verification/VerificationPage';
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
+        <Route path="/verfication" element={<VerficationPage />} />
         <Route element={<Protected component={<DefaultLayout />}/>}>
           <Route index element={ <Protected component={<ECommerce />} /> } />
           {routes.map((routes, index) => {

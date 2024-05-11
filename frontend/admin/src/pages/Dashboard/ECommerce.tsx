@@ -5,7 +5,7 @@ import { UserType } from "../../components/DropdownUser";
 
 const ECommerce = () => {
   const [user] = useState(StorageUtil.getUser());
-  if(user.userType == UserType["Car Rental"]){
+  if(user&&user.userType == UserType["Car Rental"]){
     return (
       <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -19,7 +19,7 @@ const ECommerce = () => {
       </>
     )
   }
-  if(user.userType == UserType["Event Decorator"]){
+  if(user&&user.userType == UserType["Event Decorator"]){
     return (
       <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">     
@@ -33,7 +33,7 @@ const ECommerce = () => {
       </>
     )
   }
-  if(user.userType == UserType["Venue Provider"]){
+  if(user&&user.userType == UserType["Venue Provider"]){
     return (
       <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">     

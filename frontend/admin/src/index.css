@@ -163,3 +163,17 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+.multiline-overflow-ellipsis{
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.h-165{
+  height: 165px !important;
+}
+.c-carosel{
+  .carousel-slider{
+    height: 100% !important;
+  }
+}

@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import StorageUtil from "../utils/storage.util";
 import { useGlobalDispatch, useGlobalSelector } from "../hooks";
 import { showGlobalLogin } from "../stores/reducers/global-reducer";
-export default function CarPage() {
+export default function CarPageOld() {
     const isGlobalLoginVisible = useGlobalSelector((state) => state.globalReducer.isGlobalLoginVisible);
     const isLoggedIn = useGlobalSelector((state) => state.globalReducer.isLoggedIn);
     const dispatch = useGlobalDispatch();

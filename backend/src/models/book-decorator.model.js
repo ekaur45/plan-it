@@ -9,7 +9,7 @@ class BookDecoratorModel{
         this.bookingTime = obj.bookingTime ?? "";
     }
     get isValid(){
-        return this.userId && this.decoratorId && this.bookingDate && this.bookingTime;
+        return this.userId && this.decoratorId && this.bookingDate;
     }
 }
 module.exports = BookDecoratorModel;

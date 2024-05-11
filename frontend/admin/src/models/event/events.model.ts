@@ -1,7 +1,7 @@
 export default class EventsModel{
     _id:string = "";
     name:string="";
-    price:number=0;
+    price:string="";
     description:string="";
-    documents:string[]=[];
+    files:string[]=[];
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getRequest } from "../utils/api.util";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import CONFIG from "../utils/config.util";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
     const [carRentals, setCarRentals] = useState([]);
@@ -14,131 +14,209 @@ export default function HomePage() {
             setCarRentals(carRentals)
             setVenueProviders(venueProviders);
             setEventDecorators(eventDecorators);
-            console.log({ carRentals, venueProviders, eventDecorators });
         }
+    }
+    const handleOnImageError = (e: any) => {
+        e.target.src = "/assets/images/no-image.png";
     }
     useEffect(() => {
         fetchData();
     }, []);
     return <>
-        <section>
-            <div id="home" className="header_slider slider-active">
-                <div className="single_slider bg_cover d-flex align-items-center" style={{ backgroundImage: "url(assets/images/slider-1.jpg)" }}>
-                    <div className="container">
-                        <div className="row justify-content-center">
-                            <div className="col-lg-10">
-                                <div className="slider_content text-center">
-                                    <h5 className="slider_sub_title" data-animation="fadeInUp" data-delay="0.2s">WE ARE GETTING MARRIED</h5>
-                                    <h2 className="slider_title" data-animation="fadeInUp" data-delay="0.7s">Michael <span>&</span> Jessica</h2>
-                                    <span className="location" data-animation="fadeInUp" data-delay="1s">The Big Church, New York, USA</span>
-                                    <p data-animation="fadeInUp" data-delay="1.4s"><img src="assets/images/header-shape-1.png" alt="Shape" />20 December 2023<img src="assets/images/header-shape-2.png" alt="Shape" /></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <section className="section hero" id="home">
+            <div className="container">
+                <div className="hero-content">
+                    <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                    <p className="hero-text">
+                        Live in Pakistan!
+                    </p>
                 </div>
+                <div className="hero-banner"></div>
             </div>
         </section>
-        <section id="event" className="event_area pt-120 pb-130">
+        <section className="section featured-car pt-3 pb-3" id="featured-car">
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="section_title text-center pb-30">
-                            <h3 className="title">Event Decorators</h3>
-                            <img src="assets/images/section_shape.png" alt="Shape" />
-                        </div>
-                    </div>
+                <div className="title-wrapper">
+                    <h2 className="h2 section-title">Featured cars</h2>
+                    <Link to={"/cars"} className="featured-car-link">
+                        <span>View more</span>
+                        <em className="fa fa-arrow-right"></em>
+                    </Link>
                 </div>
-                <div className="row justify-content-center">
-                    {
-                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <div key={ed._id} className="col-lg-4 col-md-7">
-                            <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                                <div className="event_image">
-                                    <img src="assets/images/event-1.jpg" alt="event" />
+                <ul className="featured-car-list">
+                {carRentals && carRentals.length === 0 && <>No Cars Found</>}
+                    {carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <li key={ed._id}>
+                        <div className="featured-car-card">
+
+                            <figure className="card-banner">
+                                <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0].file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                    className="w-100" />
+                            </figure>
+                            <div className="card-content">
+
+                                <div className="card-title-wrapper">
+                                    <h3 className="h3 card-title">
+                                        {ed.name}
+                                    </h3>
+
+                                    <data className="year" value="2021">{ed.model}</data>
                                 </div>
-                                <div className="event_content">
-                                    {/* <span className="date">02 Feb 2023</span> */}
-                                    <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
-                                    {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
-                                    <a className="more" href="#">View Services...</a>
+
+                                <ul className="card-list">
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-users"></em>
+                                        <span className="card-item-text">4 People</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-bolt"></em>
+                                        <span className="card-item-text">Hybrid</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-tachometer"></em>
+                                        <span className="card-item-text">6.1km / 1-litre</span>
+                                    </li>
+
+                                    <li className="card-list-item">
+                                        <em className="fa fa-microchip"></em>
+                                        <span className="card-item-text">Automatic</span>
+                                    </li>
+                                </ul>
+                                <p className="multiline-overflow-ellipsis">
+                                    {ed.description}
+                                </p>
+                                <div className="card-price-wrapper">
+                                    <p className="card-price">
+                                        <strong>{ed.rent}</strong> / month
+                                    </p>
+                                    <Link className="btn btn-outline-primary" to={"/cars"}>Rent now</Link>
                                 </div>
                             </div>
-                        </div>)
-                    }
-                    {
-                        (!eventDecorators || eventDecorators.length == 0) && <div>
-                            Event Decorators coming soon...
                         </div>
-                    }
-                </div>
+                    </li>)}
+                </ul>
             </div>
         </section>
-        <section id="event" className="event_area pt-120 pb-130">
+        <section className="section featured-car pt-3 pb-3" id="featured-car">
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="section_title text-center pb-30">
-                            <h3 className="title">Car Rental</h3>
-                            <img src="assets/images/section_shape.png" alt="Shape" />
-                        </div>
-                    </div>
+                <div className="title-wrapper">
+                    <h2 className="h2 section-title">Featured Venues</h2>
+                    <Link to={"/venue"} className="featured-car-link">
+                        <span>View more</span>
+                        <em className="fa fa-arrow-right"></em>
+                    </Link>
                 </div>
-                <div className="row justify-content-center">
+                <ul className="featured-car-list">
+                    {venueProviders && venueProviders.length === 0&&<>No Venues Found</>}
                     {
-                        carRentals && carRentals.length > 0 && carRentals.map((ed: any) => <div key={ed._id} className="col-lg-4 col-md-7">
-                            <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                                <div className="event_image">
-                                    <img src="assets/images/event-1.jpg" alt="event" />
-                                </div>
-                                <div className="event_content">
-                                    {/* <span className="date">02 Feb 2023</span> */}
-                                    <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
-                                    {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
-                                    <a className="more" href="#">View Services...</a>
+                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any, i) => <li key={ed._id}>
+                            <div className="featured-car-card">
+
+                                <figure className="card-banner">
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.images[0]?.file} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                        className="w-100" />
+                                </figure>
+
+
+                                <div className="card-content">
+
+                                    <div className="card-title-wrapper">
+                                        <h3 className="h3 card-title">
+                                            <a>{ed.name}</a>
+                                        </h3>
+                                    </div>
+
+                                    <ul className="card-list">
+
+                                        <li className="card-list-item">
+                                            <em className="fa fa-users"></em>
+                                            <span className="card-item-text">{ed.capacity} People</span>
+                                        </li>
+
+                                        <li className="card-list-item">
+                                            {/* <ion-icon name="flash-outline"></ion-icon> */}
+                                            <em className="fa fa-location"></em>
+                                            <span className="card-item-text">{ed.location}</span>
+                                        </li>
+                                        {/* 
+                                        <li className="card-list-item">
+                                            <em className="fa fa-tachometer"></em>
+                                            <span className="card-item-text">{venue.location}</span>
+                                        </li>
+
+                                        <li className="card-list-item">
+                                            <em className="fa fa-microchip"></em>
+                                            <span className="card-item-text">{venue.capacity}</span>
+                                        </li> */}
+                                    </ul>
+                                    <div className="multiline-overflow-ellipsis">
+                                        {ed.description}
+                                    </div>
+                                    <div className="card-price-wrapper mt-3">
+                                        <p className="card-price">
+                                            <strong>{ed.price}</strong> PKR / Person
+                                        </p>
+                                        <button className="btn fav-btn" aria-label="Add to favourite list">
+                                            {/* <ion-icon name="heart-outline"></ion-icon> */}
+                                            <em className="fa fa-heart"></em>
+                                        </button>
+                                        <Link to={"/venue"} className="btn btn-outline-primary">Rent now</Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>)
+                        </li>)
                     }
-                    {
-                        (!carRentals || carRentals.length == 0) && <div>
-                            Car Rental coming soon...
-                        </div>
-                    }
-                </div>
+                </ul>
             </div>
         </section>
-        <section id="event" className="event_area pt-120 pb-130">
+        <section className="section featured-car pt-3 pb-3" id="featured-car">
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="section_title text-center pb-30">
-                            <h3 className="title">Venue Providers</h3>
-                            <img src="assets/images/section_shape.png" alt="Shape" />
-                        </div>
-                    </div>
+                <div className="title-wrapper">
+                    <h2 className="h2 section-title">Featured Decorators</h2>
+                    <Link to="/event" className="featured-car-link">
+                        <span>View more</span>
+                        <em className="fa fa-arrow-right"></em>
+                    </Link>
                 </div>
-                <div className="row justify-content-center">
+                <ul className="featured-car-list">
+                    {eventDecorators && eventDecorators.length === 0 && <>No Decorators Found</>}
                     {
-                        venueProviders && venueProviders.length > 0 && venueProviders.map((ed: any) => <div key={ed._id} className="col-lg-4 col-md-7">
-                            <div className="single_event mt-30 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                                <div className="event_image">
-                                    <img src="assets/images/event-1.jpg" alt="event" />
-                                </div>
-                                <div className="event_content">
-                                    {/* <span className="date">02 Feb 2023</span> */}
-                                    <h3 className="event_title"><a href="#">{ed.firstName} {ed.lastName}</a></h3>
-                                    {/* <p>Typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when unknown printer took a galley</p> */}
-                                    <a className="more" href="#">View Services...</a>
+                        eventDecorators && eventDecorators.length > 0 && eventDecorators.map((ed: any) => <li key={ed._id}>
+                            <div className="featured-car-card">
+
+                                <figure className="card-banner">
+                                    <img onError={handleOnImageError} src={CONFIG.BaseUrl + ed.files[0]} alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                                        className="w-100" />
+                                </figure>
+
+                                <div className="card-content">
+
+                                    <div className="card-title-wrapper">
+                                        <h3 className="h3 card-title">
+                                            {ed.name}
+                                        </h3>
+                                    </div>
+
+                                    <ul className="card-list">
+
+
+                                    </ul>
+                                    <p className="card-list-item multiline-overflow-ellipsis" style={{ display: "-webkit-box" }}>
+                                        {ed.description}
+                                    </p>
+                                    <div className="card-price-wrapper">
+                                        <p className="card-price">
+                                            <strong>{ed.price}</strong> PKR / month
+                                        </p>
+                                        <button className="btn btn-outline-primary" onClick={e => alert("Hi")}>Rent now</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>)
+                        </li>)
                     }
-                    {
-                        (!venueProviders || venueProviders.length == 0) ? <div>
-                            Venues Provider coming soon...
-                        </div> : <></>
-                    }
-                </div>
+                </ul>
             </div>
         </section>
     </>
