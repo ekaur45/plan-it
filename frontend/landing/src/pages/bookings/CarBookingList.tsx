@@ -8,6 +8,7 @@ import { Modal } from "react-bootstrap";
 import { useGlobalSelector } from "../../hooks";
 import StarRatings from "react-star-ratings";
 import { Link, Outlet } from "react-router-dom";
+import moment from "moment";
 
 export default function CarBookingList() {
     const user = useGlobalSelector(state => state.globalReducer.user);
@@ -108,7 +109,8 @@ export default function CarBookingList() {
                             </div>
 
                             <ul className="card-list">
-
+                                <li className="card-list-item">Booking Date</li>
+                                <li className="card-list-item">{moment(booking.rentDate).format("MM-DD-YYYY")}</li>
                                 <li className="card-list-item">
                                     {/* <PeopleOutline cssClasses={"ion-icon"} /> */}
                                     <em className="fa fa-users"></em>
@@ -142,7 +144,7 @@ export default function CarBookingList() {
                                 </p>
                                 <button className="align-items-center btn d-flex fav-btn justify-content-center" style={{gap:'5px'}} aria-label="Add to favourite list">
                                     {booking.car.rating.length > 0 && <><Link to={"/bookings/car/" + booking.car._id + "/comments"}> {average(booking.car.rating.map(cc=>cc.rating))}({booking.car.rating.length})</Link></>}
-                                    {booking.car.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.car.rating.length==0 && setSelectedCar(booking)} className="fa fa-heart text-danger"></em>
+                                    {booking.car.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.car.rating.length==0 && setSelectedCar(booking)} className="fa fa-star text-warning"></em>
                                 </button>
                                 {/* <Link to={"/bookings/car/" + booking.car._id + "/comments"}>Comments</Link> */}
                                 {/* <button className="btn">Rent now</button> */}

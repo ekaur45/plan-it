@@ -29,21 +29,24 @@ export default function CarBookingComments() {
                     </Link>
                 </div>
                 <div className="card-body">
-                    <ul>
+                    <ul className="mb-0 comments">
                     {comments.map((e, i) => {
                             return (<li key={i}>
                                 <div className="d-flex">
-                                    <div className="user d-flex flex-column align-items-center" style={{width:"30%"}}>
+                                    <div className="user d-flex flex-column align-items-center mr-3">
                                         <img style={{ "height": "50px", width: "50px", borderRadius: "50%" }} src={CONFIG.BaseUrl + e.user.profileImage} onError={handleOnImageError} alt="" />
-                                        <span>{e.user?.firstName} {e.user?.lastName}</span>
                                     </div>
                                     <div className="comment" style={{width:"70%"}}>
-                                        <p>
-                                            {e.comments}
-                                        </p>
+                                    <div className="d-flex justify-content-between" style={{gap:"10px"}}>
+                                        <span className="font-weight-bold">{e.user?.firstName} {e.user?.lastName}</span>
                                         <span>
+                                            <em className="fa fa-star text-warning"></em>
                                             {e.rating}
                                         </span>
+                                        </div>
+                                        <p className="mb-0">
+                                            {e.comments}
+                                        </p>
                                     </div>
                                 </div>
 

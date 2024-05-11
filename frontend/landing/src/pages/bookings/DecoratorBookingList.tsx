@@ -8,6 +8,7 @@ import { Link, Outlet } from "react-router-dom";
 import average from "../../utils/misc.util";
 import { Modal } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
+import moment from "moment";
 
 export default function DecoratorBookingList() {
     const user = useGlobalSelector(state => state.globalReducer.user);
@@ -105,7 +106,8 @@ export default function DecoratorBookingList() {
                                 </div>
 
                                 <ul className="card-list">
-
+                                <li className="card-list-item">Booking Date</li>
+                                <li className="card-list-item">{moment(e.bookingDate).format("MM-DD-YYYY")}</li>
 
                                 </ul>
                                 <p className="card-list-item multiline-overflow-ellipsis" style={{ display: "-webkit-box" }}>
@@ -116,11 +118,10 @@ export default function DecoratorBookingList() {
                                         <strong>{e.event.price}</strong> PKR / month
                                     </p>
 
-                                    <button className="btn fav-btn" aria-label="Add to favourite list">
-                                        {e.event.rating.length > 0 && <>{average(e.event.rating.map((cc: any) => cc.rating))}({e.event.rating.length})</>}
-                                        {e.event.rating.length <= 0 && <>0(0)</>} <em onClick={() => e.event.rating.length === 0 && setSelectedEvent(e)} className="fa fa-heart text-danger"></em>
+                                    <button className="align-items-center btn d-flex fav-btn justify-content-center" style={{gap:'5px'}} aria-label="Add to favourite list">
+                                        {e.event.rating.length > 0 && <Link to={"/bookings/decor/" + e.event._id + "/comments"}>{average(e.event.rating.map((cc: any) => cc.rating))}({e.event.rating.length})</Link>}
+                                        {e.event.rating.length <= 0 && <>0(0)</>} <em onClick={() => e.event.rating.length === 0 && setSelectedEvent(e)} className="fa fa-star text-warning"></em>
                                     </button>
-                                    <Link to={"/bookings/decor/" + e.event._id + "/comments"}>Comments</Link>
                                 </div>
                             </div>
 

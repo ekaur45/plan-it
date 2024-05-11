@@ -1254,3 +1254,8 @@ button, a { transition: var(--transition); }
 .border-none{
   border:none !important
 }
+.comments li:not(:last-child) {
+  border-bottom: 1px solid #e1e1e1 !important;
+  margin-bottom: 15px !important;
+  padding-bottom: 15px;
+}

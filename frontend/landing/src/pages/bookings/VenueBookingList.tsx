@@ -8,6 +8,7 @@ import VenueBookingModel from "../../models/venue/venue-booking.model";
 import CONFIG from "../../utils/config.util";
 import average from "../../utils/misc.util";
 import { Link, Outlet } from "react-router-dom";
+import moment from "moment";
 
 export default function VenueBookingList() {
     const user = useGlobalSelector(state => state.globalReducer.user);
@@ -109,7 +110,8 @@ export default function VenueBookingList() {
                                 </div>
 
                                 <ul className="card-list">
-
+                                <li className="card-list-item">Booking Date</li>
+                                <li className="card-list-item">{moment(booking.bookingDate).format("MM-DD-YYYY")}</li>
                                     <li className="card-list-item">
                                         <em className="fa fa-users"></em>
                                         <span className="card-item-text">{booking.venue.capacity} People</span>
@@ -138,11 +140,10 @@ export default function VenueBookingList() {
                                     <p className="card-price">
                                         <strong>{booking.venue.price}</strong> PKR / Person
                                     </p>
-                                    <button className="btn fav-btn" aria-label="Add to favourite list">
-                                        {booking.venue.rating.length > 0 && <>{average(booking.venue.rating.map(cc => cc.rating))}({booking.venue.rating.length})</>}
-                                        {booking.venue.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.rating.length == 0 && setSelectedVenue(booking)} className="fa fa-heart text-danger"></em>
+                                    <button className="btn fav-btn d-flex align-items-baseline" style={{gap:"10px"}} aria-label="Add to favourite list">
+                                        {booking.venue.rating.length > 0 && <Link to={"/bookings/venue/" + booking.venue._id + "/comments"}>{average(booking.venue.rating.map(cc => cc.rating))}({booking.venue.rating.length})</Link>}
+                                        {booking.venue.rating.length <= 0 && <>0(0)</>} <em onClick={() => booking.rating.length == 0 && setSelectedVenue(booking)} className="fa fa-star text-warning"></em>
                                     </button>
-                                    <Link to={"/bookings/venue/" + booking.venue._id + "/comments"}>Comments</Link>
                                 </div>
                             </div>
                         </div>
