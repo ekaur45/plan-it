@@ -8,7 +8,7 @@ const getTokenFromStorage = ():string=>{
     if(userStorageStr){
         try {
             let userStorage = JSON.parse(userStorageStr);
-            return userStorage.access_token ?? "";
+            return userStorage.access_token ?? userStorage.token ?? "";
         } catch (error) {
             
         }
@@ -22,6 +22,18 @@ const getRequest = async <T>(url:string):Promise<ApiResponse<T>>=>{
         headers = {"Authorization":token}
     }
     const result = await axios.get(baseURL+url,{headers});
+    if(result.status == 200){
+        return result.data as ApiResponse<T>;
+    }
+    return {status:500} as ApiResponse<T>;
+}
+const deleteRequest = async <T>(url:string):Promise<ApiResponse<T>>=>{
+    let headers = {};
+    let token = getTokenFromStorage();
+    if(token){
+        headers = {"Authorization":token}
+    }
+    const result = await axios.delete(baseURL+url,{headers});
     if(result.status == 200){
         return result.data as ApiResponse<T>;
     }
@@ -55,4 +67,4 @@ const postFormRequest = async <T>(url:string,data:any):Promise<ApiResponse<T>>=>
     }
     return {status:500} as ApiResponse<T>;
 }
-export {getRequest,postRequest,postFormRequest}
+export {getRequest,postRequest,postFormRequest,deleteRequest}

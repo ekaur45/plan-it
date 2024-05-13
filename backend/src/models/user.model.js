@@ -13,6 +13,8 @@ class UserModel{
     userRole
     isUserVerified
     isProfileCompleted
+    isEmailVerified
+    createdAt
     constructor(obj={}){
         this.firstName = obj.firstName??"";
         this.lastName = obj.lastName??"";
@@ -20,10 +22,11 @@ class UserModel{
         this.password = obj.password??"";
         this.userType = obj.userType??"";
         this.userRole = obj.userRole??"user";
-
+        this.isEmailVerified = false;
+        this.createdAt = new Date();
     }
     get isValid(){
-        return this.firstName && this.lastName && this.email && this.password && this.userType;
+        return this.firstName && this.lastName && this.email && this.password && (this.userRole =="admin" ? true : this.userType);
     }
     
 }

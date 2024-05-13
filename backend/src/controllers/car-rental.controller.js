@@ -78,5 +78,44 @@ carRentalController.getBookings = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+carRentalController.carBookingSlots = async (req,res,next)=>{
+    const carId = req.query.id;
+    if(!carId) return res.BadRequest({});
+    const result = await carRentalService.getCarBookingSlots(carId);
+    return res.Ok(result);
+}
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+carRentalController.getCarRatings = async (req,res,next)=>{
+    const result = await carRentalService.getCarRatings(req.query.id);
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+carRentalController.deleteCar = async(req,res,next)=>{
+    const result = await carRentalService.deleteCar(req.query.id);
+    return res.Ok({},"Car deleted.");
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 carRentalController.example = (req,res,next)=>{}
 module.exports = carRentalController;

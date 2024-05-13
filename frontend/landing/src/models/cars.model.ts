@@ -6,6 +6,10 @@ export default class CarModel {
     color!: string;
     images!: any[];
     rent!: number;
+    capacity!:string;
+    fuelType!:string;
+    fuelAverage!:string;
+    transmission!:string;
     userId!: string;
     rating:any[] = [];
 }

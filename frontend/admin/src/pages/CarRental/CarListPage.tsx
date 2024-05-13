@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CarModel from "../../models/car/car.model";
 import Loader from "../../common/Loader";
-import { getRequest } from "../../utils/api.util";
+import { deleteRequest, getRequest } from "../../utils/api.util";
 import { Link } from "react-router-dom";
 import { FaBan, FaTrashAlt } from "react-icons/fa";
 import CONFIG from "../../utils/config.util";
 import { toast } from "react-toastify";
-
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 export default function CarListPage() {
     const [cars, setCars] = useState<CarModel[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -20,6 +21,25 @@ export default function CarListPage() {
     }
     const handleOnImageError = (e: any) => {
         e.target.src = "/assets/images/no-image.png";
+    }
+    const handleOnSeeMore = (_id: string) => {
+        const _update = cars.map(e => {
+            if (e._id == _id) {
+                e.expanded = !!!e.expanded;
+            }
+            return e;
+        })
+        //cars.filter(x=>x._id == _id)[0].expanded =  !!!cars.filter(x=>x._id == _id)[0].expanded;
+        setCars(_update);
+    }
+    const handleOnDeleteCar = async (_id:any)=>{
+        if(confirm("Are you sure you want to delete?")){
+            const result = await deleteRequest<any>('car-rental/delete-car?id=' + _id);
+            toast(result.message, { type: result.status == 200 ? "success" : "error" });
+            if (result.status == 200) {
+                initialData()
+            }
+        }
     }
     useEffect(() => {
         initialData();
@@ -45,20 +65,26 @@ export default function CarListPage() {
     return (<>
 
         <div className="p-3 bg-white dark:bg-boxdark">
-        <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">Your cars</h4>
+            <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">Your cars</h4>
             {isLoading && <Loader />}
             {
                 !isLoading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-4">
                     {
-                        cars && cars.length > 0 && cars.map((e: CarModel, i: number) => {
-                            return <div className="relative rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
-                                <div className="actions absolute right-3 top-3">
-                                    <span className="text-danger cursor-pointer" onClick={()=>toast("Feature coming soon...",{type:"info"})}>
-                                        <FaTrashAlt/>
+                        cars && cars.length > 0 && cars.map((e: CarModel) => {
+                            return <div key={e._id} className="relative rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-0">
+                                <div className="actions absolute right-3 top-3 z-10">
+                                    <span className="text-danger cursor-pointer" onClick={() => handleOnDeleteCar(e._id)}>
+                                        <FaTrashAlt />
                                     </span>
                                 </div>
                                 <div className="flex flex-col sm:grid-cols-2">
-                                    <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" />
+                                    <Carousel showArrows={true} showThumbs={false} showIndicators={false} showStatus={false} infiniteLoop={true} autoPlay={true} interval={5000} className="h-165 c-carosel">
+
+                                        {e.images.map((img, ndx) => <Fragment key={e._id + ndx}>
+                                                <img src={CONFIG.BaseUrl + img.file} onError={handleOnImageError} alt="Image 1" />
+                                        </Fragment>)}
+                                    </Carousel>
+                                    {/* <img src={CONFIG.BaseUrl + e.images[0].file} alt="" onError={handleOnImageError} className="mb-3" style={{ height: "165px" }} /> */}
                                     <div className="flex justify-between px-3">
                                         <b>
                                             Name:
@@ -91,8 +117,12 @@ export default function CarListPage() {
                                             PKR {e.rent}
                                         </span>
                                     </div>
-                                    <div className="flex justify-between px-3 pb-3">
-                                        {e.description}
+                                    <div title={e.description} className={"px-3 mb-3 "}>
+                                        <div className={"" + (e.expanded == true ? "" : "multiline-overflow-ellipsis")}>
+                                            {e.description}
+                                        </div>
+                                        {e.expanded == true && <a className="cursor text-primary" onClick={() => handleOnSeeMore(e._id)}>See less</a>}
+                                        {e.expanded != true && <a className="cursor text-primary" onClick={() => handleOnSeeMore(e._id)}>See more</a>}
                                     </div>
                                 </div>
                             </div>

@@ -61,7 +61,6 @@ export function useFetch<T = unknown>(
       try {
         let token = "";
         let userStorageStr = localStorage.getItem("user");
-        debugger
         if(userStorageStr){
           let userStorage = JSON.parse(userStorageStr);
           token = userStorage.access_token ?? "";

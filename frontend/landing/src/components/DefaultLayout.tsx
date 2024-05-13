@@ -16,26 +16,9 @@ export default function DefaultLayout() {
     return (<>
         {isGlobalLoginVisible && <Modal show={true}><Modal.Header><b>Login to continue</b><button className="btn btn-outline-danger" onClick={handlCloseGlobalLogin}>Close</button></Modal.Header> <LoginComponent hideSignup={true}/></Modal>}
         <ToastContainer />
-        <div className="preloader">
-            <div className="loader">
-                <div className="ytp-spinner">
-                    <div className="ytp-spinner-container">
-                        <div className="ytp-spinner-rotator">
-                            <div className="ytp-spinner-left">
-                                <div className="ytp-spinner-circle"></div>
-                            </div>
-                            <div className="ytp-spinner-right">
-                                <div className="ytp-spinner-circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <Header />
         <Outlet />
         <Footer />
-        <a href="#" className="back-to-top"><i className="lni lni-chevron-up"></i></a>
     </>
     )
 }

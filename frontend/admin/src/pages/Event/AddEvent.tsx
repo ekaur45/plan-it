@@ -6,8 +6,8 @@ import { FaSpinner, FaTimesCircle } from "react-icons/fa";
 
 export default function AddEventPage() {
   const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number>(1);
-  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [description,setDescription] = useState<string>("");
   const [files, setFile] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const handleFileChanged = async (e: any) => {
@@ -26,7 +26,7 @@ export default function AddEventPage() {
 }
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
-    const d = { documents: files.map(f => f.file), name,price,description };
+    const d = { files: files.map(f => f.file), name,price,description };
     const result = await postRequest("event/add", d);
     toast(result.message, { type: result.status == 200 ? "success" : "error" });
   }
@@ -54,12 +54,14 @@ export default function AddEventPage() {
                 />
               </div>
               <div>
-                <label className="mb-3 block text-black dark:text-white">Price</label>
+                <label className="mb-3 block text-black dark:text-white">
+                  Price
+                </label>
                 <input
                   type="number"
                   placeholder="Price"
                   value={price}
-                  onChange={e => setPrice(e.target.valueAsNumber)}
+                  onChange={e => setPrice(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div>
@@ -75,6 +77,7 @@ export default function AddEventPage() {
                         rows={6}
                         placeholder="Write your bio here"
                         onChange={descriptionChange}
+                        value={description}
                       ></textarea>
             </div>
               <div

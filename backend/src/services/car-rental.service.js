@@ -74,7 +74,7 @@ carRentalService.getMyCarsRental = async (userId)=>{
 
 carRentalService.getMyRental = async (userId) => {
     const docs = await mongoUtil.runner(dbConstants.CAR_RENT);
-    const carRentCollection = docs.find({"userId":userId});
+    const carRentCollection = docs.find({"userId":userId,rentDate:{"$lte":new Date()}});
     const carRentList = await carRentCollection.toArray();
     return carRentList.map(async cr=>{
         cr["car"] = await this.getSingleCar(cr.cardId);
@@ -99,7 +99,7 @@ carRentalService.getBookings = async (userId,userRole,userType)=>{
     //Get the carRental document from the mongoUtil
     const carBookingDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
     //If the userRole is admin, get all the bookings from the carBookingDocs
-    // if(userRole == "admin"){
+    if(userRole == "admin"){
         const carBookingCollection = await carBookingDocs.find();
         const carBookingList = await carBookingCollection.toArray();
         //Map the carBookingList and get the user and car details
@@ -110,14 +110,38 @@ carRentalService.getBookings = async (userId,userRole,userType)=>{
             cb["car"] = car;
             return cb;
         }));
-    // }
+    }
     // //If the userRole is user and userType is not ServiceTypes.CarRental, get myCarsRental from the carRentalService
-    // if(userRole == "user" && userType != ServiceTypes.CarRental){
-    //     return await this.getMyCarsRental(userId);
-    // }
+    if(userRole == "user" && userType != ServiceTypes.CarRental){
+        return await this.getMyCarsRental(userId);
+    }
     // //If the userRole is user and userType is ServiceTypes.CarRental, get myCarsRental from the carRentalService
-    // if(userRole == "user" && userType == ServiceTypes.CarRental){
-    //     return await carRentalService.getMyCarsRental(userId);
-    // }
+    if(userRole == "user" && userType == ServiceTypes.CarRental){
+        return await carRentalService.getMyRental(userId);
+    }
+}
+carRentalService.getCarBookingSlots = async _id =>{
+    const carDocs = await mongoUtil.runner(dbConstants.CARS);
+    const car = await carDocs.findOne({_id:new ObjectId(_id)});
+    if(!car) return null;
+    const bookingDocs = await mongoUtil.runner(dbConstants.CAR_RENT);
+    const d = new Date();
+    const dq = d.getFullYear()+"-"+(d.getMonth()+1>9?"":"0")+(d.getMonth()+1)+"-"+(d.getDate()+1>9?"":"0")+d.getDate();
+    const bookingsList = await bookingDocs.find({carId:car._id.toString(),"rentDate":{$gte:dq}}).toArray();
+    car["bookings"] = bookingsList;
+    car["disabledDates"] = bookingsList.map(x=>x.rentDate);
+    return car;    
+}
+carRentalService.getCarRatings = async id =>{
+    const carRatingDocs = await mongoUtil.runner(dbConstants.CAR_RATING);
+    const ratingList =  await carRatingDocs.find({"carId":id}).toArray();
+    return await Promise.all(ratingList.map(async rate=>{
+        rate["user"] = await userService.getUserSingle(rate.userId);
+        return rate;
+    }))
+}
+carRentalService.deleteCar = async id=>{
+    const carDocs = await mongoUtil.runner(dbConstants.CARS);
+    return await carDocs.deleteOne({_id:new ObjectId(id)});
 }
 module.exports = carRentalService;

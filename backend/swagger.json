@@ -1,0 +1,949 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\n_If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Operations about Auth"
+    },
+    {
+      "name": "Car-Rental",
+      "description": "Operations about Car-Rental"
+    },
+    {
+      "name": "Event",
+      "description": "Operations about Events"
+    },
+    {
+      "name": "Landing Page",
+      "description": "Operations about Landing Page"
+    },
+    {
+      "name": "User",
+      "description": "Operations about User"
+    },
+    {
+      "name": "Venue",
+      "description": "Operations about Venue"
+    }
+  ],
+  "paths": {
+    "/auth/all": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/test": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/verifyuseremail": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "parameters":[{
+            "in":"query",
+            "name":"verification_token"
+          }]
+        ,
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "parameters":[
+          {
+            "name":"authorization",
+            "description":"Authorization token",
+            "in":"header",
+            "required":true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/bookings": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/send-otp": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/verify-otp": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/update-profile": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/auth/me/update-image": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/car-rental/my-cars": {
+      "get": {
+        "tags": [
+          "Car-Rental"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/car-rental/all-cars": {
+      "get": {
+        "tags": [
+          "Car-Rental"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/car-rental/bookings": {
+      "get": {
+        "tags": [
+          "Car-Rental"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/car-rental/booking-slots": {
+      "get": {
+        "tags": [
+          "Car-Rental"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/car-rental/add": {
+      "post": {
+        "tags": [
+          "Car-Rental"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/car-rental/rent-car": {
+      "post": {
+        "tags": [
+          "Car-Rental"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/event/events": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/event/add": {
+      "post": {
+        "tags": [
+          "Event"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/event/book-event": {
+      "post": {
+        "tags": [
+          "Event"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/home/home-data": {
+      "get": {
+        "tags": [
+          "Landing Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/home/car-rentals": {
+      "get": {
+        "tags": [
+          "Landing Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/home/venues": {
+      "get": {
+        "tags": [
+          "Landing Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/home/decorations": {
+      "get": {
+        "tags": [
+          "Landing Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/home/bookings": {
+      "get": {
+        "tags": [
+          "Landing Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/home/add-car-rating": {
+      "post": {
+        "tags": [
+          "Landing Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/users/list": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/users/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/users/add": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/users/approve": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/venue/venues": {
+      "get": {
+        "tags": [
+          "Venue"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/venue/delete-venue": {
+      "get": {
+        "tags": [
+          "Venue"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/venue/venue-bookings": {
+      "get": {
+        "tags": [
+          "Venue"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/venue/venue-comments": {
+      "get": {
+        "tags": [
+          "Venue"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/venue/add": {
+      "post": {
+        "tags": [
+          "Venue"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/venue/book-venue": {
+      "post": {
+        "tags": [
+          "Venue"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",           
+            "content": {
+              "application/json": {
+                "schema":{
+                  "$ref":"#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
+    "/user/login": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "phone": {
+            "type": "string",
+            "example": "12345"
+          },
+          "userStatus": {
+            "type": "integer",
+            "description": "User Status",
+            "format": "int32",
+            "example": 1
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      }
+    },
+    "requestBodies": {
+      "Pet": {
+        "description": "Pet object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        }
+      },
+      "UserArray": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}

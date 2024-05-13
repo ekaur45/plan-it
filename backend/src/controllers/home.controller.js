@@ -7,8 +7,8 @@ homeController.getHomeData = async (req,res,nex)=>{
     return res.Ok(result);
 }
 homeController.getCarRentals = async (req,res,nex)=>{
-    const {name,minPrice,maxPrice,modelYear} = req.query;
-    const result = await homeService.getCarRentals({name,minPrice,maxPrice,modelYear});
+    const {name,amount,maxPrice,modelYear} = req.query;
+    const result = await homeService.getCarRentals({name,amount,modelYear});
     return res.Ok(result);
 }
 homeController.getMyBookings = async (req,res,nex)=>{
@@ -17,13 +17,18 @@ homeController.getMyBookings = async (req,res,nex)=>{
     return res.Ok(result);
 }
 homeController.getVenues = async (req,res,next)=>{
-    const result = await homeService.getVenues();
+    const {name,monthlyPay,capacity} = req.query;
+    const result = await homeService.getVenues({name,monthlyPay,capacity});
     return res.Ok(result);
 }
 homeController.addCarRating = async (req,res,next)=>{
     const carRatingModel = new CarRatingModel(req.body);
     carRatingModel.userId = req.user._id;
     const result = await homeService.addCarRating(carRatingModel);
+    return res.Ok(result);
+}
+homeController.getDecoration = async (req,res,next)=>{
+    const result = await homeService.getDecoration(req.query);
     return res.Ok(result);
 }
 module.exports = homeController;

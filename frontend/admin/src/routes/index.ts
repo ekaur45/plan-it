@@ -13,6 +13,7 @@ const CarListPage = lazy(() => import('../pages/CarRental/CarListPage'));
 const AddCar = lazy(() => import('../pages/CarRental/AddCar'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Settings = lazy(() => import('../pages/Settings'));
+const Verfication = lazy(() => import('../pages/Verification/VerificationPage'));
 const coreRoutes = [
 
   {

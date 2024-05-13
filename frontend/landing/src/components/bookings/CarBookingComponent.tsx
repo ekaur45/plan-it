@@ -41,7 +41,8 @@ export default function CarBookingComponent(props: CarBookingComponentType) {
                     numberOfStars={5}
                     starRatedColor="#ffb800"
                     starDimension="25px"
-                    changeRating={e => {handleOnRatingChange(e,booking); setCarBookings(d => [...carBookings]) }}
+                    
+                    ={e => {handleOnRatingChange(e,booking); setCarBookings(d => [...carBookings]) }}
                     rating={Object.hasOwn(booking.car.rating,"rating")?0:0}
                     starHoverColor="#ffb800"
                 />}

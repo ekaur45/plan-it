@@ -1,3 +1,4 @@
+///<reference path="./vendor/jquery-1.12.4.min.js"/>
 $(function () {
 
     "use strict";
@@ -14,11 +15,9 @@ $(function () {
     $(window).on('scroll', function (event) {
         var scroll = $(window).scrollTop();
         if (scroll < 20) {
-            $(".header_navbar").removeClass("sticky");
-            $(".header_navbar img").attr("src", "/assets/images/plan.png");
+            $(".header").removeClass("sticky");            
         } else {
-            $(".header_navbar").addClass("sticky");
-            $(".header_navbar img").attr("src", "/assets/images/plan.png");
+            $(".header").addClass("sticky");
         }
     });
     
