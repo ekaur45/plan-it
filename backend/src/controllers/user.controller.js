@@ -73,6 +73,18 @@ userController.approveUser = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+userController.dashboard = async(req,res,next)=>{
+    const result = await userService.dashboard(req.user);
+    res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 userController.example = (req,res,next)=>{}
 
 
