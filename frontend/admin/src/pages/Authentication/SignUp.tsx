@@ -460,14 +460,14 @@ const SignUp = () => {
                   <div className="form-group">
                     <div className="form-group">
                       <label htmlFor="">OTP</label>
-                      <input type="text" className="form-control form-control-md"
+                      <input type="text" className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary mb-3"
                         value={otp}
                         onChange={e => setOtp(e.target.value)}
                       />
                     </div>
                     <button
                       disabled={isLoading}
-                      type="submit" className="btn btn-outline-primary btn-sm btn-block mt-3">Submit</button>
+                      type="submit" className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90">Submit</button>
                   </div>
                 </form>
               </>}

@@ -12,5 +12,5 @@ apiRouter.use("/car-rental",carRentalRouter);
 apiRouter.use("/event",eventRouter);
 apiRouter.use("/venue",venueRouter);
 apiRouter.use("/home",homeRouter);
-apiRouter.use("/users",checkAuth("admin"),userRouter);
+apiRouter.use("/users",checkAuth(),userRouter);
 module.exports = apiRouter;

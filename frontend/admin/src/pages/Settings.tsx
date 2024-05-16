@@ -1,7 +1,6 @@
 import Breadcrumb from '../components/Breadcrumb';
-import userThree from '../images/user/user-03.png';
 import { useState, useEffect } from "react";
-import { FaEnvelope, FaSpinner, FaTimes, FaTimesCircle, FaUpload, FaUser } from 'react-icons/fa';
+import { FaEnvelope, FaExclamationTriangle, FaSpinner, FaTimesCircle, FaUpload, FaUser } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
 import { getRequest, postFormRequest, postRequest } from '../utils/api.util';
 import { toast } from 'react-toastify';
@@ -88,7 +87,17 @@ const Settings = () => {
   return (
     <>
       <div className="mx-auto max-w-270">
-
+        {user?.isProfileCompleted!=true&&<>
+        <div className='flex w-full border-l-6 border-warning bg-warning bg-opacity-[15%] mb-5 px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-5 sticky z-1' style={{top:"100px"}}>
+          <div className='mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30'>
+            <FaExclamationTriangle className='text-[#9D5425]'/>
+          </div>
+          <div className="w-full">
+            <h5 className='mb-3 text-lg font-bold text-[#9D5425]'>Complete your profile first</h5>
+            <p className='leading-relaxed text-[#D0915C]'>Provide CNIC front, CNIC back and required documents for approval.</p>
+          </div>
+        </div>        
+        </>}
         <Breadcrumb pageName="Settings" />
 
         <div className="grid grid-cols-5 gap-8">
