@@ -41,6 +41,9 @@ export default function LoginComponent(props: LoginComponentProps) {
             }
         } else {
             toast(result.message, { type: "error" });
+            if (result.data.isEmailVerified !== true) {
+                setIsOtpScreen(true);
+            }
         }
     }
     const handleOnOtpSubmit = async (e: any) => {
