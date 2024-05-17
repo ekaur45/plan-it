@@ -1,7 +1,6 @@
-import { Fragment, ReactNode, useEffect, useState } from "react";
+import { Fragment, ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import StorageUtil from "../utils/storage-util";
-import { toast } from "react-toastify";
 type PComponent ={
     component:ReactNode,
     roles?:Array<string>
@@ -13,10 +12,9 @@ export default function Protected(component:PComponent){
         if(!user){
             return redirect("/auth/signin");
         }
-        if(user.userRole!="admin" && !user.isProfileCompleted ){
-            //toast("Complete your profile",{type:"info"});
+        if(user.userRole!="admin" && (!user.isProfileCompleted || !user.isUserVerified)){
             return redirect("/settings");
         }
-    },[component]);
+    },[]);
     return <Fragment>{component.component}</Fragment>
 }

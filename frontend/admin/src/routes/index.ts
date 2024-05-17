@@ -25,11 +25,13 @@ const coreRoutes = [
     path: '/car-rental/cars',
     title: 'Cars',
     component: CarListPage,
+    protected:true
   },
   {
     path: '/car-rental/rents',
     title: 'Cars',
     component: CarBookingPage,
+    protected:true
   },
   {
     path: '/car-rental/add-booking',
@@ -40,16 +42,19 @@ const coreRoutes = [
     path: '/car-rental/add-car',
     title: 'Add Car',
     component: AddCar,
+    protected:true
   },
   {
     path: '/event/events',
     title: 'Events',
     component: EventListPage,
+    protected:true
   },
   {
     path: '/event/add-event',
     title: 'Add Event',
     component: AddEventPage,
+    protected:true
   },
   {
     path: '/venue/venues',
@@ -74,11 +79,13 @@ const coreRoutes = [
     path: '/users/add',
     title: 'Add User',
     component: AddUserPage,
+    protected:true
   },
   {
     path: '/users/:id/view',
     title: 'View User',
     component: ViewUserPage,
+    protected:true
   },
   {
     path: '/settings',

@@ -8,5 +8,6 @@ export default class UserModel{
     userType:number = 0;
     userRole:string = "";
     isUserVerified:boolean = false;
+    isProfileCompleted:boolean = false;
     documents:string[] = [];
 }
