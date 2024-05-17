@@ -8,11 +8,13 @@ import AdminDashboard from "./AdminDashboard";
 import { getRequest } from "../../utils/api.util";
 export default function Dashboard(){
     const [user] = useState(StorageUtil.getUser());
-    const [dashboardData,setDashboardData] = useState(null);
+    const [dashboardData,setDashboardData] = useState({});
     const getDashboard = async ()=>{
       const result = await getRequest<any>('users/dashboard');
       if(result.status == 200){
         setDashboardData(result.data);        
+      }else{
+        setDashboardData({});
       }
     }
     useEffect(()=>{
