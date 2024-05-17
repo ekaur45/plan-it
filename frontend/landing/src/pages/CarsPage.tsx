@@ -113,7 +113,7 @@ export default function CarPageOld() {
                                     <b>Model: </b> <span>{car.model}</span>
                                 </div>
                                 <div className="d-flex w-100 justify-content-between mb-3">
-                                    <b>Price/day: </b><span>PKR - {car.rent}</span>
+                                    <b>Rent/day: </b><span>PKR - {car.rent}</span>
                                 </div>
                                 <p>
                                     {car.description}
