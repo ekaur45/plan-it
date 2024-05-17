@@ -124,7 +124,7 @@ export default function AddEventPage() {
                 }
               </div>
             </div>
-            <div className="pl-6.5 pr-6.5 pb-6.5">
+            {/* <div className="pl-6.5 pr-6.5 pb-6.5">
               <label className="mb-3 block font-medium text-black dark:text-white">
                 Description
               </label>
@@ -136,7 +136,7 @@ export default function AddEventPage() {
                         rows={4}
                         placeholder="Write your bio here"
                       ></textarea>
-            </div>
+            </div> */}
             <div className="pl-6.5 pr-6.5 pb-6.5">
               <button onClick={handleFormSubmit} className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-70" type="submit">
                 Save

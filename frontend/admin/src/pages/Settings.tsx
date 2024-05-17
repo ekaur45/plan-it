@@ -78,6 +78,7 @@ const Settings = () => {
     form.append("file", e.target.files[0]);
     const response = await postFormRequest<any>("upload", form);
     const added = await postRequest<any>("auth/update-profile-image", { img: response.data.file });
+    if(added.status === 200) toast("Picture updated. Refresh to view",{type:"success"});
     updateProfileValued();
     setIsPIUploading(false);
   }

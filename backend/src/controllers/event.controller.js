@@ -53,7 +53,8 @@ eventController.getEvent = async (req,res,next)=>{
     const result = await eventService.getEvent();
 }
 eventController.getAll = async (req,res,next)=>{
-    const result = await eventService.getAll();
+    let id = req.user._id;
+    const result = await eventService.getAll(id);
     return res.Ok(result);
 }
 

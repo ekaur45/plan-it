@@ -27,8 +27,8 @@ venueController.add = async (req,res,next)=>{
  */
 
 venueController.getVenues = async (req,res,next)=>{
-    //let id = req.user._id;
-    const result = await venueRentalService.getVenues();
+    let id = req.user._id;
+    const result = await venueRentalService.getVenues(id);
     return res.Ok(result);
 }
 

@@ -18,9 +18,9 @@ eventService.add = async model =>{
     const docs = await mongoUtil.runner(dbConstants.EVENT);
     return await docs.insertOne(model);
 }
-eventService.getAll = async _=>{
+eventService.getAll = async id=>{
     const docs = await mongoUtil.runner(dbConstants.EVENT);
-    return await docs.find({}).toArray();
+    return await docs.find({"userId":id}).toArray();
 }
 eventService.getSingle = async id=>{
     const docs = await mongoUtil.runner(dbConstants.EVENT);
