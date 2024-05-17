@@ -13,7 +13,7 @@ export default function CarListPage() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const initialData = async () => {
         setIsLoading(true)
-        const result = await getRequest<CarModel[]>('car-rental/all-cars');
+        const result = await getRequest<CarModel[]>('car-rental/my-cars');
         setIsLoading(false);
         if (result.status == 200) {
             setCars(result.data);

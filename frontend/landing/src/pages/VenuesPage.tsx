@@ -67,6 +67,10 @@ export default function VenuesPage() {
             </div>
         </section>
         <section className="container">
+         <h3>Coming soon...</h3>
+        </section>
+
+        {/* <section className="container">
             <Modal show={isModalVisible}>
                 <Modal.Header>
                     <b>{selectedVenue?.name}</b>
@@ -125,6 +129,6 @@ export default function VenuesPage() {
                     </Fragment>
                 }
             </div>
-        </section>
+        </section> */}
     </Fragment>);
 }
