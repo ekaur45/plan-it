@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import Logo from '../images/planit.svg';
+import Logo from '../images/Plan_it.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { FaArrowLeft, FaCar, FaCaretDown, FaCaretUp, FaDashcube, FaHamburger, FaList, FaListOl, FaPlus } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';

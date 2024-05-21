@@ -74,9 +74,9 @@ export default function Venues() {
         <section className="section hero" id="home">
             <div className="container">
                 <div className="hero-content">
-                    <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                    <h2 className="h1 hero-title"> TRANSFORMING YOUR VISION INTO STUNNING REALITY</h2>
                     <p className="hero-text">
-                        Live in Pakistan!
+                        Your Vision, Our Expertise !
                     </p>
                 </div>
                 <div className="hero-banner-venue"></div>
@@ -87,13 +87,13 @@ export default function Venues() {
                             placeholder="What venue are you looking?" />
                     </div>
                     <div className="input-wrapper">
-                        <label htmlFor="input-2" className="input-label">Per head payment(min)</label>
+                        <label htmlFor="input-2" className="input-label">Per head(min)</label>
                         <input type="search" name="monthlyPay" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
                     </div>
 
                     <div className="input-wrapper">
                         <label htmlFor="input-3" className="input-label">Capacity</label>
-                        <input type="search" name="capacity" id="input-3" className="input-field" placeholder="Add an amount in PKR" />
+                        <input type="search" name="capacity" id="input-3" className="input-field" placeholder="Add no. of Guests" />
                     </div>
                     <button type="submit" className="btn btn-primary">Search</button>
                 </form>

@@ -78,9 +78,9 @@ export default function CarsPage() {
             <section className="section hero" id="home">
                 <div className="container">
                     <div className="hero-content">
-                        <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                        <h2 className="h1 hero-title"> TRANSFORMING YOUR VISION INTO STUNNING REALITY</h2>
                         <p className="hero-text">
-                            Live in Pakistan!
+                            Your Vision, Our Expertise !
                         </p>
                     </div>
                     <div className="hero-banner"></div>
@@ -91,7 +91,7 @@ export default function CarsPage() {
                                 placeholder="What car are you looking?" />
                         </div>
                         <div className="input-wrapper">
-                            <label htmlFor="input-2" className="input-label">Max. monthly payment</label>
+                            <label htmlFor="input-2" className="input-label">Max. Rent</label>
                             <input type="search" name="amount" id="input-2" className="input-field" placeholder="Add an amount in PKR" />
                         </div>
 
@@ -190,7 +190,7 @@ export default function CarsPage() {
                                             </p>
                                         <div className="card-price-wrapper">
                                             <p className="card-price">
-                                                <strong>{car.rent}</strong> / month
+                                                <strong>{car.rent}</strong> / day
                                             </p>
                                             <button className="btn btn-outline-primary" onClick={e => handBookCarSubmit(car)}>Rent now</button>
                                         </div>

@@ -37,7 +37,7 @@ EmailUtil.sendOtp = async (email,otp) =>{
     
     html = html.replace("{{OTP}}",otp);
         
-            trasport.sendMail({from:`Pant IT - OTP<${process.env.GMAIL_USER}>`,to:email,subject:"Verification",html:html},(err,info)=>{
+            trasport.sendMail({from:`Plan IT - OTP<${process.env.GMAIL_USER}>`,to:email,subject:"Verification",html:html},(err,info)=>{
                 if(err){
                     reject(err);
                 }else{

@@ -71,9 +71,9 @@ export default function DecoratorsPage() {
         <section className="section hero" id="home">
             <div className="container">
                 <div className="hero-content">
-                    <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                    <h2 className="h1 hero-title"> TRANSFORMING YOUR VISION INTO STUNNING REALITY</h2>
                     <p className="hero-text">
-                        Live in Pakistan!
+                        Your Vision, Our Expertise !
                     </p>
                 </div>
                 <div className="hero-banner-decoration"></div>
@@ -151,7 +151,7 @@ export default function DecoratorsPage() {
                                     </p>
                                     <div className="card-price-wrapper">
                                         <p className="card-price">
-                                            <strong>{e.price}</strong> PKR / month
+                                            <strong>{e.price}</strong> PKR / sq feet
                                         </p>
                                         <button className="btn btn-outline-primary" onClick={c => handleEventBookSubmit(e)}>Rent now</button>
                                     </div>
