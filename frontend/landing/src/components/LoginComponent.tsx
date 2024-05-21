@@ -40,7 +40,7 @@ export default function LoginComponent(props: LoginComponentProps) {
                 }
             }
         } else {
-            toast(result.message, { type: "error" });
+            toast(result.message, { type: "error",position:"bottom-right" });
             if (result.data.isEmailVerified !== true) {
                 setIsOtpScreen(true);
             }

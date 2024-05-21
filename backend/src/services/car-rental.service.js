@@ -39,7 +39,11 @@ carRentalService.getMyCars = async (userId,{name,minPrice,maxPrice,modelYear})=>
 carRentalService.getAllCars = async ()=>{
     const carDocs = await mongoUtil.runner(dbConstants.CARS);
     const result = await carDocs.find();
-    return result.toArray();
+    const cars = await result.toArray();
+    return await Promise.all(cars.map(async cr=>{
+        cr["user"] = await userService.getUserSingle(cr.userId);
+        return cr
+    }))
 }
 
 /**
@@ -73,13 +77,18 @@ carRentalService.getMyCarsRental = async (userId)=>{
 }
 
 carRentalService.getMyRental = async (userId) => {
+    const carDocs = await mongoUtil.runner(dbConstants.CARS);
+    const cars = await carDocs.find({userId}).toArray();
     const docs = await mongoUtil.runner(dbConstants.CAR_RENT);
-    const carRentCollection = docs.find({"userId":userId,rentDate:{"$lte":new Date()}});
+    let q = {"carId":{"$in":cars.map(e=>e._id.toString())}};
+    const carRentCollection = docs.find(q);
     const carRentList = await carRentCollection.toArray();
-    return carRentList.map(async cr=>{
-        cr["car"] = await this.getSingleCar(cr.cardId);
+
+    return  await Promise.all(carRentList.map(async cr=>{
+        cr["car"] = await carRentalService.getSingleCar(cr.carId);
+        cr["user"] = await userService.getUserSingle(cr.userId);
         return cr;
-    });
+    }));
 }
 
 carRentalService.getSingleCar = async carId =>{

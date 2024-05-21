@@ -23,10 +23,5 @@ export default function AdminDashboard(props:any) {
                     text={"Venues"}
                     image={<FaUserAlt className="text-blue"/>} />
             </div>
-            
-
-
-
-
         </>)
 }

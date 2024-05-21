@@ -29,7 +29,7 @@ function App() {
         reverseOrder={false}
         containerClassName="overflow-auto"
       />
-       <ToastContainer />
+       <ToastContainer position='bottom-right'/>
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />

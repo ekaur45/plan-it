@@ -15,7 +15,7 @@ export default function DefaultLayout() {
     }
     return (<>
         {isGlobalLoginVisible && <Modal show={true}><Modal.Header><b>Login to continue</b><button className="btn btn-outline-danger" onClick={handlCloseGlobalLogin}>Close</button></Modal.Header> <LoginComponent hideSignup={true}/></Modal>}
-        <ToastContainer />
+        <ToastContainer position="bottom-right" />
         <Header />
         <Outlet />
         <Footer />

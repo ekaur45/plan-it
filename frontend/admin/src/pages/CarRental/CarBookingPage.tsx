@@ -35,9 +35,9 @@ export default function CarBookingPage() {
         {isLoading && <Loader />}
         {!isLoading && <>
 
-            <div className="flex justify-end">
+            {/* <div className="flex justify-end">
                 <Link className="bg-primary border border-primary cursor-pointer hover:bg-opacity-90 px-4 py-2 rounded-lg text-white transition mb-2" to={"/car-rental/add-booking"}>Rent New Car</Link>
-            </div>
+            </div> */}
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="bg-graydark dark:text-gray-400 text-white text-xs uppercase">

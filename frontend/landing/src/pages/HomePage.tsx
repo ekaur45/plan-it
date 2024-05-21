@@ -66,22 +66,26 @@ export default function HomePage() {
 
                                     <li className="card-list-item">
                                         <em className="fa fa-users"></em>
-                                        <span className="card-item-text">4 People</span>
+                                        <span className="card-item-text">{ed.capacity} People</span>
                                     </li>
 
                                     <li className="card-list-item">
                                         <em className="fa fa-bolt"></em>
-                                        <span className="card-item-text">Hybrid</span>
+                                        <span className="card-item-text">{ed.fuelType}</span>
                                     </li>
 
                                     <li className="card-list-item">
                                         <em className="fa fa-tachometer"></em>
-                                        <span className="card-item-text">6.1km / 1-litre</span>
+                                        <span className="card-item-text">{ed.fuelAverage}km / 1-litre</span>
                                     </li>
 
                                     <li className="card-list-item">
                                         <em className="fa fa-microchip"></em>
-                                        <span className="card-item-text">Automatic</span>
+                                        <span className="card-item-text">{ed.transmission}</span>
+                                    </li>
+                                    <li className="card-list-item">
+                                        <em className="fa fa-phone-alt"></em>
+                                        <a href={"tel:"+ed.user.phoneNumber} className="card-item-text">{ed.user?.phoneNumber ?? "N/A"}</a>
                                     </li>
                                 </ul>
                                 <p className="multiline-overflow-ellipsis">
@@ -140,6 +144,10 @@ export default function HomePage() {
                                             <em className="fa fa-location"></em>
                                             <span className="card-item-text">{ed.location}</span>
                                         </li>
+                                        <li className="card-list-item">
+                                            <em className="fa fa-phone-alt"></em>
+                                            <span className="card-item-text">{ed.user?.phoneNumber}</span>
+                                        </li>
                                         {/* 
                                         <li className="card-list-item">
                                             <em className="fa fa-tachometer"></em>
@@ -158,10 +166,6 @@ export default function HomePage() {
                                         <p className="card-price">
                                             <strong>{ed.price}</strong> PKR / Person
                                         </p>
-                                        <button className="btn fav-btn" aria-label="Add to favourite list">
-                                            {/* <ion-icon name="heart-outline"></ion-icon> */}
-                                            <em className="fa fa-heart"></em>
-                                        </button>
                                         <Link to={"/venue"} className="btn btn-outline-primary">Rent now</Link>
                                     </div>
                                 </div>
@@ -200,8 +204,10 @@ export default function HomePage() {
                                     </div>
 
                                     <ul className="card-list">
-
-
+                                    <li className="card-list-item">
+                                            <em className="fa fa-phone-alt"></em>
+                                            <span className="card-item-text">{ed.user?.phoneNumber}</span>
+                                        </li>
                                     </ul>
                                     <p className="card-list-item multiline-overflow-ellipsis" style={{ display: "-webkit-box" }}>
                                         {ed.description}
