@@ -26,9 +26,9 @@ export default function HomePage() {
         <section className="section hero" id="home">
             <div className="container">
                 <div className="hero-content">
-                    <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                    <h2 className="h1 hero-title"> TRANSFORMING YOUR VISION INTO STUNNING REALITY</h2>
                     <p className="hero-text">
-                        Live in Pakistan!
+                        Your Vision, Our Expertise !
                     </p>
                 </div>
                 <div className="hero-banner"></div>
@@ -89,7 +89,7 @@ export default function HomePage() {
                                 </p>
                                 <div className="card-price-wrapper">
                                     <p className="card-price">
-                                        <strong>{ed.rent}</strong> / month
+                                        <strong>{ed.rent}</strong> / day
                                     </p>
                                     <Link className="btn btn-outline-primary" to={"/cars"}>Rent now</Link>
                                 </div>

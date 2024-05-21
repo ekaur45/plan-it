@@ -17,7 +17,7 @@ const SignIn = () => {
     setIsOtpScreen(false);
     e.preventDefault();
     const result = await postRequest<any>("auth/login", { email, password })
-    toast(result.message, { type: result.status == 200 ? "success" : "error" });
+    toast(result.message, { type: result.status == 200 ? "success" : "error" ,position:"bottom-right"});
     if (result != null && result.status == 200) {
       if (result.data.isEmailVerified != true) {
         setIsOtpScreen(true);
@@ -34,7 +34,7 @@ const SignIn = () => {
     setIsLoading(true);
     e.preventDefault();
     const result = await postRequest<any>("auth/verify-otp", { email, otp });
-    toast(result.message, { type: result.status == 200 ? "success" : "error" });
+    toast(result.message, { type: result.status == 200 ? "success" : "error",position:"bottom-right"});
     if (result.status == 200) {
       setIsOtpScreen(false);
       StorageUtil.setUser(result.data);
@@ -49,16 +49,13 @@ const SignIn = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                <img className="hidden dark:block" src={Logo} alt="Logo" />
-                <img className="dark:hidden" src={LogoDark} alt="Logo" />
+                <img className="hidden dark:block" src={Logo} alt="Logo" width="450" height="350"/>
+                <img className="dark:hidden" src={LogoDark} alt="Logo" width="450" height="350"/>
               </Link>
 
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
-              </p>
+            
 
-              <span className="mt-15 inline-block">
+              <span className="mt-4 inline-block">
                 <svg
                   width="350"
                   height="350"

@@ -41,9 +41,9 @@ export default function CarBookings() {
             <section className="section hero" id="home">
                 <div className="container">
                     <div className="hero-content">
-                        <h2 className="h1 hero-title">The easy way to takeover a lease</h2>
+                        <h2 className="h1 hero-title"> TRANSFORMING YOUR VISION INTO STUNNING REALITY</h2>
                         <p className="hero-text">
-                            Live in Pakistan!
+                            Your Vision, Our Expertise !
                         </p>
                     </div>
                     <div className="hero-banner"></div>

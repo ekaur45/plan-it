@@ -11,9 +11,7 @@ export default function Footer(){
                     </a>
 
                     <p className="footer-text">
-                        Search for cheap rental cars in New York. With a diverse fleet of 19,000 vehicles, Waydex offers its
-                        consumers an
-                        attractive and fun selection.
+                    From concept to celebration, Plan-it is dedicated to delivering perfection in every detail. Welcome to the future of event management.
                     </p>
                 </div>
 
@@ -67,7 +65,7 @@ export default function Footer(){
 
                 <ul className="footer-list">
 
-                    <li>
+                    {/* <li>
                         <p className="footer-list-title">Neighborhoods in New York</p>
                     </li>
 
@@ -101,7 +99,7 @@ export default function Footer(){
 
                     <li>
                         <a href="/" className="footer-link">Chelsea</a>
-                    </li>
+                    </li> */}
 
                 </ul>
 
@@ -150,7 +148,7 @@ export default function Footer(){
                 </ul>
 
                 <p className="copyright">
-                    &copy; 2022 <a href="/">codewithsadee</a>. All Rights Reserved
+                    &copy; 2024 <a href="/">Plan-IT</a>. All Rights Reserved
                 </p>
 
             </div>

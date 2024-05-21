@@ -27,7 +27,7 @@ export default function Header() {
                 <div className="overlay" data-overlay></div>
 
                 <Link to="/" className="logo">
-                    Plant-IT
+                    <img src="assets/plan_it.png" alt="LOGO" width="120" height="60"/>
                 </Link>
 
                 <nav className="navbar" data-navbar>

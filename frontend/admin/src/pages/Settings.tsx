@@ -106,7 +106,7 @@ const Settings = () => {
           </div>
           <div className="w-full">
             <h5 className='mb-3 text-lg font-bold text-[#9D5425]'>Verfication</h5>
-            <p className='leading-relaxed text-[#D0915C]'>Please for someone to approved your account. Make sure to upload all the required documents.</p>
+            <p className='leading-relaxed text-[#D0915C]'>Wait to get your account approved. Make sure to upload all the required documents.</p>
           </div>
         </div>        
         </>}
