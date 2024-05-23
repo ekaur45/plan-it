@@ -158,6 +158,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       Add Decoration
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink
+                      to="/event/bookings"
+                      className={({ isActive }) =>
+                        'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                        (isActive && '!text-white')
+                      }
+                    >
+                      Bookings                    </NavLink>
+                  </li>
                 </>
 
               }
@@ -185,6 +195,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     >
                       <FaPlus/>
                       Add Venue
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/venue/bookings"
+                      className={({ isActive }) =>
+                        'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                        (isActive && '!text-white')
+                      }
+                    >
+                      <FaPlus/>
+                      Bookings
                     </NavLink>
                   </li>
 

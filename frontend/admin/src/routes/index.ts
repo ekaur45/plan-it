@@ -1,4 +1,6 @@
 import { lazy } from 'react';
+const VenueBookingPage =lazy(()=>import('../pages/Venue/VenueBookingPage'));
+const EventBookingPage = lazy(()=>import('../pages/Event/EventBookingPage'));
 const CarBookingPage = lazy(()=>import('../pages/CarRental/CarBookingPage'));
 const AddCarBookingPage = lazy(()=>import('../pages/CarRental/AddCarBookingPage'));
 const AddVenuePage = lazy(()=>import('../pages/Venue/AddVenue'))
@@ -57,6 +59,12 @@ const coreRoutes = [
     protected:true
   },
   {
+    path: '/event/bookings',
+    title: 'Event booking',
+    component: EventBookingPage,
+    protected:true
+  },
+  {
     path: '/venue/venues',
     title: 'Venues',
     component: VenueListPage,
@@ -66,6 +74,12 @@ const coreRoutes = [
     path: '/venue/add-venue',
     title: 'Add Venue',
     component: AddVenuePage,
+    protected:true
+  },
+  {
+    path: '/venue/Bookings',
+    title: 'Venue Bookings',
+    component: VenueBookingPage,
     protected:true
   },
   {

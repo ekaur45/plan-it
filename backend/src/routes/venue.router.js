@@ -5,6 +5,7 @@ const venueRouter = require("express").Router();
 venueRouter.get("/venues",checkAuth(),venueController.getVenues);
 venueRouter.get("/delete-venue",venueController.deleteVenue);
 venueRouter.get("/venue-bookings",venueController.getVenues);
+venueRouter.get("/my-bookings",checkAuth(),venueController.getMyVenues);
 venueRouter.get("/venue-comments",venueController.getVenueRatings);
 
 venueRouter.post("/add",checkAuth(),venueController.add);

@@ -172,8 +172,6 @@ span.flatpickr-weekday,
 .h-165{
   height: 165px !important;
 }
-.c-carosel{
-  .carousel-slider{
-    height: 100% !important;
-  }
+.carousel-slider{
+  height: 100% !important;
 }

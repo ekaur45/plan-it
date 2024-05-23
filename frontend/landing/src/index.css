@@ -70,3 +70,7 @@
   .h-100vh{
     height: 100vh;
   }
+  .w80x80{
+    height: 80px;
+    width: 80px;
+}

@@ -19,6 +19,19 @@ venueRentalService.getVenues = async (userId)=>{
     const result = await docs.find({"userId":userId})
     return result.toArray();
 }
+venueRentalService.geMytVenues = async (userId)=>{
+    const docs = await mongoUtil.runner(dbConstants.VENUES);
+    const result = docs.find({"userId":userId})
+    const venues = await result.toArray();
+    const vid = venues.map(e=>e._id.toString());
+    const bookingDocs = await mongoUtil.runner(dbConstants.VENUE_BOOKING);
+    const boookings = await bookingDocs.find({venueId:{"$in":[...vid]}}).toArray();
+    return await Promise.all(boookings.map(async b=>{
+        b["user"] = await userService.getUserSingle(b.userId);
+        b["venue"] = await venueRentalService.getVenue(b.venueId);
+        return b;
+    }));
+}
 venueRentalService.getVenue = async (id)=>{
     const docs = await mongoUtil.runner(dbConstants.VENUES);
     const result = await docs.findOne({"_id":new ObjectId(id)})

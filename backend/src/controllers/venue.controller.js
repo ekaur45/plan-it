@@ -39,6 +39,19 @@ venueController.getVenues = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
+venueController.getMyVenues = async (req,res,next)=>{
+    let id = req.user._id;
+    const result = await venueRentalService.geMytVenues(id);
+    return res.Ok(result);
+}
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
 venueController.bookVenue = async (req,res,next)=>{
     const model = new BookVenueModel(req.body);
     model.userId = req.user._id;

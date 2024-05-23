@@ -66,4 +66,18 @@ eventService.getEvent = async ()=>{
     const docs = await mongoUtil.runner(dbConstants.EVENT);
     return await docs.find().toArray();
 }
+
+eventService.getMyBookings = async userId=>{
+    const docs = await mongoUtil.runner(dbConstants.EVENT);
+    const myEvents = await docs.find({userId}).toArray();
+    const eventIds = myEvents.map(e=>e.id);
+    const bookingDocs = await mongoUtil.runner(dbConstants.EVENT_DECORATOR);
+    const bookings = await bookingDocs.find({eventId:{"$in":[...eventIds]}}).toArray();
+    return await Promise.all(bookings.map(async e=>{
+        e["user"] = await userService.getUserSingle(e.userId);
+        e["event"] = await eventService.getSingle(e.decoratorId);
+        return e;
+    }))
+}
+
 module.exports = eventService;

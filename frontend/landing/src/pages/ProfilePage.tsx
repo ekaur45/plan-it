@@ -10,6 +10,8 @@ export default function ProfilePage() {
     const dispatch = useGlobalDispatch();
     const [firstName, setFirstName] = useState<string>(user.firstName);
     const [lastName, setLastName] = useState<string>(user.lastName);
+    const [phoneNumber, setPhoneNumber] = useState<string>(user.phoneNumber);
+    const [isUploading,setIsUploading] = useState<boolean>(false);
     const updateProfileValues = async () => {
         const result = await getRequest("auth/me");
         if (result.status === 200) {
@@ -18,10 +20,12 @@ export default function ProfilePage() {
         }
       }
     const handleOnProfileImageChange = async (e: any) => {
+        setIsUploading(true);
         const form = new FormData();
         form.append("file", e.target.files[0]);
         const response = await postFormRequest<any>("upload", form);
         if(response.status === 200){
+            setIsUploading(false);
             const result = await postRequest<any>("auth/update-profile-image", { img: response.data.file });
             toast(result.message,{type:result.status === 200?"success":"error"});
             if(result.status === 200){
@@ -34,6 +38,7 @@ export default function ProfilePage() {
         const rest = {...user};
         rest["firstName"] = firstName
         rest["lastName"] = lastName;
+        rest["phoneNumber"] = phoneNumber;
         let d = { ...rest };
         const result = await postRequest("auth/update-profile", d);     
         toast(result.message,{type:result.status === 200?"success":"error"});   
@@ -70,6 +75,14 @@ export default function ProfilePage() {
                             />
                         </div>
                         <div className="col-md-6 mb-3">
+                            <label>Phone number</label>
+                            <input type="text" className="form-control"
+                                value={phoneNumber}
+                                required
+                                onChange={e => setPhoneNumber(e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-6 mb-3">
                             <label>Email</label>
                             <input type="text" className="form-control"
                                 value={user.email}
@@ -78,9 +91,10 @@ export default function ProfilePage() {
                         </div>
                         <div className="col-md-6 mb-3">
                             <label>Image</label>
-                            <div aria-controls="abcd" className="form-control position-relative">
+                            <div aria-controls="abcd" className="position-relative w80x80">
+                                <label htmlFor="abcd"></label>
                                 <input id="abcd" type="file" onChange={handleOnProfileImageChange} className="position-absolute w-100" style={{opacity:0}}/>
-                                {user.profileImage&&<img src={CONFIG.BaseUrl+user.profileImage} className="h-100"/>}
+                                {user.profileImage&&<img src={CONFIG.BaseUrl+user.profileImage} className="h-100 w-100"/>}
                             </div>
                         </div>
                         <div className="col-md-6 mb-3">

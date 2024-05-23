@@ -6,4 +6,5 @@ export default class EventBookingModel{
     user:UserModel = new UserModel();    
     bookingDate:string = "";
     bookingTime:string = "";
+    event:any;
 }

@@ -103,5 +103,19 @@ eventController.deleteEvent = async (req,res,next)=>{
  * @param {import("express").NextFunction} next 
  */
 
-eventController.example = (req,res,next)=>{}
+eventController.getMyBookings = async(req,res,next)=>{
+    const userId = req.user._id;
+    const result = await eventService.getMyBookings(userId);
+    return res.Ok(result);
+}
+
+
+/**
+ * 
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ * @param {import("express").NextFunction} next 
+ */
+
+eventController.example = async(req,res,next)=>{}
 module.exports = eventController;

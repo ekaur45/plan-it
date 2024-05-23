@@ -49,17 +49,20 @@ export default function CarBookingPage() {
                                 Car
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                User
+                                Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Phone number
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Date
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            {/* <th scope="col" className="px-6 py-3">
                                 No. of days
                             </th>
                             <th scope="col" className="px-6 py-3 text-center">
                                 Action
-                            </th>
+                            </th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -72,19 +75,21 @@ export default function CarBookingPage() {
                                     <span>{booking.car.name} {booking.car.model}</span>
                                     PKR - {booking.car.rent} /-
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-4 flex flex-col">
                                     <span>{booking.user.firstName} {booking.user.lastName}</span>
-                                    {booking.user.phoneNumber}
                                 </td>
+                                    <td>
+                                    {booking.user.phoneNumber ?? "N/A"}
+                                    </td>
                                 <td className="px-6 py-4">
                                     {moment(booking.startDate).format("YYYY-MM-DD")}
                                 </td>
-                                <td className="px-6 py-4">
+                                {/* <td className="px-6 py-4">
                                     {moment(booking.endDate).format("YYYY-MM-DD")}
-                                </td>
-                                <td className="px-6 py-4 flex gap-3 justify-center">
+                                </td> */}
+                                {/* <td className="px-6 py-4 flex gap-3 justify-center">
                                     Actions
-                                </td>
+                                </td> */}
                             </tr>
                         </Fragment>)}
                         {bookings.length == 0 && <tr>
