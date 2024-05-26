@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../images/Plan_it.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import { FaArrowLeft, FaCar, FaCaretDown, FaCaretUp, FaDashcube, FaHamburger, FaList, FaListOl, FaPlus } from 'react-icons/fa';
+import { FaArrowLeft, FaBuilding, FaCar, FaCaretDown, FaCaretUp, FaDashcube, FaHamburger, FaLightbulb, FaList, FaListOl, FaPlus } from 'react-icons/fa';
 import StorageUtil from '../utils/storage-util';
 
 interface SidebarProps {
@@ -144,6 +144,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         (isActive && '!text-white')
                       }
                     >
+                      <FaLightbulb/>
                       Decorations
                     </NavLink>
                   </li>
@@ -155,17 +156,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         (isActive && '!text-white')
                       }
                     >
+                      <FaPlus/>
                       Add Decoration
                     </NavLink>
                   </li>
                   <li>
                     <NavLink
-                      to="/event/bookings"
+                      to="/event/ bookings"
                       className={({ isActive }) =>
                         'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                         (isActive && '!text-white')
                       }
                     >
+                      <FaList/>
                       Bookings                    </NavLink>
                   </li>
                 </>
@@ -181,7 +184,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         (isActive && '!text-white')
                       }
                     >
-                      <FaListOl/>
+                      <FaBuilding/>
                       Venues
                     </NavLink>
                   </li>
@@ -205,7 +208,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         (isActive && '!text-white')
                       }
                     >
-                      <FaPlus/>
+                      <FaList/>
                       Bookings
                     </NavLink>
                   </li>
