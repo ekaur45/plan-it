@@ -9,7 +9,7 @@ import './Auth.css';
 const SignIn = () => {
   const redirect = useNavigate();
   const [email, setEmail] = useState("admin@email.com");
-  const [password, setPassword] = useState("123456");
+  const [password, setPassword] = useState("");
   const [isOtpScreen, setIsOtpScreen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otp, setOtp] = useState("");

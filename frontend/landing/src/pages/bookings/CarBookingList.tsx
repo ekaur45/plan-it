@@ -140,7 +140,7 @@ export default function CarBookingList() {
                             </div>
                             <div className="card-price-wrapper">
                                 <p className="card-price">
-                                    <strong>{booking.car.rent}</strong> / day
+                                    <strong>{booking.car.rent}</strong> / Day
                                 </p>
                                 <button className="align-items-center btn d-flex fav-btn justify-content-center" style={{gap:'5px'}} aria-label="Add to favourite list">
                                     {booking.car.rating.length > 0 && <><Link to={"/bookings/car/" + booking.car._id + "/comments"}> {average(booking.car.rating.map(cc=>cc.rating))}({booking.car.rating.length})</Link></>}

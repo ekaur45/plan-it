@@ -115,7 +115,7 @@ export default function DecoratorBookingList() {
                                 </p>
                                 <div className="card-price-wrapper">
                                     <p className="card-price">
-                                        <strong>{e.event.price}</strong> PKR / day
+                                        <strong>{e.event.price}</strong> PKR / Day
                                     </p>
 
                                     <button className="align-items-center btn d-flex fav-btn justify-content-center" style={{gap:'5px'}} aria-label="Add to favourite list">

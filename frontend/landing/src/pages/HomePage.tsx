@@ -93,7 +93,7 @@ export default function HomePage() {
                                 </p>
                                 <div className="card-price-wrapper">
                                     <p className="card-price">
-                                        <strong>{ed.rent}</strong> / day
+                                        <strong>{ed.rent}</strong> / Day
                                     </p>
                                     <Link className="btn btn-outline-primary" to={"/cars"}>Rent now</Link>
                                 </div>
@@ -214,7 +214,7 @@ export default function HomePage() {
                                     </p>
                                     <div className="card-price-wrapper">
                                         <p className="card-price">
-                                            <strong>{ed.price}</strong> PKR / month
+                                            <strong>{ed.price}</strong> PKR / Day
                                         </p>
                                         <button className="btn btn-outline-primary" onClick={e => alert("Hi")}>Rent now</button>
                                     </div>

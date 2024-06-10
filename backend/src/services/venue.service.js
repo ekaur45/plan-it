@@ -41,7 +41,11 @@ venueRentalService.getVenue = async (id)=>{
 venueRentalService.getAllVenues = async (userId)=>{
     const docs = await mongoUtil.runner(dbConstants.VENUES);
     const result = await docs.find({})//.find({"userId":userId})
-    return result.toArray();
+    const venues = await result.toArray();
+    return await Promise.all(venues.map(async venue=>{
+        venue["user"] = await userService.getUserSingle(venue["userId"]);
+        return venue;
+    }))
 }
 
 /**
