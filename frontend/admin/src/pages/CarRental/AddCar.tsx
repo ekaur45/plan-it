@@ -1,8 +1,10 @@
 import { toast } from "react-toastify";
 import { postFormRequest, postRequest } from "../../utils/api.util";
 import { ChangeEvent, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export default function AddCarPage() {
+  const redirect = useNavigate();
   const [name,setName] = useState("");
   const [model,setModel] = useState("");
   const [color,setColor] = useState("");
@@ -22,6 +24,7 @@ export default function AddCarPage() {
     setIsSubmiting(false);
     toast(result.message,{type:result.status == 200 ?"success":"error"});
     if(result&&result.status == 200){
+      redirect("/car-rental/cars");
     }
   }
   const descriptionChange = (e:ChangeEvent<HTMLTextAreaElement>)=>{

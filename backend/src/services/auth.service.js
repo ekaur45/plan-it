@@ -101,7 +101,7 @@ authService.verifyUserEmail = async token =>{
            const resss = await userDoc.updateOne({_id:new ObjectId(result.userId)},{$set:{isEmailVerified:true}});
             const {_id,password,...rest} = user;
             const token = jwtUtil.sign(rest);
-            rest["token"] =token;
+            rest["access_token"] =token;
             return rest;
         }
     }
@@ -119,7 +119,7 @@ authService.resetPassword = async (email,otp,_password) =>{
            await userTokenDoc.updateOne({_id:new ObjectId(result._id.toString())},{$set:{isUsed:true}});
             const {_id,password,...rest} = user;
             const token = jwtUtil.sign(rest);
-            rest["token"] =token;
+            rest["access_token"] =token;
             return rest;
         }
     }
@@ -136,7 +136,7 @@ authService.verifyUserOtp = async (email,otp) =>{
            await userTokenDoc.updateOne({_id:new ObjectId(result._id.toString())},{$set:{isUsed:true}});
             const {_id,password,...rest} = user;
             const token = jwtUtil.sign(rest);
-            rest["token"] =token;
+            rest["access_token"] = token;
             return rest;
         }
     }

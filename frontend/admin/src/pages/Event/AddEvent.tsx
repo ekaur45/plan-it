@@ -2,9 +2,11 @@ import { ChangeEvent, useState } from "react"
 import { postFormRequest, postRequest } from "../../utils/api.util";
 import { toast } from "react-toastify";
 import { FaSpinner, FaTimesCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 export default function AddEventPage() {
+  const redirect = useNavigate();
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [description,setDescription] = useState<string>("");
@@ -29,6 +31,9 @@ export default function AddEventPage() {
     const d = { files: files.map(f => f.file), name,price,description };
     const result = await postRequest("event/add", d);
     toast(result.message, { type: result.status == 200 ? "success" : "error" });
+    if(result&&result.status == 200){
+    redirect("/event/events");
+    }
   }
   return (
     <>

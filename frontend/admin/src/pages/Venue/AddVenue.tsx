@@ -1,9 +1,11 @@
 import { ChangeEvent, useState } from "react"
 import { postFormRequest, postRequest } from "../../utils/api.util";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 export default function AddVenuePage() {
+  const redirect = useNavigate();
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
@@ -15,6 +17,7 @@ export default function AddVenuePage() {
     const result = await postRequest<any>('venue/add', d);
     if (result && result.status == 200) {
       toast(result.message, { type: "success" });
+      redirect("/venue/venues");
     }
   }
   const handleOnImageChange = async (e: any) => {

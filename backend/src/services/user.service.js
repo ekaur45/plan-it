@@ -33,9 +33,9 @@ userService.addUser = async (user) => {
 userService.dashboard = async (user) => {
     if (user.userRole == "admin") {
         const docs = await mongoUtil.runner(dbConstants.USERS);
-        const rents = await docs.countDocuments({ "userType": 1 });
-        const decors = await docs.countDocuments({ "userType": 2 });
-        const venue = await docs.countDocuments({ "userType": 3 });
+        const rents = await docs.countDocuments({ "userType": "1" });
+        const decors = await docs.countDocuments({ "userType": "2" });
+        const venue = await docs.countDocuments({ "userType": "3" });
         const total = await docs.countDocuments({});
         return { total, rents, decors, venue }
     } else {
